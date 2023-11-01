@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* newSymptom.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
 		FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FED02ADDEE9800F6273B /* ContentView.swift */; };
 		FB87FED32ADDEEA100F6273B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED22ADDEEA100F6273B /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB320FA62AEB2754005865F5 /* newSymptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSymptom.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = medTrackerApp.swift; sourceTree = "<group>"; };
 		FB87FED02ADDEE9800F6273B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */,
 				FB87FED02ADDEE9800F6273B /* ContentView.swift */,
+				FB320FA62AEB2754005865F5 /* newSymptom.swift */,
 				FBE3812B2ADF3C2E004737C9 /* analysis.swift */,
 				FBE381292ADF3BC9004737C9 /* profile.swift */,
 				FB87FED22ADDEEA100F6273B /* Assets.xcassets */,
@@ -146,6 +149,7 @@
 				FBE3812A2ADF3BC9004737C9 /* profile.swift in Sources */,
 				FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */,
+				FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
