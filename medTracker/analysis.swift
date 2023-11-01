@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct analysis: View {
     @State private var descripcion = "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad."
