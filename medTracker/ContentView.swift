@@ -20,14 +20,8 @@ struct ContentView: View {
         TabView (selection: $currentTab) {
             analysis()
                 .tag(Tab.Analisis)
-            VStack {
-                Text("vista Inicio")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color("bg").ignoresSafeArea())
-                    //.tag(Tab.Inicio)
-            }
-            .background(Color.gray)
-            .tag(Tab.Inicio)
+            RegistroDatos1()
+                .tag(Tab.Inicio)
             profile()
                 .tag(Tab.Perfil)
         }
@@ -39,7 +33,7 @@ struct ContentView: View {
                 .padding(.vertical)
                 .padding(.bottom, getSafeArea().bottom == 0 ? 5 :
                             (getSafeArea().bottom - 15))
-                .background(Color.white)
+                .background(Color(red: 170/255, green: 166/255, blue: 157/255))
             }
             ,
             alignment: .bottom
@@ -55,27 +49,31 @@ struct ContentView: View {
                 }
             }, label: {
                 VStack(spacing: 0) {
-                    Image(systemName: currentTab == tab ? tab.rawValue + ".fill" : tab.rawValue)
+                    Image(systemName: tab.rawValue)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
+                        .frame(width: 30, height: 30)
                         .frame(maxWidth: .infinity)
-                        .foregroundColor(currentTab == tab ? .primary : .secondary)
+                        .foregroundColor(currentTab == tab ? .white : .black)
                         .padding(currentTab == tab ? 15 : 0)
                         .background(
-                            ZStack {
+                           ZStack {
                                 if currentTab == tab {
                                     MaterialEffect(style: .light)
+                                        .background(Color(red: 199/255, green: 236/255, blue: 238/255))
                                         .clipShape(Circle())
-                                        .matchedGeometryEffect(id: "TAB", in: animation)
-                                    
-                                    Text(tab.tabName).foregroundColor(.primary)
-                                        .font(.footnote).padding(.top, 50)
+                                        //.matchedGeometryEffect(id: "TAB", in: animation)
                                 }
                             }
                         )
                         .contentShape(Rectangle())
                         .offset(y: currentTab == tab ? -35 : 0)
+                    
+                    Text(tab.tabName)
+                        .foregroundColor(Color.black)
+                        .font(.system(size: 16))
+                        .padding(.top, 65)
+                        .offset(y: currentTab == tab ? -95 : -60)
                 }
             })
         }
@@ -97,7 +95,7 @@ enum Tab: String, CaseIterable {
     var tabName : String {
         switch self {
         case .Analisis:
-            return "Analisis"
+            return "Análisis"
         case .Inicio:
             return "Inicio"
         case .Perfil:
@@ -133,3 +131,4 @@ struct MaterialEffect : UIViewRepresentable {
         
     }
 }
+
