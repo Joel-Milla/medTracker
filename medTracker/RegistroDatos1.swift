@@ -114,9 +114,9 @@ struct CustomSlider :View{
     }
 }
 
-#Preview {
-    RegistroDatos1()
-}
+//#Preview {
+  //  RegistroDatos1()
+//}
 
 /*
  NOTAS:
