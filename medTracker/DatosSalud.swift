@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DatosSalud : Codable{
+struct DatosSalud : Codable, Identifiable{
     var id = UUID()
     var telefono : String
     var nombre : String

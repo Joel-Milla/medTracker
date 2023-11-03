@@ -8,5 +8,9 @@
 import Foundation
 
 struct Registro : Codable{
+    // var id
     var nombre : String
+    var fecha : Date
+    var cantidad : Int
+    //var notas ? : String
 }
