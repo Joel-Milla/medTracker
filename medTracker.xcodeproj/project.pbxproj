@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* newSymptom.swift */; };
 		F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* DatosSalud.swift */; };
 		F82095A22AF590EE002F1C28 /* Registro.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82095A12AF590EE002F1C28 /* Registro.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegistroDatos1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB320FA62AEB2754005865F5 /* newSymptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSymptom.swift; sourceTree = "<group>"; };
 		F820959F2AF58ACE002F1C28 /* DatosSalud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatosSalud.swift; sourceTree = "<group>"; };
 		F82095A12AF590EE002F1C28 /* Registro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registro.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroDatos1.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			children = (
 				FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */,
 				FB87FED02ADDEE9800F6273B /* ContentView.swift */,
+				FB320FA62AEB2754005865F5 /* newSymptom.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */,
 				F820959F2AF58ACE002F1C28 /* DatosSalud.swift */,
 				F82095A12AF590EE002F1C28 /* Registro.swift */,
@@ -158,6 +161,7 @@
 				F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */,
 				F82095A22AF590EE002F1C28 /* Registro.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */,
+				FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
