@@ -3,7 +3,7 @@
 //  bottomTabBar
 //
 //  Created by Alumno on 16/10/23.
-//
+//  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
 
 import SwiftUI
 
@@ -20,13 +20,8 @@ struct ContentView: View {
         TabView (selection: $currentTab) {
             analysis()
                 .tag(Tab.Analisis)
-            VStack {
-                Text("vista Inicio")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color("bg").ignoresSafeArea())
-                    //.tag(Tab.Inicio)
-            }
-            .tag(Tab.Inicio)
+            newSymptom()
+                .tag(Tab.Inicio)
             profile()
                 .tag(Tab.Perfil)
         }
