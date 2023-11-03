@@ -26,13 +26,13 @@ struct RegistroDatos1: View {
                 VStack() {
                     Text(dummySymptom)
                         .font(.title)
-                        .foregroundStyle(Color("secondaryBlue"))
+                        .foregroundStyle(Color("blueGreen"))
                         .bold()
                         .padding(.horizontal, -179)
                     DatePicker("Fecha registro", selection: $date, displayedComponents: [.date, .hourAndMinute])
                         .padding(.horizontal,3)
-                        .foregroundColor(Color("secondaryBlue")) // sale identico??
-                        .tint(Color("mainBlue"))
+                        .foregroundColor(Color("blueGreen")) // sale identico??
+                        .tint(Color("blueGreen"))
                         .bold()
                     //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
                     if(sliderOrTF){
@@ -60,6 +60,7 @@ struct RegistroDatos1: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 Spacer()
                 .navigationTitle("Agregar síntoma")
+                .navigationBarTitleDisplayMode(.inline)
             }
             .toolbar{
                 Button{
@@ -91,7 +92,7 @@ struct CustomSlider :View{
     @State var metric : Double = 5
     var body: some View{
         HStack {
-            Image(systemName: "person")
+            Image(systemName: "face.smiling")
             Slider(value: $metric, in: 0...10)
                 .padding()
                 .tint(getColor())
