@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Registro : Codable{
+    var nombre : String
+}

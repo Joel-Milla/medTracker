@@ -32,24 +32,24 @@ struct RegistroDatos1: View {
                     DatePicker("Fecha registro", selection: $date, displayedComponents: [.date, .hourAndMinute])
                         .padding(.horizontal,3)
                         .foregroundColor(Color("secondaryBlue")) // sale identico??
-                        .accentColor(Color("mainBlue"))
+                        .tint(Color("mainBlue"))
                         .bold()
                     //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
                     if(sliderOrTF){
                         Text("Califica cómo te sientes")
-                        Slider(value: $metric, in: 0...10)
-                            .padding()
-                            .tint(getColor())
+                        CustomSlider()
                     }
                     else{
                         Text("Ingresa el valor")
                         TextField("Valor", text: $metricsString)
                     }
-                    TextField("Notes", text: $notes, axis: .vertical)
-                        .textFieldStyle(.roundedBorder)
+                    TextEditor(text: $notes) // usar geomtery reader
                         .padding(10)
-                        .cornerRadius(20)
-                                .shadow(color: .gray, radius: 2)
+                        .cornerRadius(30)
+                        .shadow(color: .gray, radius: 2)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(5)
+                    
                     Spacer()
                     Button{
                     }label:{
@@ -71,6 +71,33 @@ struct RegistroDatos1: View {
         }
     }
     // otra forma de hacer esto?
+    func getColor()->Color{
+        if(metric < 4){
+            return Color.green
+        }
+        else if(metric >= 4 && metric < 7){
+            return Color.yellow
+        }
+        else if(metric >= 7){
+            return Color.red
+        }
+        else{
+            return Color("mainBlue")
+        }
+    }
+}
+
+struct CustomSlider :View{
+    @State var metric : Double = 5
+    var body: some View{
+        HStack {
+            Image(systemName: "person")
+            Slider(value: $metric, in: 0...10)
+                .padding()
+                .tint(getColor())
+            Image(systemName: "person")
+        }
+    }
     func getColor()->Color{
         if(metric < 4){
             return Color.green
