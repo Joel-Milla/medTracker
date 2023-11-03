@@ -3,7 +3,7 @@
 //  bottomTabBar
 //
 //  Created by Alumno on 16/10/23.
-//  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
+//
 
 import SwiftUI
 
@@ -20,7 +20,7 @@ struct ContentView: View {
         TabView (selection: $currentTab) {
             analysis()
                 .tag(Tab.Analisis)
-            RegistroDatos1()
+            newSymptom()
                 .tag(Tab.Inicio)
             profile()
                 .tag(Tab.Perfil)
