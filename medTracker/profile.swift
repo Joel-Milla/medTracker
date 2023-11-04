@@ -8,63 +8,114 @@
 import SwiftUI
 
 struct profile: View {
-    @State var fechaNac = Date()
-    @State var dummy : String = ""
-    @State var mostrar : Bool = false
+    var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
 
+    @Environment(\.editMode) private var editMode
+    
+    @State private var user: Usuario =
+    Usuario(nombre: "", apellidoPaterno: "", apellidoMaterno: "",
+            sexo: "", antecedentes: "", estatura: 0.0)
+    @State private var draftUser: Usuario = Usuario(nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
+    @State private var sexo : String = ""
+    @State private var estatura : String = ""
+    
+    @State private var birthDate = Date()
+    @State private var date : String = ""
+    
+    @State private var isEditing = false
+    
+    let defaults = UserDefaults.standard
+    
     var body: some View {
-        VStack {
+        VStack() {
             NavigationStack {
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 150)
-                    .padding()
                 Form {
                     Section {
-                        HStack {
-                            Text("Nombre: ")
-                            TextField("nombre", text: $dummy)
-                                .textFieldStyle(.roundedBorder)
+                        if isEditing {
+                            HStack {
+                                Text("Nombre(s)")
+                                TextField("Joel Alejandro", text: $draftUser.nombre)
+                            }
+                            HStack {
+                                Text("Apellido Paterno")
+                                TextField("Milla", text: $draftUser.apellidoPaterno)}
+                            HStack {
+                                Text("Apellido Materno")
+                                TextField("Lopez", text: $draftUser.apellidoMaterno)}
+                            DatePicker("Fecha Nacimiento", selection: $birthDate, displayedComponents: .date)
+                        } else {
+                            Text("Nombre: \(user.nombre)")
+                            Text("Apellido Paterno: \(user.apellidoPaterno)")
+                            Text("Apellido Materno: \(user.apellidoMaterno)")
+                            Text("Fecha Nacimiento: \(date)")
                         }
-                        Text("Apellido Paterno: ")
-                        Text("Apellido Materno: ")
-                        DatePicker("Fecha Nacimiento", selection: $fechaNac, displayedComponents: .date)
-                        
                     } header: {
                         Text("Datos personales")
                     }
                     
                     Section {
-                        HStack {
-                            Text("Estatura: ")
+                        if isEditing {
+                            HStack {
+                                Text("Estatura")
+                                TextField("1.80", text: $estatura)
+                                    .keyboardType(.decimalPad)
+                            }
+                            Picker(selection: $sexo) {
+                                ForEach(tipos, id: \.self) { tipo in
+                                 Text(tipo)
+                                }
+                            } label: {
+                                Text("Sexo")
+                            }
+
+                        } else {
+                            Text("Estatura: \(String(format: "%.1f", user.estatura))")
+                            Text("Sexo: \(user.sexo)")
                         }
-                        Text("Sexo: ")
                     } header: {
                         Text("Datos fijos")
                     }
                     
                     Section {
-                        HStack {
-                            Text("Antecedentes: ")
-                            
+                        if isEditing {
+                            Text("Antecedentes:")
+                            TextEditor(text: $draftUser.antecedentes)
+                        } else {
+                            Text("Antecedentes:")
+                            Text("\(user.antecedentes)")
+                                .lineLimit(10)
                         }
                     } header: {
-                        Text("Datos variables")
+                        Text("Historial Clinico")
                     }
                 }
                 .navigationTitle("Profile")
-                .toolbar{
-                    Button {
-                        mostrar = true
-                    } label: {
-                        Text("Edit")
+                .toolbar {
+                    Button(isEditing ? "Done" : "Edit") {
+                        if isEditing {
+                            // Editar se termino
+                            draftUser.estatura = Double(estatura) ?? 0.0
+                            draftUser.sexo = sexo
+                            user = draftUser
+                        } else {
+                            // Se empieza a editar
+                            draftUser = user
+                        }
+                        isEditing.toggle()
                     }
+                }
+                .onChange(of: birthDate) { newValue in
+                    date = "\(birthDate.formatted(date: .long, time: .omitted))"
+                    
+                }
+                .onAppear {
+                    draftUser = user
                 }
             }
         }
     }
 }
+
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
