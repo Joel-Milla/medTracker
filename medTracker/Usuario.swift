@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Usuario: Identifiable {
-    var id = UUID() // Unique identifier
+struct Usuario : Codable {
+    var telefono : String // Unique identifier
     var nombre : String
     var apellidoPaterno : String
     var apellidoMaterno : String

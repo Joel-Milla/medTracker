@@ -13,9 +13,9 @@ struct profile: View {
     @Environment(\.editMode) private var editMode
     
     @State private var user: Usuario =
-    Usuario(nombre: "", apellidoPaterno: "", apellidoMaterno: "",
+    Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "",
             sexo: "", antecedentes: "", estatura: 0.0)
-    @State private var draftUser: Usuario = Usuario(nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
+    @State private var draftUser: Usuario = Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
     @State private var sexo : String = ""
     @State private var estatura : String = ""
     
@@ -42,11 +42,15 @@ struct profile: View {
                             HStack {
                                 Text("Apellido Materno")
                                 TextField("Lopez", text: $draftUser.apellidoMaterno)}
+                            HStack {
+                                Text("Telefono")
+                                TextField("+81 2611 1857", text: $draftUser.telefono)}
                             DatePicker("Fecha Nacimiento", selection: $birthDate, displayedComponents: .date)
                         } else {
                             Text("Nombre: \(user.nombre)")
                             Text("Apellido Paterno: \(user.apellidoPaterno)")
                             Text("Apellido Materno: \(user.apellidoMaterno)")
+                            Text("Telefono: \(user.telefono)")
                             Text("Fecha Nacimiento: \(date)")
                         }
                     } header: {
