@@ -9,8 +9,6 @@ import SwiftUI
 
 struct profile: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
-
-    @Environment(\.editMode) private var editMode
     
     @State private var user: Usuario =
     Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "",
@@ -101,6 +99,7 @@ struct profile: View {
                             draftUser.estatura = Double(estatura) ?? 0.0
                             draftUser.sexo = sexo
                             user = draftUser
+                            saveUser()
                         } else {
                             // Se empieza a editar
                             draftUser = user
@@ -115,9 +114,28 @@ struct profile: View {
                 .onAppear {
                     draftUser = user
                 }
+                .onAppear {
+                    loadUser()
+                }
             }
         }
     }
+    
+    /* Guardar informacion y obtenerla*/
+    func saveUser() {
+        if let encoded = try? JSONEncoder().encode(user) {
+            UserDefaults.standard.set(encoded, forKey: "savedUser")
+        }
+    }
+
+    func loadUser() {
+        if let savedUserData = UserDefaults.standard.object(forKey: "savedUser") as? Data {
+            if let loadedUser = try? JSONDecoder().decode(Usuario.self, from: savedUserData) {
+                user = loadedUser
+            }
+        }
+    }
+
 }
 
 
