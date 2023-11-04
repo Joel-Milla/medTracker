@@ -1,0 +1,30 @@
+# Xcode
+##
+.DS_Store
+xcuserdata/
+*.xccheckout
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode1v3
+*.xcodeproj/*.mode2v3
+*.xcodeproj/*.perspectivev3
+!default.mode1v3
+!default.perspectivev3
+*.xcworkspace/
+!default.xcworkspace
+*.xcworkspace/xcuserdata/
+!default.xcworkspace/xcuserdata/
+*.xcworkspace/contents.xcworkspacedata
+DerivedData/
+*.playground/
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.build/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
