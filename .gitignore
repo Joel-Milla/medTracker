@@ -1,20 +1,29 @@
-# Xcode
-##
+# macOS files
 .DS_Store
-xcuserdata/
-*.xccheckout
-*.xcodeproj/*.pbxuser
-*.xcodeproj/*.mode1v3
-*.xcodeproj/*.mode2v3
-*.xcodeproj/*.perspectivev3
+
+# Xcode per-user files
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
 !default.mode1v3
 !default.perspectivev3
+xcuserdata/
+
+# Xcode project and workspace files
+*.xcodeproj/
+!default.xcodeproj
 *.xcworkspace/
 !default.xcworkspace
-*.xcworkspace/xcuserdata/
-!default.xcworkspace/xcuserdata/
-*.xcworkspace/contents.xcworkspacedata
+
+# Xcode build output
 DerivedData/
+build/
+*.o
+*.LinkFileList
+*.hmap
+
+# Xcode playground
 *.playground/
 timeline.xctimeline
 playground.xcworkspace
@@ -22,9 +31,10 @@ playground.xcworkspace
 # Swift Package Manager
 .build/
 
-# CocoaPods
-Pods/
-
-# Carthage
-Carthage/Build/
+# Editor temporary files
+*~.nib
+*.swp
+*~
+*.dat
+*.dep
 
