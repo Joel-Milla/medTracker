@@ -10,15 +10,10 @@ import SwiftUI
 struct profile: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
     
-    @State private var user: Usuario =
-    Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "",
-            sexo: "", antecedentes: "", estatura: 0.0)
+    @State private var user: Usuario = Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
     @State private var draftUser: Usuario = Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
     @State private var sexo : String = ""
     @State private var estatura : String = ""
-    
-    @State private var birthDate = Date()
-    @State private var date : String = ""
     
     @State private var isEditing = false
     
@@ -27,6 +22,12 @@ struct profile: View {
     var body: some View {
         VStack() {
             NavigationStack {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .clipShape(Circle())
+                    .clipped()
                 Form {
                     Section {
                         if isEditing {
@@ -43,13 +44,11 @@ struct profile: View {
                             HStack {
                                 Text("Telefono")
                                 TextField("+81 2611 1857", text: $draftUser.telefono)}
-                            DatePicker("Fecha Nacimiento", selection: $birthDate, displayedComponents: .date)
                         } else {
                             Text("Nombre: \(user.nombre)")
                             Text("Apellido Paterno: \(user.apellidoPaterno)")
                             Text("Apellido Materno: \(user.apellidoMaterno)")
                             Text("Telefono: \(user.telefono)")
-                            Text("Fecha Nacimiento: \(date)")
                         }
                     } header: {
                         Text("Datos personales")
@@ -64,12 +63,12 @@ struct profile: View {
                             }
                             Picker(selection: $sexo) {
                                 ForEach(tipos, id: \.self) { tipo in
-                                 Text(tipo)
+                                    Text(tipo)
                                 }
                             } label: {
                                 Text("Sexo")
                             }
-
+                            
                         } else {
                             Text("Estatura: \(String(format: "%.1f", user.estatura))")
                             Text("Sexo: \(user.sexo)")
@@ -93,23 +92,33 @@ struct profile: View {
                 }
                 .navigationTitle("Profile")
                 .toolbar {
-                    Button(isEditing ? "Done" : "Edit") {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         if isEditing {
-                            // Editar se termino
-                            draftUser.estatura = Double(estatura) ?? 0.0
-                            draftUser.sexo = sexo
-                            user = draftUser
-                            saveUser()
-                        } else {
-                            // Se empieza a editar
-                            draftUser = user
+                            Button("Cancel") {
+                                // Borrar informacion de draft user
+                                draftUser = user
+                                isEditing = false
+                            }
                         }
-                        isEditing.toggle()
                     }
-                }
-                .onChange(of: birthDate) { newValue in
-                    date = "\(birthDate.formatted(date: .long, time: .omitted))"
-                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        if isEditing {
+                            Button("Done") {
+                                // Guardar informacion en user y sandbox
+                                draftUser.estatura = Double(estatura) ?? 0.0
+                                draftUser.sexo = sexo
+                                user = draftUser
+                                saveUser()
+                                isEditing = false
+                            }
+                        } else {
+                            Button("Edit") {
+                                // Modo normal
+                                draftUser = user
+                                isEditing = true
+                            }
+                        }
+                    }
                 }
                 .onAppear {
                     draftUser = user
@@ -121,13 +130,13 @@ struct profile: View {
         }
     }
     
-    /* Guardar informacion y obtenerla*/
+    /* Guardar informacion y obtenerla */
     func saveUser() {
         if let encoded = try? JSONEncoder().encode(user) {
             UserDefaults.standard.set(encoded, forKey: "savedUser")
         }
     }
-
+    
     func loadUser() {
         if let savedUserData = UserDefaults.standard.object(forKey: "savedUser") as? Data {
             if let loadedUser = try? JSONDecoder().decode(Usuario.self, from: savedUserData) {
@@ -135,7 +144,7 @@ struct profile: View {
             }
         }
     }
-
+    
 }
 
 
