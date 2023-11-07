@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import SegmentedPicker
 
 struct newSymptom: View {
     @State var nombreSintoma = ""
     @State var descripcion = ""
     @State var tipo = ["#", "-*-"]
     @State private var colorSymptom = Color.blue
+    
+    @State var selectedIndex: Int?
     
     var body: some View {
         NavigationView {
@@ -43,40 +46,37 @@ struct newSymptom: View {
                     .font(.system(size: 24))
                     .padding(.top, 22)
                 
+                HStack {
+                    Spacer()
+                    SegmentedPicker(
+                        ["Cuantitativo", "Cualitativo"],
+                        selectedIndex: Binding(
+                            get: { selectedIndex },
+                            set: { selectedIndex = $0 }),
+                        content: { item, isSelected in
+                            Text(item)
+                                .foregroundColor(isSelected ? Color.white : Color.black )
+                                .padding(.horizontal, 45)
+                                .padding(.vertical, 8)
+                        },
+                        selection: {
+                            Capsule()
+                                .fill(colorSymptom)
+                        })
+                    .onAppear {
+                        selectedIndex = 0
+                    }
+                    .animation(.easeInOut(duration: 0.3))
+                    Spacer()
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.leading, 20)
+            .background(Color("mainWhite"))
             .navigationTitle("Nuevo síntoma")
         }
     }
 }
-
-/*struct SegmentedPickerExample: View {
-    let titles: [String]
-    @State var selectedIndex: Int?
-
-    var body: some View {
-        SegmentedPicker(
-            titles,
-            selectedIndex: Binding(
-                get: { selectedIndex },
-                set: { selectedIndex = $0 }),
-            content: { item, isSelected in
-                Text(item)
-                    .foregroundColor(isSelected ? Color.white : Color.gray )
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-            },
-            selection: {
-                Capsule()
-                    .fill(Color.gray)
-            })
-            .onAppear {
-                selectedIndex = 0
-            }
-            .animation(.easeInOut(duration: 0.3))
-    }
-}*/
 
 struct newSymptom_Previews: PreviewProvider {
     static var previews: some View {

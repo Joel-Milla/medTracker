@@ -10,7 +10,10 @@ import Charts
 
 struct analysis: View {
     @State private var descripcion = "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad."
-    @State private var sintomas = ["Síntoma1", "Síntoma2", "Síntoma3"]
+    @State private var sintomas : [DatosSalud]
+    
+    private var s1 = DatosSalud(telefono: 1, nombre: "a", description: "a", unidades: "cm", activo: true, color: Color.blue)
+    sintomas;.append(s1)
     
     
     var body: some View {
@@ -18,19 +21,11 @@ struct analysis: View {
             TabView {
                 ForEach(sintomas, id: \.self) { sintoma in
                     VStack(alignment: .leading) {
-                        HStack (spacing: 25) {
-                            Image(systemName: "camera.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 40)
-                                .padding(.top, 30)
-                                .foregroundColor(Color.red)
-                            
-                            Text(sintoma)
-                                .font(.largeTitle)
-                                .bold()
-                                .padding(.top, 30)
-                        }
+                        Text(sintoma)
+                            .font(.largeTitle)
+                            .bold()
+                            .padding(.top, 30)
+                        
                         Text("Descripción: ")
                             .font(.system(size: 24))
                             .padding(.top, 22)
@@ -67,6 +62,7 @@ struct analysis: View {
             
             Spacer(minLength: 50)
         }
+        .background(Color("mainWhite"))
     }
 }
 
