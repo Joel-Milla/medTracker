@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 // struct DatosSalud : Codable, Identifiable {
-struct DatosSalud {
+struct DatosSalud : Hashable, Identifiable {
     var id = UUID()
     var telefono : String
     var nombre : String
