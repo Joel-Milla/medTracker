@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* DatosSalud.swift */; };
-		F82095A22AF590EE002F1C28 /* Registro.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82095A12AF590EE002F1C28 /* Registro.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegistroDatos1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */; };
 		FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* newSymptom.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
@@ -24,7 +23,6 @@
 
 /* Begin PBXFileReference section */
 		F820959F2AF58ACE002F1C28 /* DatosSalud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatosSalud.swift; sourceTree = "<group>"; };
-		F82095A12AF590EE002F1C28 /* Registro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registro.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroDatos1.swift; sourceTree = "<group>"; };
 		FB320FA62AEB2754005865F5 /* newSymptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSymptom.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,7 +72,6 @@
 				FB320FA62AEB2754005865F5 /* newSymptom.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */,
 				F820959F2AF58ACE002F1C28 /* DatosSalud.swift */,
-				F82095A12AF590EE002F1C28 /* Registro.swift */,
 				FBE3812B2ADF3C2E004737C9 /* analysis.swift */,
 				FBB5AD352AFC2829003918CA /* Registrar.swift */,
 				FBE381292ADF3BC9004737C9 /* profile.swift */,
@@ -174,7 +171,6 @@
 				FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Registrar.swift in Sources */,
-				F82095A22AF590EE002F1C28 /* Registro.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */,
