@@ -20,7 +20,7 @@ struct ContentView: View {
         TabView (selection: $currentTab) {
             analysis()
                 .tag(Tab.Analisis)
-            RegistroDatos1()
+            newSymptom()
                 .tag(Tab.Inicio)
             profile()
                 .tag(Tab.Perfil)
@@ -60,7 +60,7 @@ struct ContentView: View {
                            ZStack {
                                 if currentTab == tab {
                                     MaterialEffect(style: .light)
-                                        .background(Color(red: 199/255, green: 236/255, blue: 238/255))
+                                        .background(Color("mainBlue"))
                                         .clipShape(Circle())
                                         //.matchedGeometryEffect(id: "TAB", in: animation)
                                 }

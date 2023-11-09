@@ -15,6 +15,8 @@
 		FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FED02ADDEE9800F6273B /* ContentView.swift */; };
 		FB87FED32ADDEEA100F6273B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED22ADDEEA100F6273B /* Assets.xcassets */; };
 		FB87FED62ADDEEA100F6273B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */; };
+		FBB5AD362AFC2829003918CA /* Registrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB5AD352AFC2829003918CA /* Registrar.swift */; };
+		FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBC80D972AF5AE0700820A3A /* SegmentedPicker */; };
 		FBE3812A2ADF3BC9004737C9 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE381292ADF3BC9004737C9 /* profile.swift */; };
 		FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE3812B2ADF3C2E004737C9 /* analysis.swift */; };
 		FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE41E732AF6D464007B48E5 /* Usuario.swift */; };
@@ -30,6 +32,7 @@
 		FB87FED02ADDEE9800F6273B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FB87FED22ADDEEA100F6273B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FBB5AD352AFC2829003918CA /* Registrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registrar.swift; sourceTree = "<group>"; };
 		FBE381292ADF3BC9004737C9 /* profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
 		FBE3812B2ADF3C2E004737C9 /* analysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analysis.swift; sourceTree = "<group>"; };
 		FBE41E732AF6D464007B48E5 /* Usuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usuario.swift; sourceTree = "<group>"; };
@@ -40,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +76,7 @@
 				F820959F2AF58ACE002F1C28 /* DatosSalud.swift */,
 				F82095A12AF590EE002F1C28 /* Registro.swift */,
 				FBE3812B2ADF3C2E004737C9 /* analysis.swift */,
+				FBB5AD352AFC2829003918CA /* Registrar.swift */,
 				FBE381292ADF3BC9004737C9 /* profile.swift */,
 				FBE41E732AF6D464007B48E5 /* Usuario.swift */,
 				FB87FED22ADDEEA100F6273B /* Assets.xcassets */,
@@ -104,6 +109,9 @@
 			dependencies = (
 			);
 			name = medTracker;
+			packageProductDependencies = (
+				FBC80D972AF5AE0700820A3A /* SegmentedPicker */,
+			);
 			productName = medTracker;
 			productReference = FB87FECB2ADDEE9800F6273B /* medTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -132,6 +140,9 @@
 				Base,
 			);
 			mainGroup = FB87FEC22ADDEE9800F6273B;
+			packageReferences = (
+				FBC80D962AF5AE0700820A3A /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
+			);
 			productRefGroup = FB87FECC2ADDEE9800F6273B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -162,6 +173,7 @@
 				F839EFF12AE0C4AE00CB5327 /* RegistroDatos1.swift in Sources */,
 				FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */,
+				FBB5AD362AFC2829003918CA /* Registrar.swift in Sources */,
 				F82095A22AF590EE002F1C28 /* Registro.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */,
@@ -367,6 +379,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FBC80D962AF5AE0700820A3A /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/KazaiMazai/SwiftySegmentedPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FBC80D972AF5AE0700820A3A /* SegmentedPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBC80D962AF5AE0700820A3A /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */;
+			productName = SegmentedPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB87FEC32ADDEE9800F6273B /* Project object */;
 }
