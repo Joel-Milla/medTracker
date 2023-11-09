@@ -1,0 +1,40 @@
+# macOS files
+.DS_Store
+
+# Xcode per-user files
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.mode1v3
+!default.perspectivev3
+xcuserdata/
+
+# Xcode project and workspace files
+*.xcodeproj/
+!default.xcodeproj
+*.xcworkspace/
+!default.xcworkspace
+
+# Xcode build output
+DerivedData/
+build/
+*.o
+*.LinkFileList
+*.hmap
+
+# Xcode playground
+*.playground/
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.build/
+
+# Editor temporary files
+*~.nib
+*.swp
+*~
+*.dat
+*.dep
+

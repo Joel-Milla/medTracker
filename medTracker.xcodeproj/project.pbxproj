@@ -19,6 +19,7 @@
 		FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBC80D972AF5AE0700820A3A /* SegmentedPicker */; };
 		FBE3812A2ADF3BC9004737C9 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE381292ADF3BC9004737C9 /* profile.swift */; };
 		FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE3812B2ADF3C2E004737C9 /* analysis.swift */; };
+		FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE41E732AF6D464007B48E5 /* Usuario.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		FBB5AD352AFC2829003918CA /* Registrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registrar.swift; sourceTree = "<group>"; };
 		FBE381292ADF3BC9004737C9 /* profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
 		FBE3812B2ADF3C2E004737C9 /* analysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analysis.swift; sourceTree = "<group>"; };
+		FBE41E732AF6D464007B48E5 /* Usuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usuario.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				FBE3812B2ADF3C2E004737C9 /* analysis.swift */,
 				FBB5AD352AFC2829003918CA /* Registrar.swift */,
 				FBE381292ADF3BC9004737C9 /* profile.swift */,
+				FBE41E732AF6D464007B48E5 /* Usuario.swift */,
 				FB87FED22ADDEEA100F6273B /* Assets.xcassets */,
 				FB87FED42ADDEEA100F6273B /* Preview Content */,
 			);
@@ -172,6 +175,7 @@
 				F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Registrar.swift in Sources */,
 				F82095A22AF590EE002F1C28 /* Registro.swift in Sources */,
+				FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
