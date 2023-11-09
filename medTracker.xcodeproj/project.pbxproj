@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* DatosSalud.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegistroDatos1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */; };
+		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
+		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
 		FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* newSymptom.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
 		FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FED02ADDEE9800F6273B /* ContentView.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		F820959F2AF58ACE002F1C28 /* DatosSalud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatosSalud.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistroDatos1.swift; sourceTree = "<group>"; };
+		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
 		FB320FA62AEB2754005865F5 /* newSymptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSymptom.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = medTrackerApp.swift; sourceTree = "<group>"; };
@@ -71,6 +75,8 @@
 				FB87FED02ADDEE9800F6273B /* ContentView.swift */,
 				FB320FA62AEB2754005865F5 /* newSymptom.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */,
+				FB1A55512AFD772900F9A74A /* CustomSlider.swift */,
+				FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */,
 				F820959F2AF58ACE002F1C28 /* DatosSalud.swift */,
 				FBE3812B2ADF3C2E004737C9 /* analysis.swift */,
 				FBB5AD352AFC2829003918CA /* Registrar.swift */,
@@ -166,7 +172,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */,
 				FBE3812A2ADF3BC9004737C9 /* profile.swift in Sources */,
+				FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */,
 				F839EFF12AE0C4AE00CB5327 /* RegistroDatos1.swift in Sources */,
 				FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */,
