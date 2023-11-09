@@ -16,6 +16,11 @@
 		FB87FED62ADDEEA100F6273B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */; };
 		FBB5AD362AFC2829003918CA /* Registrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB5AD352AFC2829003918CA /* Registrar.swift */; };
 		FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBC80D972AF5AE0700820A3A /* SegmentedPicker */; };
+		FBD940AF2AFD73E800C3BD11 /* editarLista.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940AE2AFD73E800C3BD11 /* editarLista.swift */; };
+		FBD940B12AFD74D100C3BD11 /* Bienvenida.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940B02AFD74D100C3BD11 /* Bienvenida.swift */; };
+		FBD940B32AFD754A00C3BD11 /* registroUsuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940B22AFD754A00C3BD11 /* registroUsuario.swift */; };
+		FBD940B52AFD759D00C3BD11 /* inicioSesion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940B42AFD759D00C3BD11 /* inicioSesion.swift */; };
+		FBD940B72AFD763000C3BD11 /* pagInicio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940B62AFD763000C3BD11 /* pagInicio.swift */; };
 		FBE3812A2ADF3BC9004737C9 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE381292ADF3BC9004737C9 /* profile.swift */; };
 		FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE3812B2ADF3C2E004737C9 /* analysis.swift */; };
 		FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE41E732AF6D464007B48E5 /* Usuario.swift */; };
@@ -31,6 +36,11 @@
 		FB87FED22ADDEEA100F6273B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBB5AD352AFC2829003918CA /* Registrar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registrar.swift; sourceTree = "<group>"; };
+		FBD940AE2AFD73E800C3BD11 /* editarLista.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editarLista.swift; sourceTree = "<group>"; };
+		FBD940B02AFD74D100C3BD11 /* Bienvenida.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bienvenida.swift; sourceTree = "<group>"; };
+		FBD940B22AFD754A00C3BD11 /* registroUsuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = registroUsuario.swift; sourceTree = "<group>"; };
+		FBD940B42AFD759D00C3BD11 /* inicioSesion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inicioSesion.swift; sourceTree = "<group>"; };
+		FBD940B62AFD763000C3BD11 /* pagInicio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pagInicio.swift; sourceTree = "<group>"; };
 		FBE381292ADF3BC9004737C9 /* profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
 		FBE3812B2ADF3C2E004737C9 /* analysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = analysis.swift; sourceTree = "<group>"; };
 		FBE41E732AF6D464007B48E5 /* Usuario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usuario.swift; sourceTree = "<group>"; };
@@ -69,10 +79,15 @@
 			children = (
 				FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */,
 				FB87FED02ADDEE9800F6273B /* ContentView.swift */,
+				FBD940B62AFD763000C3BD11 /* pagInicio.swift */,
+				FBD940AE2AFD73E800C3BD11 /* editarLista.swift */,
 				FB320FA62AEB2754005865F5 /* newSymptom.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegistroDatos1.swift */,
 				F820959F2AF58ACE002F1C28 /* DatosSalud.swift */,
 				FBE3812B2ADF3C2E004737C9 /* analysis.swift */,
+				FBD940B02AFD74D100C3BD11 /* Bienvenida.swift */,
+				FBD940B22AFD754A00C3BD11 /* registroUsuario.swift */,
+				FBD940B42AFD759D00C3BD11 /* inicioSesion.swift */,
 				FBB5AD352AFC2829003918CA /* Registrar.swift */,
 				FBE381292ADF3BC9004737C9 /* profile.swift */,
 				FBE41E732AF6D464007B48E5 /* Usuario.swift */,
@@ -169,11 +184,16 @@
 				FBE3812A2ADF3BC9004737C9 /* profile.swift in Sources */,
 				F839EFF12AE0C4AE00CB5327 /* RegistroDatos1.swift in Sources */,
 				FBE3812C2ADF3C2E004737C9 /* analysis.swift in Sources */,
+				FBD940B32AFD754A00C3BD11 /* registroUsuario.swift in Sources */,
+				FBD940B52AFD759D00C3BD11 /* inicioSesion.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* DatosSalud.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Registrar.swift in Sources */,
+				FBD940B72AFD763000C3BD11 /* pagInicio.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* Usuario.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* ContentView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* newSymptom.swift in Sources */,
+				FBD940B12AFD74D100C3BD11 /* Bienvenida.swift in Sources */,
+				FBD940AF2AFD73E800C3BD11 /* editarLista.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

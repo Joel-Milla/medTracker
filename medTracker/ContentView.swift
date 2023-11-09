@@ -20,7 +20,7 @@ struct ContentView: View {
         TabView (selection: $currentTab) {
             analysis()
                 .tag(Tab.Analisis)
-            newSymptom()
+            pagInicio()
                 .tag(Tab.Inicio)
             profile()
                 .tag(Tab.Perfil)
