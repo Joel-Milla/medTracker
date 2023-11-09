@@ -1,5 +1,5 @@
 //
-//  inicioSesion.swift
+//  registroUsuario.swift
 //  medTracker
 //
 //  Created by Alumno on 09/11/23.
@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct inicioSesion: View {
+struct RegisterView: View {
+    @State var nombre = ""
     @State var telefono = 0
     @State var contrasena = ""
     
@@ -20,6 +21,10 @@ struct inicioSesion: View {
                 .font(.largeTitle)
             Form{
                 Section{
+                    HStack{
+                        Text("Nombre:")
+                        TextField("", text: $nombre)
+                    }
                     HStack{
                         Text("Telefono:")
                         TextField("", value: $telefono, format: .number)
@@ -37,8 +42,8 @@ struct inicioSesion: View {
     }
 }
 
-struct inicioSesion_Previews: PreviewProvider {
+struct registroUsuario_Previews: PreviewProvider {
     static var previews: some View {
-        inicioSesion()
+        RegisterView()
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Usuario : Codable {
+struct User : Codable {
     var telefono : String // Unique identifier
     var nombre : String
     var apellidoPaterno : String

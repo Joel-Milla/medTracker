@@ -8,12 +8,12 @@
 import SwiftUI
 import Charts
 
-struct analysis: View {
+struct AnalysisView: View {
     @State private var descripcion = "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad."
     
-    var sintomas = [DatosSalud(telefono: "1", nombre: "a", description: "a", unidades: 10.0, activo: true, color: Color.red), DatosSalud(telefono: "1", nombre: "b", description: "b", unidades: 10.0, activo: true, color: Color.blue), DatosSalud(telefono: "1", nombre: "c", description: "c", unidades: 10.0, activo: true, color: Color.yellow)]
+    var sintomas = [Symptom(telefono: "1", nombre: "a", description: "a", unidades: 10.0, activo: true, color: Color.red), Symptom(telefono: "1", nombre: "b", description: "b", unidades: 10.0, activo: true, color: Color.blue), Symptom(telefono: "1", nombre: "c", description: "c", unidades: 10.0, activo: true, color: Color.yellow)]
     
-    var registros = [Registrar(idSituacion: 0, telefono: "1", fecha: Date.now, cantidad: 3, notas: "Nota 1"), Registrar(idSituacion: 1, telefono: "1", fecha: Date.now.addingTimeInterval(86400), cantidad: 5, notas: "Nota 2"), Registrar(idSituacion: 2, telefono: "1", fecha: Date.now.addingTimeInterval(86400*2), cantidad: 10, notas: "Nota 3"), Registrar(idSituacion: 3, telefono: "1", fecha: Date.now.addingTimeInterval(86400*3), cantidad: 3, notas: "Nota 4"), Registrar(idSituacion: 4, telefono: "1", fecha: Date.now.addingTimeInterval(86400*4), cantidad: 5, notas: "Nota 5")]
+    var registros = [Register(idSituacion: 0, telefono: "1", fecha: Date.now, cantidad: 3, notas: "Nota 1"), Register(idSituacion: 1, telefono: "1", fecha: Date.now.addingTimeInterval(86400), cantidad: 5, notas: "Nota 2"), Register(idSituacion: 2, telefono: "1", fecha: Date.now.addingTimeInterval(86400*2), cantidad: 10, notas: "Nota 3"), Register(idSituacion: 3, telefono: "1", fecha: Date.now.addingTimeInterval(86400*3), cantidad: 3, notas: "Nota 4"), Register(idSituacion: 4, telefono: "1", fecha: Date.now.addingTimeInterval(86400*4), cantidad: 5, notas: "Nota 5")]
     
     var body: some View {
         VStack {
@@ -81,6 +81,6 @@ struct analysis: View {
 
 struct analysis_Previews: PreviewProvider {
     static var previews: some View {
-        analysis()
+        AnalysisView()
     }
 }

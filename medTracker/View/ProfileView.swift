@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct profile: View {
+struct ProfileView: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
     
-    @State private var user: Usuario = Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
-    @State private var draftUser: Usuario = Usuario(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
+    @State private var user: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
+    @State private var draftUser: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
     @State private var sexo : String = ""
     @State private var estatura : String = ""
     
@@ -139,7 +139,7 @@ struct profile: View {
     
     func loadUser() {
         if let savedUserData = UserDefaults.standard.object(forKey: "savedUser") as? Data {
-            if let loadedUser = try? JSONDecoder().decode(Usuario.self, from: savedUserData) {
+            if let loadedUser = try? JSONDecoder().decode(User.self, from: savedUserData) {
                 user = loadedUser
             }
         }
@@ -150,6 +150,6 @@ struct profile: View {
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        profile()
+        ProfileView()
     }
 }

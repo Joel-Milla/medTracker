@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct editarLista: View {
+struct EditSymptomView: View {
     @State var sintomaOn : Bool = true
-    var listaDatos = [DatosSalud(telefono: "1", nombre: "a", description: "a", unidades: 10.0, activo: true, color: Color.red), DatosSalud(telefono: "1", nombre: "b", description: "b", unidades: 10.0, activo: true, color: Color.blue), DatosSalud(telefono: "1", nombre: "c", description: "c", unidades: 10.0, activo: true, color: Color.yellow)]
+    var listaDatos = [Symptom(telefono: "1", nombre: "a", description: "a", unidades: 10.0, activo: true, color: Color.red), Symptom(telefono: "1", nombre: "b", description: "b", unidades: 10.0, activo: true, color: Color.blue), Symptom(telefono: "1", nombre: "c", description: "c", unidades: 10.0, activo: true, color: Color.yellow)]
     
     var body: some View {
         NavigationView {
@@ -40,6 +40,6 @@ struct editarLista: View {
 
 struct editarLista_Previews: PreviewProvider {
     static var previews: some View {
-        editarLista()
+        EditSymptomView()
     }
 }

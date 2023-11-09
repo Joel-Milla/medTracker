@@ -11,7 +11,7 @@ import SwiftUI
 //usar contentview??
 //cambiar color de contenttitle?
 
-struct RegistroDatos1: View {
+struct RegisterSymptomView: View {
     @State var metricsString = ""
     @State private var date = Date.now
     @State var sliderOrTF : Bool = true
@@ -102,7 +102,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegistroDatos1()
+        RegisterSymptomView()
     }
 }
 

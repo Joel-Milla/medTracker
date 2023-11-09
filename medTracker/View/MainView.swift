@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     
     @State var currentTab: Tab = .Inicio
     
@@ -18,11 +18,11 @@ struct ContentView: View {
     @Namespace var animation
     var body: some View {
         TabView (selection: $currentTab) {
-            analysis()
+            AnalysisView()
                 .tag(Tab.Analisis)
-            pagInicio()
+            HomeView()
                 .tag(Tab.Inicio)
-            profile()
+            ProfileView()
                 .tag(Tab.Perfil)
         }
         .overlay(
@@ -83,7 +83,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MainView()
     }
 }
 

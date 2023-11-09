@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Registrar : Codable, Hashable {
+struct Register : Codable, Hashable {
     var idSituacion : Int
     var telefono : String
     var fecha : Date

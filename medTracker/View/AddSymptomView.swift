@@ -8,7 +8,7 @@
 import SwiftUI
 import SegmentedPicker
 
-struct newSymptom: View {
+struct AddSymptomView: View {
     @State var nombreSintoma = ""
     @State var descripcion = ""
     @State var tipo = ["#", "-*-"]
@@ -80,6 +80,6 @@ struct newSymptom: View {
 
 struct newSymptom_Previews: PreviewProvider {
     static var previews: some View {
-        newSymptom()
+        AddSymptomView()
     }
 }

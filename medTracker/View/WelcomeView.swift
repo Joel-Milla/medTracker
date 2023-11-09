@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Bienvenida: View {
+struct WelcomeView: View {
     var body: some View {
         ZStack {
             Color(red: 108/255, green: 171/255, blue: 219/255)
@@ -34,6 +34,6 @@ struct Bienvenida: View {
 
 struct Bienvenida_Previews: PreviewProvider {
     static var previews: some View {
-        Bienvenida()
+        WelcomeView()
     }
 }
