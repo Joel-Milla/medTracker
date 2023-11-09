@@ -38,9 +38,9 @@ struct analysis: View {
                             .padding(.trailing, 20)
                             .disabled(true)
                         
-                        Text("Promedio Semanal: ")
+                        Text("Promedio última semana: ")
                             .font(.system(size: 24))
-                            .padding(.top, 100)
+                            .padding(.top, 30)
                         
                         Chart {
                             ForEach(registros, id:\.self) { registro in
@@ -57,14 +57,13 @@ struct analysis: View {
                         .padding()
                         .shadow(radius: /*@START_MENU_TOKEN@*/6/*@END_MENU_TOKEN@*/)
                         .chartXAxisLabel("DIA", alignment: .topTrailing, spacing: 10)
-                        .chartYAxisLabel("PRECIOS", spacing: 10)
+                        .chartYAxisLabel("CANTIDAD", spacing: 10)
                         .foregroundColor(.black)
                         .chartPlotStyle { plotContent in
                             plotContent
                                 .background(.gray.opacity(0.1))
                                 .border(Color.black, width: 2)
                         }
-                        //Spacer()
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     .padding(.leading, 20)
