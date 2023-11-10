@@ -18,7 +18,6 @@ struct HomeView: View {
                     .font(.largeTitle)
                 Button {
                     muestraEditarSintomas = true
-                    //este botón te va a llevar a la vista de toggle de síntomas
                 } label: {
                     VStack {
                         Image(systemName: "pencil")
@@ -26,7 +25,7 @@ struct HomeView: View {
                         Text("Editar")
                     }
                 }
-                .sheet(isPresented: $muestraEditarSintomas) {
+                .fullScreenCover(isPresented: $muestraEditarSintomas) {
                     EditSymptomView()
                 }
                 .padding()
