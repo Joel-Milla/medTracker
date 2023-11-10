@@ -12,6 +12,7 @@ import SwiftUI
 //cambiar color de contenttitle?
 
 struct RegisterSymptomView: View {
+    @Environment(\.dismiss) var dismiss
     @State var metricsString = ""
     @State private var date = Date.now
     @State var sliderOrTF : Bool = true
@@ -44,12 +45,22 @@ struct RegisterSymptomView: View {
                                 .bold()
                             CustomSlider(valueFinal: $metric)
                                 .padding(.horizontal, 5)
-                                .frame(height: geometry.size.height * 0.06)                        }
+                                .frame(height: geometry.size.height * 0.06)
+                                .padding(.vertical)
+                        }
                         else{
                             Text("Ingresa el valor")
-                            TextField("Valor", text: $metricsString)
-                                .textFieldStyle(OvalTextFieldStyle())
+                            HStack {
+                                Image(systemName: "heart.text.square.fill")
+                                    .foregroundColor(Color("blueGreen"))
+                                TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.white))
+                                        .padding()
+                                    .textFieldStyle(OvalTextFieldStyle())
+                                .foregroundStyle(.white)
+                            }
                         }
+                            
+                        //Spacer()
                         TextEditor(text: self.$notes) // usar geomtery reader
                             .foregroundColor(self.notes == notes ? .gray : .primary)
                             .onTapGesture {
@@ -62,11 +73,15 @@ struct RegisterSymptomView: View {
                             .shadow(color: .gray, radius: 2)
                             .multilineTextAlignment(.center)
                             .lineLimit(5)
-                            .frame(height: geometry.size.height *  0.4)
+                            .frame(height: geometry.size.height *  0.30)
                         Button{
+                            if(self.notes == "Agrega alguna nota..."){
+                                notes = ""
+                            }
                             print("Done!")
+                            dismiss()
                         }label:{
-                            Label("Añadir información", systemImage: "plus.circle")
+                            Label("Añadir información", systemImage: "cross.circle.fill")
                         }
                         .buttonStyle(Button1MedTracker())
                         .frame(height: geometry.size.height *  0.2)
@@ -80,7 +95,7 @@ struct RegisterSymptomView: View {
                 }
                 .toolbar{
                     Button{
-                        
+                        dismiss()
                     }label:{
                         Text("Volver")
                     }
@@ -93,9 +108,10 @@ struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.white, Color("blueGreen").opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-            .cornerRadius(20)
-            .shadow(color: .gray, radius: 10)
+            .background(Color("blueGreen").opacity(0.5))
+        /*(LinearGradient(gradient: Gradient(colors: [Color.white, Color("blueGreen").opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))*/
+            .cornerRadius(10)
+            .frame(width: 150)
     }
 }
 

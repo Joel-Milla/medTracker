@@ -26,76 +26,104 @@ struct CustomSlider: View {
                     Circle()
                         .foregroundStyle(.white)
                         .frame (width: cursorSize, height: cursorSize)
-                        .offset (x: self.value)
+                        .offset (x: self.value + 3)
                         .gesture (
                             DragGesture (minimumDistance: 0)
                                 .onChanged { v in
                                     if (abs(v.translation.width) < 0.1) {
                                         self.lastCoordinateValue = self.value
                                     }
-                                    if v.translation.width > 0 {
+                                    if v.translation.width > 0  && valueFinal <= 96{
                                         self.value = min (maxValue, self.lastCoordinateValue + v.translation.width)
                                     } else{
                                         self.value = max (minValue, self.lastCoordinateValue + v.translation.width)
-                                        
+                                    }
+                                    if(valueFinal == 96){
+                                        self.value = value
+                                        valueFinal = 100;
                                     }
                                 }
                         )
-                    Image("happy_green")
+                    Image(getImage())
                         .resizable()
                         .scaledToFit()
-                        .offset(x:self.value - 50)
+                        .aspectRatio(contentMode: .fit)
+                        .offset(x:self.value - 46)
                         .gesture (
                             DragGesture (minimumDistance: 0)
                                 .onChanged { v in
                                     if (abs(v.translation.width) < 0.1) {
                                         self.lastCoordinateValue = self.value
                                     }
-                                    if v.translation.width > 0 {
+                                    if (v.translation.width > 0 && self.value <= 306) {
                                         self.value = min (maxValue, self.lastCoordinateValue + v.translation.width)
                                         valueFinal = getValue(maxValue: maxValue)
                                     } else{
                                         self.value = max (minValue, self.lastCoordinateValue + v.translation.width)
                                         valueFinal = getValue(maxValue: maxValue)
                                     }
+                                    if(self.value >= 306){
+                                        self.value = 306
+                                        valueFinal = 100;
+                                    }
                                 }
                         )
-                    Text("\(valueFinal,  specifier: "%.2F")")
+//                    Text("\(valueFinal,  specifier: "%.2F")")
+//                    Text("\(value,  specifier: "%.2F")")
                     Spacer()
                 }
             }
         }
     }
+    
     func getColor()->Color{
-        if(valueFinal < 30){
-            return Color.green
+        if(valueFinal < 20){
+            return Color("green_MT")
         }
-        else if(valueFinal >= 30 && valueFinal < 70){
-            return Color.yellow
+        else if(valueFinal >= 20 && valueFinal < 80){
+            if(valueFinal < 40){
+                return Color("yellowgreen_MT")
+            }
+            else if(valueFinal >= 40 && valueFinal < 60){
+                return Color("yellow_MT")
+            }
+            else if(valueFinal >= 60){
+                return Color("orange_MT")
+            }
         }
-        else if(valueFinal >= 70){
-            return Color.red
+        else if(valueFinal >= 80){
+            return Color("red_MT")
         }
         else{
             return Color("mainBlue")
         }
+        return Color(.white)
     }
     func getValue(maxValue: Double)->Double{
        return(100 * value) / maxValue
     }
     func getImage()->String{
-        if(valueFinal < 30){
-            return ""
+        if(valueFinal < 20){
+            return "happier_face"
         }
-        else if(valueFinal >= 30 && valueFinal < 70){
-            return ""
+        else if(valueFinal >= 20 && valueFinal < 80){
+            if(valueFinal < 40){
+                return "va_test"
+            }
+            else if(valueFinal >= 40 && valueFinal < 60){
+                return "normal_face"
+            }
+            else if(valueFinal >= 60){
+                return "sad_face"
+            }
         }
-        else if(valueFinal >= 70){
-            return ""
+        else if(valueFinal >= 80){
+            return "sadder_face"
         }
         else{
             return ""
         }
+        return ""
     }
 
 }
