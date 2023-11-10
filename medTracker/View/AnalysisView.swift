@@ -9,9 +9,7 @@ import SwiftUI
 import Charts
 
 struct AnalysisView: View {
-    @State private var descripcion = "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad."
-    
-    var sintomas = [Symptom(telefono: "1", nombre: "a", description: "a", unidades: 10.0, activo: true, color: Color.red), Symptom(telefono: "1", nombre: "b", description: "b", unidades: 10.0, activo: true, color: Color.blue), Symptom(telefono: "1", nombre: "c", description: "c", unidades: 10.0, activo: true, color: Color.yellow)]
+    var sintomas = [Symptom(telefono: "1", nombre: "a", description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", unidades: 10.0, activo: true, color: Color.red), Symptom(telefono: "1", nombre: "b", description: "Este es un ejemplo de descripción corto.", unidades: 10.0, activo: true, color: Color.blue), Symptom(telefono: "1", nombre: "c", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", unidades: 10.0, activo: true, color: Color.yellow)]
     
     var registros = [Register(idSituacion: 0, telefono: "1", fecha: Date.now, cantidad: 3, notas: "Nota 1"), Register(idSituacion: 1, telefono: "1", fecha: Date.now.addingTimeInterval(86400), cantidad: 5, notas: "Nota 2"), Register(idSituacion: 2, telefono: "1", fecha: Date.now.addingTimeInterval(86400*2), cantidad: 10, notas: "Nota 3"), Register(idSituacion: 3, telefono: "1", fecha: Date.now.addingTimeInterval(86400*3), cantidad: 3, notas: "Nota 4"), Register(idSituacion: 4, telefono: "1", fecha: Date.now.addingTimeInterval(86400*4), cantidad: 5, notas: "Nota 5")]
     
@@ -29,6 +27,8 @@ struct AnalysisView: View {
                         Text("Descripción: ")
                             .font(.system(size: 24))
                             .padding(.top, 22)
+                        
+                        @State var descripcion = sintoma.description
                         
                         TextField("", text: $descripcion, axis : .vertical)
                             .textFieldStyle(.roundedBorder)
