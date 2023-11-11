@@ -9,17 +9,32 @@ import SwiftUI
 import Charts
 
 struct AnalysisView: View {
-    var sintomas = [Symptom(telefono: "1", nombre: "a", description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", unidades: 10.0, activo: true, color: Color.red), Symptom(telefono: "1", nombre: "b", description: "Este es un ejemplo de descripción corto.", unidades: 10.0, activo: true, color: Color.blue), Symptom(telefono: "1", nombre: "c", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", unidades: 10.0, activo: true, color: Color.yellow)]
+    @State var registers = [
+        Register(idSymptom: 1, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
+        Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400), cantidad: 80.5, notas: "Esto es una nota."),
+        Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*2), cantidad: 80.2, notas: "Esto es una nota."),
+        Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*3), cantidad: 79.6, notas: "Esto es una nota."),
+        
+        Register(idSymptom: 3, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
+        Register(idSymptom: 3, fecha: Date.now.addingTimeInterval(86400), cantidad: 70, notas: "Esto es una nota."),
+        Register(idSymptom: 3, fecha: Date.now.addingTimeInterval(86400*2), cantidad: 30, notas: "Esto es una nota."),
+        Register(idSymptom: 3, fecha: Date.now.addingTimeInterval(86400*3), cantidad: 40, notas: "Esto es una nota."),
+    ]
     
-    var registros = [Register(idSituacion: 0, telefono: "1", fecha: Date.now, cantidad: 3, notas: "Nota 1"), Register(idSituacion: 1, telefono: "1", fecha: Date.now.addingTimeInterval(86400), cantidad: 5, notas: "Nota 2"), Register(idSituacion: 2, telefono: "1", fecha: Date.now.addingTimeInterval(86400*2), cantidad: 10, notas: "Nota 3"), Register(idSituacion: 3, telefono: "1", fecha: Date.now.addingTimeInterval(86400*3), cantidad: 3, notas: "Nota 4"), Register(idSituacion: 4, telefono: "1", fecha: Date.now.addingTimeInterval(86400*4), cantidad: 5, notas: "Nota 5")]
+    @State var symptoms = [
+        Symptom(id: 1, nombre: "Peso", description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", cuantitativo: true, unidades: "kg", activo: true, color: ""),
+        Symptom(id: 2, nombre: "Cansancio", description: "Este es un ejemplo de descripción corto.", cuantitativo: false, unidades: "", activo: false, color: ""),
+        Symptom(id: 3, nombre: "Insomnio", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", cuantitativo: true, unidades: "", activo: false, color: ""),
+        Symptom(id: 4, nombre: "Estado cardíaco", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "")
+    ]
     
     var body: some View {
         VStack {
             TabView {
-                ForEach(sintomas, id: \.self) { sintoma in
+                ForEach(symptoms, id: \.self) { symptom in
                     VStack(alignment: .leading) {
-                        Text(sintoma.nombre)
-                            .foregroundColor(sintoma.color)
+                        Text(symptom.nombre)
+                            //.foregroundColor(symptom.color)
                             .font(.largeTitle)
                             .bold()
                             .padding(.top, 30)
@@ -28,7 +43,7 @@ struct AnalysisView: View {
                             .font(.system(size: 24))
                             .padding(.top, 22)
                         
-                        @State var descripcion = sintoma.description
+                        @State var descripcion = symptom.description
                         
                         TextField("", text: $descripcion, axis : .vertical)
                             .textFieldStyle(.roundedBorder)
@@ -43,17 +58,17 @@ struct AnalysisView: View {
                             .padding(.top, 30)
                         
                         Chart {
-                            ForEach(registros, id:\.self) { registro in
-                                BarMark(x: .value("DIA", registro.fecha.formatted(.dateTime.day().month())),
-                                        y: .value("CANTIDAD", registro.cantidad))
+                            ForEach(registers, id:\.self) { register in
+                                BarMark(x: .value("DIA", register.fecha.formatted(.dateTime.day().month())),
+                                        y: .value("CANTIDAD", register.cantidad))
                                     .cornerRadius(10)
                                     .annotation{
-                                        Text(String(format: "%.0f", registro.cantidad))
+                                        Text(String(format: "%.0f", register.cantidad))
                                     }
                             }
                         }
                         .frame(height: 300)
-                        .foregroundStyle(sintoma.color)
+                        //.foregroundStyle(symptom.color)
                         .padding()
                         .shadow(radius: /*@START_MENU_TOKEN@*/6/*@END_MENU_TOKEN@*/)
                         .chartXAxisLabel("DIA", alignment: .topTrailing, spacing: 10)
@@ -82,5 +97,7 @@ struct AnalysisView: View {
 struct analysis_Previews: PreviewProvider {
     static var previews: some View {
         AnalysisView()
+            .environmentObject(SymptomList())
+            .environmentObject(RegisterList())
     }
 }

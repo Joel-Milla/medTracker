@@ -14,7 +14,6 @@
 		FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* AddSymptomView.swift */; };
 		FB86F0712AFEC4160051C6A6 /* SymptomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0702AFEC4160051C6A6 /* SymptomList.swift */; };
 		FB86F0732AFEC42A0051C6A6 /* RegisterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */; };
-		FB86F0752AFEC4370051C6A6 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0742AFEC4370051C6A6 /* UserList.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
 		FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FED02ADDEE9800F6273B /* MainView.swift */; };
 		FB87FED32ADDEEA100F6273B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED22ADDEEA100F6273B /* Assets.xcassets */; };
@@ -39,7 +38,6 @@
 		FB320FA62AEB2754005865F5 /* AddSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymptomView.swift; sourceTree = "<group>"; };
 		FB86F0702AFEC4160051C6A6 /* SymptomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomList.swift; sourceTree = "<group>"; };
 		FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterList.swift; sourceTree = "<group>"; };
-		FB86F0742AFEC4370051C6A6 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = medTrackerApp.swift; sourceTree = "<group>"; };
 		FB87FED02ADDEE9800F6273B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -95,14 +93,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		FB86F06F2AFEC3DD0051C6A6 /* Lists */ = {
+		FB86F06F2AFEC3DD0051C6A6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				FB86F0702AFEC4160051C6A6 /* SymptomList.swift */,
 				FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */,
-				FB86F0742AFEC4370051C6A6 /* UserList.swift */,
 			);
-			path = Lists;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		FB87FEC22ADDEE9800F6273B = {
@@ -126,7 +123,7 @@
 			children = (
 				FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */,
 				FB1A55552AFD793C00F9A74A /* View */,
-				FB86F06F2AFEC3DD0051C6A6 /* Lists */,
+				FB86F06F2AFEC3DD0051C6A6 /* ViewModel */,
 				FB1A55572AFD795200F9A74A /* Model */,
 				FB9BBE092AFD7C0F0045AACE /* Elements */,
 				FB87FED22ADDEEA100F6273B /* Assets.xcassets */,
@@ -245,7 +242,6 @@
 				FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */,
 				FBD940B12AFD74D100C3BD11 /* WelcomeView.swift in Sources */,
 				FBD940AF2AFD73E800C3BD11 /* EditSymptomView.swift in Sources */,
-				FB86F0752AFEC4370051C6A6 /* UserList.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
