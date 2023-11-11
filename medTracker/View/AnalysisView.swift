@@ -15,17 +15,21 @@ struct AnalysisView: View {
         Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*2), cantidad: 80.2, notas: "Esto es una nota."),
         Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*3), cantidad: 79.6, notas: "Esto es una nota."),
         
+        Register(idSymptom: 2, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
+        
         Register(idSymptom: 3, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
         Register(idSymptom: 3, fecha: Date.now.addingTimeInterval(86400), cantidad: 70, notas: "Esto es una nota."),
         Register(idSymptom: 3, fecha: Date.now.addingTimeInterval(86400*2), cantidad: 30, notas: "Esto es una nota."),
         Register(idSymptom: 3, fecha: Date.now.addingTimeInterval(86400*3), cantidad: 40, notas: "Esto es una nota."),
+        
+        Register(idSymptom: 4, fecha: Date.now, cantidad: 80, notas: "Esto es una nota.")
     ]
     
     @State var symptoms = [
-        Symptom(id: 1, nombre: "Peso", description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", cuantitativo: true, unidades: "kg", activo: true, color: ""),
-        Symptom(id: 2, nombre: "Cansancio", description: "Este es un ejemplo de descripción corto.", cuantitativo: false, unidades: "", activo: false, color: ""),
-        Symptom(id: 3, nombre: "Insomnio", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", cuantitativo: true, unidades: "", activo: false, color: ""),
-        Symptom(id: 4, nombre: "Estado cardíaco", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "")
+        Symptom(id: 1, nombre: "Peso", description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", cuantitativo: true, unidades: "kg", activo: true, color: "#007AF"),
+        Symptom(id: 2, nombre: "Cansancio", description: "Este es un ejemplo de descripción corto.", cuantitativo: false, unidades: "", activo: false, color: "#AF43EB"),
+        Symptom(id: 3, nombre: "Insomnio", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", cuantitativo: true, unidades: "", activo: false, color: "#D03A20"),
+        Symptom(id: 4, nombre: "Estado cardíaco", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "#86B953")
     ]
     
     var body: some View {
@@ -34,7 +38,7 @@ struct AnalysisView: View {
                 ForEach(symptoms, id: \.self) { symptom in
                     VStack(alignment: .leading) {
                         Text(symptom.nombre)
-                            //.foregroundColor(symptom.color)
+                            .foregroundColor(Color(hex: symptom.color))
                             .font(.largeTitle)
                             .bold()
                             .padding(.top, 30)
@@ -68,7 +72,7 @@ struct AnalysisView: View {
                             }
                         }
                         .frame(height: 300)
-                        //.foregroundStyle(symptom.color)
+                        .foregroundStyle(Color(hex: symptom.color))
                         .padding()
                         .shadow(radius: /*@START_MENU_TOKEN@*/6/*@END_MENU_TOKEN@*/)
                         .chartXAxisLabel("DIA", alignment: .topTrailing, spacing: 10)

@@ -18,6 +18,7 @@
 		FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FED02ADDEE9800F6273B /* MainView.swift */; };
 		FB87FED32ADDEEA100F6273B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED22ADDEEA100F6273B /* Assets.xcassets */; };
 		FB87FED62ADDEEA100F6273B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */; };
+		FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */; };
 		FBB5AD362AFC2829003918CA /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB5AD352AFC2829003918CA /* Register.swift */; };
 		FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBC80D972AF5AE0700820A3A /* SegmentedPicker */; };
 		FBD940AF2AFD73E800C3BD11 /* EditSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */; };
@@ -43,6 +44,7 @@
 		FB87FED02ADDEE9800F6273B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FB87FED22ADDEEA100F6273B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexToColor.swift; sourceTree = "<group>"; };
 		FBB5AD352AFC2829003918CA /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSymptomView.swift; sourceTree = "<group>"; };
 		FBD940B02AFD74D100C3BD11 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				FB1A55512AFD772900F9A74A /* CustomSlider.swift */,
 				FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */,
+				FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
+				FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */,
 				FBD940B12AFD74D100C3BD11 /* WelcomeView.swift in Sources */,

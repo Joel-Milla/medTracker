@@ -11,8 +11,8 @@ import SegmentedPicker
 struct AddSymptomView: View {
     @State var nombreSintoma = ""
     @State var descripcion = ""
-    @State var tipo = ["#", "-*-"]
     @State private var colorSymptom = Color.blue
+    @State private var colorString = ""
     
     @State var selectedIndex: Int?
     
@@ -31,7 +31,7 @@ struct AddSymptomView: View {
                 }
                 .padding(.top, 20)
                 
-                Text("Descripción: ")
+                Text("Descripción: \(colorString)")
                     .font(.system(size: 24))
                     .padding(.top, 22)
                 
@@ -75,6 +75,38 @@ struct AddSymptomView: View {
             .background(Color("mainWhite"))
             .navigationTitle("Nuevo síntoma")
         }
+        .onAppear {
+            // Initialize hexString with the initial color
+            colorString = hexString(from: colorSymptom)
+        }
+        .onChange(of: colorSymptom) { newColor in
+            // Update hexString when the color changes
+            colorString = hexString(from: newColor)
+        }
+    }
+    
+    func hexString(from color: Color) -> String {
+            // Convert SwiftUI Color to UIColor
+            let uiColor = UIColor(color)
+
+            // Get the RGBA components
+            guard let components = uiColor.cgColor.components else {
+                return ""
+            }
+
+            let red = Float(components[0])
+            let green = Float(components[1])
+            let blue = Float(components[2])
+
+            // Convert the components to HEX
+            let hexString = String(
+                format: "#%02lX%02lX%02lX",
+                lroundf(red * 255),
+                lroundf(green * 255),
+                lroundf(blue * 255)
+            )
+
+            return hexString
     }
 }
 
