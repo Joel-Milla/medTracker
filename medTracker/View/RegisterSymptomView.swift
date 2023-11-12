@@ -53,11 +53,21 @@ struct RegisterSymptomView: View {
                             HStack {
                                 Image(systemName: "heart.text.square.fill")
                                     .foregroundColor(Color("blueGreen"))
+                                    .font(.title2)
                                 TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.white))
                                         .padding()
                                     .textFieldStyle(OvalTextFieldStyle())
                                 .foregroundStyle(.white)
+                                .multilineTextAlignment(.center)
+                                .keyboardType(.numberPad)
                             }
+                            .padding(.horizontal)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.gray, lineWidth: 1)
+                                .background(Color(""))
+                            )
+
                         }
                             
                         //Spacer()

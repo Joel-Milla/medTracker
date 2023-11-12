@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* Symptom.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegisterSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */; };
+		F8D6CC842AFEE2A700736DFB /* TextFieldMedTracker1.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */; };
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
 		FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* AddSymptomView.swift */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		F820959F2AF58ACE002F1C28 /* Symptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symptom.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSymptomView.swift; sourceTree = "<group>"; };
+		F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMedTracker1.swift; sourceTree = "<group>"; };
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
 		FB320FA62AEB2754005865F5 /* AddSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymptomView.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			children = (
 				FB1A55512AFD772900F9A74A /* CustomSlider.swift */,
 				FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */,
+				F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
+				F8D6CC842AFEE2A700736DFB /* TextFieldMedTracker1.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */,
