@@ -8,21 +8,20 @@
 import Foundation
 import SwiftUI
 
-// struct DatosSalud : Codable, Identifiable {
-struct Symptom : Hashable, Identifiable {
-    var id = UUID()
-    var telefono : String
+struct Symptom : Codable, Hashable {
+    var id : Int
     var nombre : String
     var description : String
-    var unidades  : Float
+    var cuantitativo : Bool // True = Cuantitativo, False = Cualitativo
+    var unidades  : String
     var activo : Bool
-    var color : Color
+    var color : String
     
-    init(id: UUID = UUID(), telefono: String, nombre: String, description: String, unidades: Float, activo: Bool, color: Color) {
+    init(id: Int, nombre: String, description: String, cuantitativo: Bool, unidades: String, activo: Bool, color: String) {
         self.id = id
-        self.telefono = telefono
         self.nombre = nombre
         self.description = description
+        self.cuantitativo = cuantitativo
         self.unidades = unidades
         self.activo = activo
         self.color = color

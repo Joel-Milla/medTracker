@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    
     var body: some View {
         ZStack {
             Color(red: 108/255, green: 171/255, blue: 219/255)

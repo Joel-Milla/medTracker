@@ -15,4 +15,14 @@ struct User : Codable {
     var sexo : String
     var antecedentes : String
     var estatura : Double
+    
+    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, sexo: String, antecedentes: String, estatura: Double) {
+        self.telefono = telefono
+        self.nombre = nombre
+        self.apellidoPaterno = apellidoPaterno
+        self.apellidoMaterno = apellidoMaterno
+        self.sexo = sexo
+        self.antecedentes = antecedentes
+        self.estatura = estatura
+    }
 }
