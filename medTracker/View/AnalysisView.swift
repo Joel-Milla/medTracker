@@ -13,7 +13,7 @@ struct AnalysisView: View {
         Register(idSymptom: 1, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
         Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400), cantidad: 80.5, notas: "Esto es una nota."),
         Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*2), cantidad: 80.2, notas: "Esto es una nota."),
-        Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*3), cantidad: 79.6, notas: "Esto es una nota."),
+        Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*3), cantidad: 20, notas: "Esto es una nota."),
         
         Register(idSymptom: 2, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
         
@@ -50,9 +50,11 @@ struct AnalysisView: View {
                         @State var descripcion = symptom.description
                         
                         TextField("", text: $descripcion, axis : .vertical)
+                            .frame(height: 120)
                             .textFieldStyle(.roundedBorder)
                             .font(.system(size: 18))
                             .lineSpacing(4)
+                            .background(Color.white)
                             .border(.black)
                             .padding(.trailing, 20)
                             .disabled(true)
@@ -62,7 +64,8 @@ struct AnalysisView: View {
                             .padding(.top, 30)
                         
                         Chart {
-                            ForEach(registers, id:\.self) { register in
+                            ForEach(registers.filter { $0.idSymptom == symptom.id
+                            }, id:\.self) { register in
                                 BarMark(x: .value("DIA", register.fecha.formatted(.dateTime.day().month())),
                                         y: .value("CANTIDAD", register.cantidad))
                                     .cornerRadius(10)
