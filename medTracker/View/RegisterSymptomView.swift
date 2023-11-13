@@ -15,10 +15,11 @@ struct RegisterSymptomView: View {
     @Environment(\.dismiss) var dismiss
     @State var metricsString = ""
     @State private var date = Date.now
-    @State var sliderOrTF : Bool = true
+    @State var sliderOrTF : Bool = false
     @State var notes = "Agrega alguna nota..."
     var dummySymptom = "Migraña"
     @State var metric: Double = 0
+    //@StateObject var symptom = Symptom()
     //let mainWhite = Color
     var body: some View {
         GeometryReader { geometry in
@@ -39,7 +40,7 @@ struct RegisterSymptomView: View {
                             .bold()
                         //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
                         if(sliderOrTF){
-                            Text("Califica cómo te sientes")
+                            Text("¿Qué tanto malestar tienes?")
                                 .font(.system(size: 18))
                                 .foregroundStyle(Color("blueGreen"))
                                 .bold()
@@ -50,14 +51,35 @@ struct RegisterSymptomView: View {
                         }
                         else{
                             Text("Ingresa el valor")
-                            HStack {
-                                Image(systemName: "heart.text.square.fill")
-                                    .foregroundColor(Color("blueGreen"))
-                                TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.white))
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.gray, lineWidth: 0.5)
+                                    .frame(width: geometry.size.width * 0.63, height: geometry.size.height * 0.1)
+                                
+                                HStack {
+                                    Image(systemName: "heart.text.square.fill")
+                                        .foregroundColor(Color("blueGreen"))
+                                        .font(.title)
+                                    TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.gray))
+                                    //                                    .overlay(
+                                    //                                        Capsule(style: .continuous)
+                                    //                                            .stroke(Color("blueGreen")
+                                    //                                                    , style: StrokeStyle(lineWidth: 4, miterLimit: 100, dash: [0]))
+                                    //                                    )
                                         .padding()
-                                    .textFieldStyle(OvalTextFieldStyle())
-                                .foregroundStyle(.white)
+                                        .textFieldStyle(OvalTextFieldStyle())
+                                        .foregroundStyle(.white)
+                                        .multilineTextAlignment(.center)
+                                        .keyboardType(.numberPad)
+                                }
+                                .padding(.horizontal)
                             }
+                            //                            .overlay(
+                            //                                RoundedRectangle(cornerRadius: 20)
+                            //                                    .stroke(Color.gray, lineWidth: 0.5)
+                            //                                .background(Color(""))
+                            //                            )
+                            
                         }
                             
                         //Spacer()
@@ -108,7 +130,8 @@ struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background(Color("blueGreen").opacity(0.5))
+            .background((Color(.white)))
+            
         /*(LinearGradient(gradient: Gradient(colors: [Color.white, Color("blueGreen").opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))*/
             .cornerRadius(10)
             .frame(width: 150)

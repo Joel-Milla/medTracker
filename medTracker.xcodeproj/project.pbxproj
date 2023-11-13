@@ -34,6 +34,7 @@
 /* Begin PBXFileReference section */
 		F820959F2AF58ACE002F1C28 /* Symptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symptom.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSymptomView.swift; sourceTree = "<group>"; };
+		F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMedTracker1.swift; sourceTree = "<group>"; };
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
 		FB320FA62AEB2754005865F5 /* AddSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymptomView.swift; sourceTree = "<group>"; };
@@ -68,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F83767772B0172850092CDED /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		FB1A55552AFD793C00F9A74A /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +118,7 @@
 			children = (
 				FB87FECD2ADDEE9800F6273B /* medTracker */,
 				FB87FECC2ADDEE9800F6273B /* Products */,
+				F83767772B0172850092CDED /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
