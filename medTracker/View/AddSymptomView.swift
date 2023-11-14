@@ -11,8 +11,9 @@ import SegmentedPicker
 struct AddSymptomView: View {
     @State var nombreSintoma = ""
     @State var descripcion = ""
-    @State var tipo = ["#", "-*-"]
     @State private var colorSymptom = Color.blue
+    @State private var colorString = ""
+    @State var notificaciones = false
     
     @State var selectedIndex: Int?
     
@@ -41,6 +42,7 @@ struct AddSymptomView: View {
                     .lineSpacing(4)
                     .padding(.trailing, 20)
                     .foregroundColor(colorSymptom)
+                    .disableAutocorrection(true)
                 
                 Text("Tipo: ")
                     .font(.system(size: 24))
@@ -63,10 +65,28 @@ struct AddSymptomView: View {
                             Capsule()
                                 .fill(colorSymptom)
                         })
-                    .onAppear {
-                        selectedIndex = 0
-                    }
                     .animation(.easeInOut(duration: 0.3))
+                    Spacer()
+                }
+                
+                Text("Notificaciones: ")
+                    .font(.system(size: 24))
+                    .padding(.top, 40)
+                
+                Toggle("Recibir notificaciones diarias", isOn: $notificaciones)
+                    .tint(colorSymptom)
+                    .padding(.trailing, 20)
+                    .padding(.top, -10)
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Label("Añadir síntoma", systemImage: "cross.circle.fill")
+                    }
+                    .buttonStyle(Button1MedTracker(backgroundColor: colorSymptom))
+                    .padding(.top, 50)
                     Spacer()
                 }
             }
@@ -75,6 +95,38 @@ struct AddSymptomView: View {
             .background(Color("mainWhite"))
             .navigationTitle("Nuevo síntoma")
         }
+        .onAppear {
+            // Initialize hexString with the initial color
+            colorString = hexString(from: colorSymptom)
+        }
+        .onChange(of: colorSymptom) { newColor in
+            // Update hexString when the color changes
+            colorString = hexString(from: newColor)
+        }
+    }
+    
+    func hexString(from color: Color) -> String {
+            // Convert SwiftUI Color to UIColor
+            let uiColor = UIColor(color)
+
+            // Get the RGBA components
+            guard let components = uiColor.cgColor.components else {
+                return ""
+            }
+
+            let red = Float(components[0])
+            let green = Float(components[1])
+            let blue = Float(components[2])
+
+            // Convert the components to HEX
+            let hexString = String(
+                format: "#%02lX%02lX%02lX",
+                lroundf(red * 255),
+                lroundf(green * 255),
+                lroundf(blue * 255)
+            )
+
+            return hexString
     }
 }
 

@@ -20,10 +20,16 @@ import SwiftUI
 //}
 
 struct Button1MedTracker : ButtonStyle{
+    var backgroundColor: Color
+
+    init(backgroundColor: Color = Color("blueGreen")) {
+        self.backgroundColor = backgroundColor
+    }
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
-            .background(Color("blueGreen"))
+            .background(backgroundColor)
             .foregroundStyle(.white)
             .font(.headline)
             .clipShape(Capsule())

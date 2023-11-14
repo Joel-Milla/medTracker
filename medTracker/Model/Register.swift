@@ -8,15 +8,13 @@
 import Foundation
 
 struct Register : Codable, Hashable {
-    var idSituacion : Int
-    var telefono : String
+    var idSymptom : Int
     var fecha : Date
     var cantidad : Float
     var notas : String
     
-    init(idSituacion: Int, telefono: String, fecha: Date, cantidad: Float, notas: String) {
-        self.idSituacion = idSituacion
-        self.telefono = telefono
+    init(idSymptom: Int, fecha: Date, cantidad: Float, notas: String) {
+        self.idSymptom = idSymptom
         self.fecha = fecha
         self.cantidad = cantidad
         self.notas = notas

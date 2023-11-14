@@ -9,9 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     @State var muestraEditarSintomas = false
-    var listaDatos = [Symptom(telefono: "1", nombre: "a", description: "a", unidades: 10.0, activo: true, color: Color.red), Symptom(telefono: "1", nombre: "b", description: "b", unidades: 10.0, activo: true, color: Color.blue), Symptom(telefono: "1", nombre: "c", description: "c", unidades: 10.0, activo: true, color: Color.yellow)]
+    @StateObject var listaDatos = SymptomList()
     
     var body: some View {
+        NavigationView {
         VStack {
             HStack {
                 Text("Síntomas")
@@ -30,11 +31,10 @@ struct HomeView: View {
                 }
                 .padding()
             }
-            NavigationView {
                 List{
-                    ForEach(listaDatos, id: \.self){ dato in
+                    ForEach($listaDatos.symptoms, id: \.self){ $dato in
                         NavigationLink{
-                            //VistaRegistrar(undato: dato)
+                            RegisterSymptomView(symptom: $dato)
                         } label: {
                             Celda(unDato : dato)
                         }
