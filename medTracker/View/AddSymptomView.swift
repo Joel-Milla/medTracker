@@ -65,9 +65,6 @@ struct AddSymptomView: View {
                             Capsule()
                                 .fill(colorSymptom)
                         })
-                    .onAppear {
-                        selectedIndex = 0
-                    }
                     .animation(.easeInOut(duration: 0.3))
                     Spacer()
                 }
@@ -76,7 +73,7 @@ struct AddSymptomView: View {
                     .font(.system(size: 24))
                     .padding(.top, 40)
                 
-                Toggle("Permitir notificaciones", isOn: $notificaciones)
+                Toggle("Recibir notificaciones diarias", isOn: $notificaciones)
                     .tint(colorSymptom)
                     .padding(.trailing, 20)
                     .padding(.top, -10)
