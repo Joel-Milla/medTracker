@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Symptom : Codable, Hashable {
+struct Symptom : Hashable {
     var id : Int
     var nombre : String
     var description : String

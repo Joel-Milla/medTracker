@@ -8,14 +8,14 @@
 import SwiftUI
 
 
-//usar contentview??
-//cambiar color de contenttitle?
 
 struct RegisterSymptomView: View {
     @Environment(\.dismiss) var dismiss
+    @Binding var symptom : Symptom
+    //@StateObject var symptom = Symptom()
     @State var metricsString = ""
     @State private var date = Date.now
-    @State var sliderOrTF : Bool = false
+    //@State var sliderOrTF : Bool = false
     @State var notes = "Agrega alguna nota..."
     var dummySymptom = "Migraña"
     @State var metric: Double = 0
@@ -27,7 +27,7 @@ struct RegisterSymptomView: View {
                 ZStack {
                     Color("mainWhite").ignoresSafeArea()
                     VStack() {
-                        Text(dummySymptom)
+                        Text(symptom.nombre)
                             .font(.title)
                             .foregroundStyle(Color("blueGreen"))
                             .bold()
@@ -39,7 +39,7 @@ struct RegisterSymptomView: View {
                             .tint(Color("blueGreen"))
                             .bold()
                         //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
-                        if(sliderOrTF){
+                        if(symptom.cuantitativo){
                             Text("¿Qué tanto malestar tienes?")
                                 .font(.system(size: 18))
                                 .foregroundStyle(Color("blueGreen"))
@@ -54,6 +54,7 @@ struct RegisterSymptomView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.gray, lineWidth: 0.5)
+                                    .background(RoundedRectangle(cornerRadius: 20).fill(.white))
                                     .frame(width: geometry.size.width * 0.63, height: geometry.size.height * 0.1)
                                 
                                 HStack {
@@ -61,6 +62,7 @@ struct RegisterSymptomView: View {
                                         .foregroundColor(Color("blueGreen"))
                                         .font(.title)
                                     TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.gray))
+                                        .font(.title2)
                                     //                                    .overlay(
                                     //                                        Capsule(style: .continuous)
                                     //                                            .stroke(Color("blueGreen")
@@ -68,11 +70,11 @@ struct RegisterSymptomView: View {
                                     //                                    )
                                         .padding()
                                         .textFieldStyle(OvalTextFieldStyle())
-                                        .foregroundStyle(.white)
-                                        .multilineTextAlignment(.center)
+                                        .foregroundStyle(.primary)
+                                        .multilineTextAlignment(.leading)
                                         .keyboardType(.numberPad)
                                 }
-                                .padding(.horizontal)
+                                .padding()
                             }
                             //                            .overlay(
                             //                                RoundedRectangle(cornerRadius: 20)
@@ -126,6 +128,8 @@ struct RegisterSymptomView: View {
         }
     }
 }
+
+
 struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
@@ -141,23 +145,11 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView()
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "")))
     }
 }
 
 /*
  NOTAS:
- COMO CAMBIAR SLIDER THUMBNAIL
- QUE ES INIT??
- pongo dos imagenes en los extremos de la barra?
- QUE PONGO DE BOTON?
- HAY FORMA DE CAMBIAR EL COLOR DEL PICKER DE FECHA?
- AÑADIR LISTA DE UNIDADES
- HACER CLASES
- MEJORAR SISTEMA DE NOTAS, NO PUEDO HACER MAS GRANDE EL TEXTFIELD??
- Siento que hay mucho espacio
- Mejor tipo de animacion... usar sheet? o cambiar con transicion
- Investigar elementos interesantes
- Hacer otra vista para agregar notas??
- Agregar gradient
+Hay otra forma de hacer el slider (posicion)? no se si con todos los dispositivos quede asi de bien
  */
