@@ -13,6 +13,7 @@ struct AddSymptomView: View {
     @State var descripcion = ""
     @State private var colorSymptom = Color.blue
     @State private var colorString = ""
+    @State var notificaciones = false
     
     @State var selectedIndex: Int?
     
@@ -31,7 +32,7 @@ struct AddSymptomView: View {
                 }
                 .padding(.top, 20)
                 
-                Text("Descripción: \(colorString)")
+                Text("Descripción: ")
                     .font(.system(size: 24))
                     .padding(.top, 22)
                 
@@ -41,6 +42,7 @@ struct AddSymptomView: View {
                     .lineSpacing(4)
                     .padding(.trailing, 20)
                     .foregroundColor(colorSymptom)
+                    .disableAutocorrection(true)
                 
                 Text("Tipo: ")
                     .font(.system(size: 24))
@@ -67,6 +69,27 @@ struct AddSymptomView: View {
                         selectedIndex = 0
                     }
                     .animation(.easeInOut(duration: 0.3))
+                    Spacer()
+                }
+                
+                Text("Notificaciones: ")
+                    .font(.system(size: 24))
+                    .padding(.top, 40)
+                
+                Toggle("Permitir notificaciones", isOn: $notificaciones)
+                    .tint(colorSymptom)
+                    .padding(.trailing, 20)
+                    .padding(.top, -10)
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Label("Añadir síntoma", systemImage: "cross.circle.fill")
+                    }
+                    .buttonStyle(Button1MedTracker(backgroundColor: colorSymptom))
+                    .padding(.top, 50)
                     Spacer()
                 }
             }

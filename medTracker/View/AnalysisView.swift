@@ -49,15 +49,16 @@ struct AnalysisView: View {
                         
                         @State var descripcion = symptom.description
                         
-                        TextField("", text: $descripcion, axis : .vertical)
-                            .frame(height: 120)
-                            .textFieldStyle(.roundedBorder)
-                            .font(.system(size: 18))
-                            .lineSpacing(4)
-                            .background(Color.white)
-                            .border(.black)
-                            .padding(.trailing, 20)
-                            .disabled(true)
+                        ScrollView {
+                            TextField("", text: $descripcion, axis : .vertical)
+                                .textFieldStyle(.roundedBorder)
+                                .font(.system(size: 18))
+                                .lineSpacing(4)
+                                .background(Color.white)
+                                .border(.black)
+                                .padding(.trailing, 20)
+                                .disabled(true)
+                        }
                         
                         Text("Promedio última semana: ")
                             .font(.system(size: 24))
@@ -86,6 +87,7 @@ struct AnalysisView: View {
                                 .background(.gray.opacity(0.1))
                                 .border(Color.black, width: 2)
                         }
+                        Spacer(minLength: 20)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     .padding(.leading, 20)
