@@ -9,11 +9,6 @@ struct LogInView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("MedTracker")
-                    .font(.largeTitle)
-                    .padding()
-                Text("Login")
-                    .font(.largeTitle)
                 Form {
                     Section {
                         HStack {
@@ -36,6 +31,7 @@ struct LogInView: View {
                                 Text("Regresar")
                             }
                         ))
+            .navigationTitle("Login")
             
         }
     }
