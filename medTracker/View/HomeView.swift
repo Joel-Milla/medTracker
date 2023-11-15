@@ -45,7 +45,8 @@ struct HomeView: View {
             }
             
         }
-        .padding()
+        .background(Color("mainGray"))
+        .ignoresSafeArea()
     }
 }
 
