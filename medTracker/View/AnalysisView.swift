@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct AnalysisView: View {
-    @State var registers = [
+   @State var registers = [
         Register(idSymptom: 1, fecha: Date.now, cantidad: 80, notas: "Esto es una nota."),
         Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400), cantidad: 80.5, notas: "Esto es una nota."),
         Register(idSymptom: 1, fecha: Date.now.addingTimeInterval(86400*2), cantidad: 80.2, notas: "Esto es una nota."),
@@ -60,7 +60,7 @@ struct AnalysisView: View {
                                 .disabled(true)
                         }
                         
-                        Text("Promedio última semana: ")
+                        Text("Últimos registros: ")
                             .font(.system(size: 24))
                             .padding(.top, 30)
                         
