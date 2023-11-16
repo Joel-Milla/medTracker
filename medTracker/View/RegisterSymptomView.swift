@@ -39,7 +39,7 @@ struct RegisterSymptomView: View {
                             .tint(Color("blueGreen"))
                             .bold()
                         //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
-                        if(symptom.cuantitativo){
+                        if(!symptom.cuantitativo){
                             Text("¿Qué tanto malestar tienes?")
                                 .font(.system(size: 18))
                                 .foregroundStyle(Color("blueGreen"))
