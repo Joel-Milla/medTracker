@@ -13,8 +13,10 @@ struct AddSymptomView: View {
     @State var descripcion = ""
     @State private var colorSymptom = Color.blue
     @State private var colorString = ""
-    
+    @State var notificaciones = false
     @State var selectedIndex: Int?
+    var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
+    @State var notificaciones_seleccion = "Todos los días"
     
     var body: some View {
         NavigationView {
@@ -31,7 +33,7 @@ struct AddSymptomView: View {
                 }
                 .padding(.top, 20)
                 
-                Text("Descripción: \(colorString)")
+                Text("Descripción")
                     .font(.system(size: 24))
                     .padding(.top, 22)
                 
@@ -41,8 +43,9 @@ struct AddSymptomView: View {
                     .lineSpacing(4)
                     .padding(.trailing, 20)
                     .foregroundColor(colorSymptom)
+                    .disableAutocorrection(true)
                 
-                Text("Tipo: ")
+                Text("Tipo")
                     .font(.system(size: 24))
                     .padding(.top, 22)
                 
@@ -63,10 +66,37 @@ struct AddSymptomView: View {
                             Capsule()
                                 .fill(colorSymptom)
                         })
-                    .onAppear {
-                        selectedIndex = 0
-                    }
                     .animation(.easeInOut(duration: 0.3))
+                    Spacer()
+                }
+                
+                Toggle("Recibir notificaciones", isOn: $notificaciones)
+                    .tint(colorSymptom)
+                    .padding(.trailing, 20)
+                    .padding(.top, 40)
+                    .font(.system(size: 24))
+                
+                Picker("Quiero recibirlas:", selection: $notificaciones_seleccion) {
+                    ForEach(cada_cuanto, id: \.self) {
+                        Text($0)
+                            //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                    }
+                }
+                .pickerStyle(.navigationLink)
+                .disabled(!notificaciones ? true : false)
+                .foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                .padding(.trailing, 20)
+                .font(.system(size: 18))
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        
+                    } label: {
+                        Label("Añadir síntoma", systemImage: "cross.circle.fill")
+                    }
+                    .buttonStyle(Button1MedTracker(backgroundColor: colorSymptom))
+                    .padding(.top, 50)
                     Spacer()
                 }
             }

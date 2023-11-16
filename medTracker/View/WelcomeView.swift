@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    
+    @State var muestraLogin = false
+    @State var muestraRegistro = false
     var body: some View {
         ZStack {
             Color(red: 108/255, green: 171/255, blue: 219/255)
@@ -19,17 +20,25 @@ struct WelcomeView: View {
                     .bold()
                     .foregroundColor(.white)
                 Button("Registrarse") {
-                    
+                    muestraRegistro = true
                 }
+                .fullScreenCover(isPresented: $muestraRegistro, content: {
+                    RegisterView()
+                })
                 .buttonStyle(.borderedProminent)
                 .padding()
                 Button("Iniciar Sesión") {
-                    
+                    muestraLogin = true
                 }
+                .fullScreenCover(isPresented: $muestraLogin, content: {
+                    LogInView()
+                })
                 .buttonStyle(.borderedProminent)
                 
-            } 
+            }
+            
         }
+        .toolbar(.hidden)
     }
 }
 
