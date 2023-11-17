@@ -9,6 +9,7 @@ struct RegisterView: View {
     @State var aPaterno = ""
     @State var aMaterno = ""
     @State private var muestraBienvenida = false
+    @State private var muestraHome = false
 
     var body: some View {
         NavigationStack {
@@ -51,6 +52,14 @@ struct RegisterView: View {
                         Text("Datos de tu cuenta")
                     }
                 }
+                Button("Registrarme") {
+                    muestraHome = true
+                }
+                .fullScreenCover(isPresented: $muestraHome, content: {
+                    MainView()
+                })
+                .buttonStyle(Button1MedTracker())
+                
             }
             .navigationBarItems(leading: NavigationLink(
                             destination: WelcomeView(),
@@ -60,6 +69,7 @@ struct RegisterView: View {
                             }
                         ))
             .navigationTitle("Registro")
+            
             
         }
     }

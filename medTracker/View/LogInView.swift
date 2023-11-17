@@ -5,6 +5,7 @@ struct LogInView: View {
     @State var telefono = 0
     @State var contrasena = ""
     @State private var muestraBienvenida = false
+    @State private var muestraHome = false
 
     var body: some View {
         NavigationStack {
@@ -23,6 +24,13 @@ struct LogInView: View {
                         Text("Ingresa tus datos:")
                     }
                 }
+                Button("Iniciar Sesión") {
+                    muestraHome = true
+                }
+                .fullScreenCover(isPresented: $muestraHome, content: {
+                    MainView()
+                })
+                .buttonStyle(Button1MedTracker())
             }
             .navigationBarItems(leading: NavigationLink(
                             destination: WelcomeView(),
@@ -31,7 +39,7 @@ struct LogInView: View {
                                 Text("Regresar")
                             }
                         ))
-            .navigationTitle("Login")
+            .navigationTitle("Inicia Sesión")
             
         }
     }
@@ -42,5 +50,6 @@ struct loginView_Previews: PreviewProvider {
         LogInView()
     }
 }
+
 
 

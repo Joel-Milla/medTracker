@@ -24,6 +24,9 @@ struct HomeView: View {
                             } label: {
                                 Celda(unDato : symptom)
                             }
+                            //.foregroundColor(Color(hex: symptom.color))
+                            .padding(10)
+                            
                         }
                     }
                 }
@@ -57,12 +60,14 @@ struct Celda: View {
 
     var body: some View {
         HStack {
-            //Poner aquí el ícono del dato:)
+            Image(systemName: "pill.fill")
+                .foregroundColor(Color(hex: unDato.color))
             VStack(alignment: .leading) {
                 Text(unDato.nombre)
-                    .font(.title3)
+                    .font(.title2)
                 
             }
         }
     }
 }
+
