@@ -20,8 +20,6 @@ struct MainView: View {
     var body: some View {
         TabView (selection: $currentTab) {
             AnalysisView()
-                .environmentObject(symptoms)
-                .environmentObject(registers)
                 .tag(Tab.Analisis)
             HomeView()
                 .tag(Tab.Inicio)
