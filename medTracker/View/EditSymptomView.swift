@@ -40,7 +40,8 @@ struct EditSymptomView: View {
                         .sheet(isPresented: $muestraNewSymptom) {
                             AddSymptomView()
                         }
-                        .navigationTitle("Edita tus datos de salud")
+                        .navigationTitle("Editar datos")
+                        
                     }
                     .background(Color("mainGray"))
               
