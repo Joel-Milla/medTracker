@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var muestraEditarSintomas = false
-    @StateObject var listaDatos = SymptomList()
+    @ObservedObject var listaDatos : SymptomList
     
     var body: some View {
         NavigationStack {
@@ -48,7 +48,7 @@ struct HomeView: View {
 
 struct pagInicio_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(listaDatos: SymptomList())
     }
 }
 

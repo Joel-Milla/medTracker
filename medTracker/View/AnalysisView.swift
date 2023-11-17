@@ -10,8 +10,8 @@ import Charts
 
 struct AnalysisView: View {
     
-    @StateObject var listSymp = SymptomList()
-    @StateObject var registers = RegisterList()
+    @ObservedObject var listSymp : SymptomList
+    @ObservedObject var registers : RegisterList
     
     var body: some View {
         VStack {
@@ -88,6 +88,6 @@ struct AnalysisItemView: View {
 
 struct analysis_Previews: PreviewProvider {
     static var previews: some View {
-        AnalysisView()
+        AnalysisView(listSymp: SymptomList(), registers: RegisterList())
     }
 }
