@@ -36,7 +36,7 @@ struct HomeView: View {
                     Image(systemName: "square.and.pencil")
                 }
             )
-            .sheet(isPresented: $muestraEditarSintomas) {
+            .fullScreenCover(isPresented: $muestraEditarSintomas) {
                 EditSymptomView(listaDatos: listaDatos)
             }
         }
