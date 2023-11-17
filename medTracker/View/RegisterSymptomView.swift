@@ -63,11 +63,6 @@ struct RegisterSymptomView: View {
                                         .font(.title)
                                     TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.gray))
                                         .font(.title2)
-                                    //                                    .overlay(
-                                    //                                        Capsule(style: .continuous)
-                                    //                                            .stroke(Color("blueGreen")
-                                    //                                                    , style: StrokeStyle(lineWidth: 4, miterLimit: 100, dash: [0]))
-                                    //                                    )
                                         .padding()
                                         .textFieldStyle(OvalTextFieldStyle())
                                         .foregroundStyle(.primary)
@@ -76,11 +71,6 @@ struct RegisterSymptomView: View {
                                 }
                                 .padding()
                             }
-                            //                            .overlay(
-                            //                                RoundedRectangle(cornerRadius: 20)
-                            //                                    .stroke(Color.gray, lineWidth: 0.5)
-                            //                                .background(Color(""))
-                            //                            )
                             
                         }
                             
@@ -97,7 +87,7 @@ struct RegisterSymptomView: View {
                             .shadow(color: .gray, radius: 2)
                             .multilineTextAlignment(.center)
                             .lineLimit(5)
-                            .frame(height: geometry.size.height *  0.30)
+                            .frame(height: geometry.size.height *  0.28)
                         Button{
                             if(self.notes == "Agrega alguna nota..."){
                                 notes = ""
@@ -108,7 +98,7 @@ struct RegisterSymptomView: View {
                             Label("Añadir información", systemImage: "cross.circle.fill")
                         }
                         .buttonStyle(Button1MedTracker())
-                        .frame(height: geometry.size.height *  0.2)
+                        .frame(height: geometry.size.height *  0.12)
                         
                     }
                     .padding()
