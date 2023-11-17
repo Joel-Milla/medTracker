@@ -19,9 +19,9 @@ struct MainView: View {
     @Namespace var animation
     var body: some View {
         TabView (selection: $currentTab) {
-            AnalysisView()
+            AnalysisView(listSymp: symptoms, registers: registers)
                 .tag(Tab.Analisis)
-            HomeView()
+            HomeView(listaDatos: symptoms)
                 .tag(Tab.Inicio)
             ProfileView()
                 .tag(Tab.Perfil)
