@@ -44,30 +44,32 @@ struct CustomSlider: View {
                                     }
                                 }
                         )
-                    Image(getImage())
-                        .resizable()
-                        .scaledToFit()
-                        .aspectRatio(contentMode: .fit)
-                        .offset(x:self.value - 46)
-                        .gesture (
-                            DragGesture (minimumDistance: 0)
-                                .onChanged { v in
-                                    if (abs(v.translation.width) < 0.1) {
-                                        self.lastCoordinateValue = self.value
+                    GeometryReader{ gr in
+                        Image(getImage())
+                            .resizable()
+                            .scaledToFit()
+                            .aspectRatio(contentMode: .fit)
+                            .offset(x:self.value - gr.size.width * 0.155 + 3)
+                            .gesture (
+                                DragGesture (minimumDistance: 0)
+                                    .onChanged { v in
+                                        if (abs(v.translation.width) < 0.1) {
+                                            self.lastCoordinateValue = self.value
+                                        }
+                                        if (v.translation.width > 0 && self.value <= 306) {
+                                            self.value = min (maxValue, self.lastCoordinateValue + v.translation.width)
+                                            valueFinal = getValue(maxValue: maxValue)
+                                        } else{
+                                            self.value = max (minValue, self.lastCoordinateValue + v.translation.width)
+                                            valueFinal = getValue(maxValue: maxValue)
+                                        }
+                                        if(self.value >= 306){
+                                            self.value = 306
+                                            valueFinal = 100;
+                                        }
                                     }
-                                    if (v.translation.width > 0 && self.value <= 306) {
-                                        self.value = min (maxValue, self.lastCoordinateValue + v.translation.width)
-                                        valueFinal = getValue(maxValue: maxValue)
-                                    } else{
-                                        self.value = max (minValue, self.lastCoordinateValue + v.translation.width)
-                                        valueFinal = getValue(maxValue: maxValue)
-                                    }
-                                    if(self.value >= 306){
-                                        self.value = 306
-                                        valueFinal = 100;
-                                    }
-                                }
-                        )
+                            )
+                    }
 //                    Text("\(valueFinal,  specifier: "%.2F")")
 //                    Text("\(value,  specifier: "%.2F")")
                     Spacer()
