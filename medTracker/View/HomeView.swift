@@ -43,9 +43,11 @@ struct HomeView: View {
                 AddSymptom(createAction: listaDatos.makeCreateAction(), listaDatos: listaDatos)
             }
         }
-        
         .background(Color("mainGray"))
         .ignoresSafeArea()
+        .onAppear {
+            listaDatos.fetchPosts()
+        }
     }
 }
 

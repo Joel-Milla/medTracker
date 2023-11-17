@@ -22,13 +22,23 @@ class SymptomList : ObservableObject {
         }
     }
     
+    func fetchPosts() {
+        Task {
+            do {
+                symptoms = try await SymptomRespository.fetchPosts()
+            } catch {
+                print("[PostsViewModel] Cannot fetch posts: \(error)")
+            }
+        }
+    }
+    
     func rutaArchivos() -> URL {
         let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
         let pathArchivo = url.appendingPathComponent("Symptoms.JSON")
         return pathArchivo
     }
     
-    init() {
+    /*init() {
         if let datosRecuperados = try? Data.init(contentsOf: rutaArchivos()) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
                 symptoms = datosDecodificados
@@ -43,7 +53,7 @@ class SymptomList : ObservableObject {
             }
         }
         symptoms = []
-    }
+    }*/
 }
 
 /*

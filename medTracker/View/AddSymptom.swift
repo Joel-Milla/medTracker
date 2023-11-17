@@ -34,6 +34,7 @@ struct AddSymptom: View {
 
     private func createSymptom() {
         symptom.id = listaDatos.symptoms.count
+        symptom.nombre = "\(symptom.id)"
         listaDatos.symptoms.append(symptom)
         Task {
             do {

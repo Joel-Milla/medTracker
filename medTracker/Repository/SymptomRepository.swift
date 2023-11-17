@@ -10,11 +10,21 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct SymptomRespository {
-    static let symptomRepository = Firestore.firestore().collection("symptoms")
+    static let symptomReference = Firestore.firestore().collection("symptoms")
     
     static func create(_ symptom: Symptom) async throws {
-        let document = symptomRepository.document(String(symptom.id))
+        let document = symptomReference.document(String(symptom.id))
         try await document.setData(from: symptom)
+    }
+    
+    static func fetchPosts() async throws -> [Symptom] {
+        let snapshot = try await symptomReference
+            .order(by: "id", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Symptom
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Symptom.self)
+        }
     }
 }
 
