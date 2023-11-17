@@ -126,7 +126,6 @@
 			children = (
 				FB87FECD2ADDEE9800F6273B /* medTracker */,
 				FB87FECC2ADDEE9800F6273B /* Products */,
-				FBEC06302B080B2D007AC73B /* Resources */,
 				F83767772B0172850092CDED /* Recovered References */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +147,7 @@
 				FB1A55572AFD795200F9A74A /* Model */,
 				FB9BBE092AFD7C0F0045AACE /* Elements */,
 				FB87FED22ADDEEA100F6273B /* Assets.xcassets */,
+				FBEC06302B080B2D007AC73B /* Resources */,
 				FB87FED42ADDEEA100F6273B /* Preview Content */,
 			);
 			path = medTracker;
