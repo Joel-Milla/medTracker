@@ -12,7 +12,7 @@ struct HomeView: View {
     @StateObject var listaDatos = SymptomList()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
         VStack {
                 List{
                     ForEach($listaDatos.symptoms, id: \.self){ $dato in
