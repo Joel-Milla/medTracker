@@ -15,6 +15,8 @@ struct AddSymptomView: View {
     @State private var colorSymptom = Color.blue
     @State private var colorString = ""
     @State var notificaciones = false
+    @State private var icon = "star.fill"
+    @State private var isPresented = false
     @State var selectedIndex: Int?
     var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
     @State var notificaciones_seleccion = "Todos los días"
@@ -29,6 +31,16 @@ struct AddSymptomView: View {
                         .font(.system(size: 28))
                         .lineSpacing(4)
                         .foregroundColor(colorSymptom)
+
+                    Button {
+                        isPresented.toggle()
+                    } label: {
+                        Image(systemName: icon).font(.title)
+                            .foregroundColor(colorSymptom)
+                    }
+                        .sheet(isPresented: $isPresented, content: {
+                            SymbolsPicker(selection: $icon, title: "Choose your symbol", autoDismiss: true)
+                        }).padding()
                     
                     ColorPicker("", selection: $colorSymptom)
                         .labelsHidden()
