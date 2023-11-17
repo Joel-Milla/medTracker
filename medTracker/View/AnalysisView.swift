@@ -50,19 +50,6 @@ struct AnalysisItemView: View {
                 .lineSpacing(4)
                 .font(.system(size: 18))
                 .frame(height: 120, alignment: .top)
-    
-            /*@State var descripcion = symptom.description
-             
-             ScrollView {
-                 TextField("", text: $descripcion, axis : .vertical)
-                     .textFieldStyle(.roundedBorder)
-                     .font(.system(size: 18))
-                     .lineSpacing(4)
-                     .background(Color.white)
-                     .border(.black)
-                     .padding(.trailing, 20)
-                     .disabled(true)
-             }*/
             
             Text("Últimos registros:")
                 .font(.system(size: 24))
