@@ -20,8 +20,6 @@ struct MainView: View {
     var body: some View {
         TabView (selection: $currentTab) {
             AnalysisView()
-                .environmentObject(symptoms)
-                .environmentObject(registers)
                 .tag(Tab.Analisis)
             HomeView()
                 .tag(Tab.Inicio)
@@ -36,7 +34,7 @@ struct MainView: View {
                 .padding(.vertical)
                 .padding(.bottom, getSafeArea().bottom == 0 ? 5 :
                             (getSafeArea().bottom - 15))
-                .background(Color(red: 170/255, green: 166/255, blue: 157/255))
+                .background(Color("mainGray"))
             }
             ,
             alignment: .bottom
@@ -63,7 +61,7 @@ struct MainView: View {
                            ZStack {
                                 if currentTab == tab {
                                     MaterialEffect(style: .light)
-                                        .background(Color("mainBlue"))
+                                        .background(Color("blueGreen"))
                                         .clipShape(Circle())
                                         //.matchedGeometryEffect(id: "TAB", in: animation)
                                 }
