@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class SymptomList : ObservableObject {
     @Published var symptoms = [Symptom]() {
