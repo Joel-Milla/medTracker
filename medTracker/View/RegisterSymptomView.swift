@@ -117,13 +117,6 @@ struct RegisterSymptomView: View {
                     .navigationTitle("Agregar síntoma")
                     .navigationBarTitleDisplayMode(.inline)
                 }
-                .toolbar{
-                    Button{
-                        dismiss()
-                    }label:{
-                        Text("Volver")
-                    }
-                }
             }
         }
     }
