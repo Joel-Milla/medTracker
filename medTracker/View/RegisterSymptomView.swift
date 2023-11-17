@@ -103,7 +103,7 @@ struct RegisterSymptomView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    Spacer()
+                    //Spacer()
                     .navigationTitle("Agregar síntoma")
                     .navigationBarTitleDisplayMode(.inline)
                 }

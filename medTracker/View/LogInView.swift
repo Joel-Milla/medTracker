@@ -7,13 +7,8 @@ struct LogInView: View {
     @State private var muestraBienvenida = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
-                Text("MedTracker")
-                    .font(.largeTitle)
-                    .padding()
-                Text("Login")
-                    .font(.largeTitle)
                 Form {
                     Section {
                         HStack {
@@ -36,6 +31,7 @@ struct LogInView: View {
                                 Text("Regresar")
                             }
                         ))
+            .navigationTitle("Login")
             
         }
     }

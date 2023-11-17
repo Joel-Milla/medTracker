@@ -12,25 +12,8 @@ struct HomeView: View {
     @StateObject var listaDatos = SymptomList()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
         VStack {
-            HStack {
-                Text("Síntomas")
-                    .font(.largeTitle)
-                Button {
-                    muestraEditarSintomas = true
-                } label: {
-                    VStack {
-                        Image(systemName: "pencil")
-                            .aspectRatio(contentMode: .fit)
-                        Text("Editar")
-                    }
-                }
-                .fullScreenCover(isPresented: $muestraEditarSintomas) {
-                    EditSymptomView()
-                }
-                .padding()
-            }
                 List{
                     ForEach($listaDatos.symptoms, id: \.self){ $dato in
                         NavigationLink{
@@ -38,13 +21,22 @@ struct HomeView: View {
                         } label: {
                             Celda(unDato : dato)
                         }
-                        
                     }
                 }
-    
             }
-            
+            .navigationTitle("Datos de salud")
+            .navigationBarItems(trailing:
+                Button {
+                muestraEditarSintomas = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }
+            )
+            .sheet(isPresented: $muestraEditarSintomas) {
+                AddSymptomView()
+            }
         }
+        
         .background(Color("mainGray"))
         .ignoresSafeArea()
     }

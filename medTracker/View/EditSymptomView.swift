@@ -21,21 +21,6 @@ struct EditSymptomView: View {
     var body: some View {
             NavigationView {
                     VStack {
-                        HStack {
-                            Text("Nuevo dato de salud")
-                                .padding(.horizontal)
-                            Button {
-                                muestraNewSymptom = true
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                        }
-                        .padding(.vertical)
-                        .font(.title2)
-                        .sheet(isPresented: $muestraNewSymptom) {
-                            AddSymptomView()
-                        }
-
                         List {
                             Section(header: Text("Lista de datos de salud")) {
                                 ForEach($listaDatos.symptoms.indices, id: \.self) { index in
@@ -45,12 +30,23 @@ struct EditSymptomView: View {
                         }
                         .background(Color("mainGray"))
                         .font(.title3)
-                        .navigationBarItems(trailing: Button(action: {
+                        .navigationBarItems(leading: Button(action: {
                             presentationMode.wrappedValue.dismiss()
                         }) {
-                            Image(systemName: "xmark")
-                                .aspectRatio(contentMode: .fit)
+                            Image(systemName: "arrow.left")
+                            Text("Regresar")
                         })
+                        .navigationBarItems(trailing:
+                            Button {
+                                muestraNewSymptom = true
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        )
+                        .sheet(isPresented: $muestraNewSymptom) {
+                            AddSymptomView()
+                        }
+                        .navigationTitle("Edita tus datos de salud")
                     }
                     .background(Color("mainGray"))
               
