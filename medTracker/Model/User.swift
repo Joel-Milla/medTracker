@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User : Codable {
+struct User : Codable, Hashable {
     var telefono : String // Unique identifier
     var nombre : String
     var apellidoPaterno : String
