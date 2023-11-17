@@ -128,7 +128,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "")))
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "")))
     }
 }
 

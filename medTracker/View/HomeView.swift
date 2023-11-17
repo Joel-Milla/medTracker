@@ -60,7 +60,7 @@ struct Celda: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "pill.fill")
+            Image(systemName: unDato.icon)
                 .foregroundColor(Color(hex: unDato.color))
             VStack(alignment: .leading) {
                 Text(unDato.nombre)

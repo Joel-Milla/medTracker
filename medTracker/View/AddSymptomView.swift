@@ -111,7 +111,7 @@ struct AddSymptomView: View {
                             selectedIndex == 0 || selectedIndex == 1 {
                             let newID = symptoms.symptoms.generateUniqueID()
                             let cuantitativo = selectedIndex == 0 ? true : false
-                            symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
+                            symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
                             dismiss()
                         }
                     } label: {
