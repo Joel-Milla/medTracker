@@ -15,11 +15,15 @@ struct HomeView: View {
         NavigationStack {
         VStack {
                 List{
-                    ForEach($listaDatos.symptoms, id: \.self){ $dato in
-                        NavigationLink{
-                            RegisterSymptomView(symptom: $dato)
-                        } label: {
-                            Celda(unDato : dato)
+                    ForEach(listaDatos.symptoms.indices, id: \.self) { index in
+                        
+                        if listaDatos.symptoms[index].activo {
+                            let symptom = listaDatos.symptoms[index]
+                            NavigationLink{
+                                RegisterSymptomView(symptom: $listaDatos.symptoms[index])
+                            } label: {
+                                Celda(unDato : symptom)
+                            }
                         }
                     }
                 }
@@ -33,7 +37,7 @@ struct HomeView: View {
                 }
             )
             .sheet(isPresented: $muestraEditarSintomas) {
-                AddSymptomView()
+                EditSymptomView(listaDatos: listaDatos)
             }
         }
         

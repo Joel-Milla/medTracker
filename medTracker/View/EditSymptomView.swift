@@ -10,23 +10,18 @@ import SwiftUI
 struct EditSymptomView: View {
     @State var muestraNewSymptom = false
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var listaDatos = SymptomList()
-    
-    @State private var isToggleOn: [Bool] = []
-
-        init() {
-            _isToggleOn = State(initialValue: Array(repeating: true, count: listaDatos.symptoms.count))
-        }
+    @ObservedObject var listaDatos: SymptomList
 
     var body: some View {
             NavigationView {
                     VStack {
                         List {
                             Section(header: Text("Lista de datos de salud")) {
-                                ForEach($listaDatos.symptoms.indices, id: \.self) { index in
-                                    Toggle(listaDatos.symptoms[index].nombre, isOn: $isToggleOn[index])
-                                }
-                            }
+                                ForEach(listaDatos.symptoms.indices, id: \.self) { index in
+                                    Toggle(listaDatos.symptoms[index].nombre, isOn: $listaDatos.symptoms[index].activo)
+                                    //listaDatos.symptoms[index].activo = true
+                                                        }
+                                                }
                         }
                         .background(Color("mainGray"))
                         .font(.title3)
@@ -58,6 +53,6 @@ struct EditSymptomView: View {
 
 struct editarLista_Previews: PreviewProvider {
     static var previews: some View {
-        EditSymptomView()
+        EditSymptomView(listaDatos: SymptomList())
     }
 }
