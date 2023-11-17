@@ -3,23 +3,42 @@ import SwiftUI
 struct RegisterView: View {
     @State var nombre = ""
     @State var telefono = 0
+    @State var estatura = 0.0
     @State var contrasena = ""
+    @State var sexo = ""
+    @State var aPaterno = ""
+    @State var aMaterno = ""
     @State private var muestraBienvenida = false
 
     var body: some View {
         NavigationView {
             VStack {
-                Text("MedTracker")
-                    .font(.largeTitle)
-                    .padding()
-                Text("Registro")
-                    .font(.largeTitle)
                 Form {
                     Section {
                         HStack {
                             Text("Nombre:")
                             TextField("", text: $nombre)
                         }
+                        HStack {
+                            Text("Apellido Paterno:")
+                            TextField("", text: $aPaterno)
+                        }
+                        HStack {
+                            Text("Apellido Materno:")
+                            TextField("", text: $aMaterno)
+                        }
+                        HStack {
+                            Text("Estatura:")
+                            TextField("", value: $estatura, format: .number)
+                        }
+                        HStack {
+                            Text("Sexo:")
+                            TextField("", text: $sexo)
+                        }
+                    } header: {
+                        Text("datos perosnales")
+                    }
+                    Section{
                         HStack {
                             Text("Telefono:")
                             TextField("", value: $telefono, format: .number)
@@ -28,8 +47,8 @@ struct RegisterView: View {
                             Text("Contraseña:")
                             SecureField("", text: $contrasena)
                         }
-                    } header: {
-                        Text("Ingresa tus datos:")
+                    }header: {
+                        Text("Datos de tu cuenta")
                     }
                 }
             }
@@ -40,6 +59,7 @@ struct RegisterView: View {
                                 Text("Regresar")
                             }
                         ))
+            .navigationTitle("Registro")
             
         }
     }
