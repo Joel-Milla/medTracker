@@ -19,7 +19,6 @@ struct EditSymptomView: View {
                             Section(header: Text("Lista de datos de salud")) {
                                 ForEach(listaDatos.symptoms.indices, id: \.self) { index in
                                     Toggle(listaDatos.symptoms[index].nombre, isOn: $listaDatos.symptoms[index].activo)
-                                    //listaDatos.symptoms[index].activo = true
                                                         }
                                                 }
                         }
