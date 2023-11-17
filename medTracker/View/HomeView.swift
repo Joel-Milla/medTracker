@@ -10,13 +10,13 @@ import SwiftUI
 struct HomeView: View {
     @State var muestraEditarSintomas = false
     @ObservedObject var listaDatos : SymptomList
+    @State var muestraAgregarDatos = false
     
     var body: some View {
         NavigationStack {
         VStack {
                 List{
                     ForEach(listaDatos.symptoms.indices, id: \.self) { index in
-                        
                         if listaDatos.symptoms[index].activo {
                             let symptom = listaDatos.symptoms[index]
                             NavigationLink{
@@ -31,13 +31,16 @@ struct HomeView: View {
             .navigationTitle("Datos de salud")
             .navigationBarItems(trailing:
                 Button {
-                muestraEditarSintomas = true
+                muestraAgregarDatos = true
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
             )
             .sheet(isPresented: $muestraEditarSintomas) {
                 EditSymptomView(listaDatos: listaDatos)
+            }
+            .sheet(isPresented: $muestraAgregarDatos) {
+                AddSymptom(createAction: listaDatos.makeCreateAction(), listaDatos: listaDatos)
             }
         }
         

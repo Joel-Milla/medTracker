@@ -16,6 +16,12 @@ class SymptomList : ObservableObject {
         }
     }
     
+    func makeCreateAction() -> AddSymptom.CreateAction {
+        return { [weak self] symptom in
+            try await SymptomRespository.create(symptom)
+        }
+    }
+    
     func rutaArchivos() -> URL {
         let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
         let pathArchivo = url.appendingPathComponent("Symptoms.JSON")
