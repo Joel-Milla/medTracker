@@ -25,7 +25,7 @@ struct MainView: View {
         TabView (selection: $currentTab) {
             AnalysisView(listSymp: symptoms, registers: registers)
                 .tag(Tab.Analisis)
-            HomeView(listaDatos: symptoms)
+            HomeView(listaDatos: symptoms, registers: registers)
                 .tag(Tab.Inicio)
             ProfileView()
                 .tag(Tab.Perfil)

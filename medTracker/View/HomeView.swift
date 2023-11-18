@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var muestraEditarSintomas = false
     @ObservedObject var listaDatos : SymptomList
+    @ObservedObject var registers : RegisterList
     
     var body: some View {
         NavigationStack {
@@ -20,7 +21,7 @@ struct HomeView: View {
                         if listaDatos.symptoms[index].activo {
                             let symptom = listaDatos.symptoms[index]
                             NavigationLink{
-                                RegisterSymptomView(symptom: $listaDatos.symptoms[index])
+                                RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers)
                             } label: {
                                 Celda(unDato : symptom)
                             }
@@ -51,7 +52,7 @@ struct HomeView: View {
 
 struct pagInicio_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(listaDatos: SymptomList())
+        HomeView(listaDatos: SymptomList(), registers: RegisterList())
     }
 }
 
