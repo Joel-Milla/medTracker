@@ -12,6 +12,7 @@ import SwiftUI
 struct RegisterSymptomView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var symptom : Symptom
+    @ObservedObject var registers : RegisterList
     //@StateObject var symptom = Symptom()
     @State var metricsString = ""
     @State private var date = Date.now
@@ -29,28 +30,31 @@ struct RegisterSymptomView: View {
                     VStack() {
                         Text(symptom.nombre)
                             .font(.title)
-                            .foregroundStyle(Color("blueGreen"))
+                            .foregroundStyle(Color(hex: symptom.color))
                             .bold()
                             .padding(.horizontal, -179)
                             .frame(height: geometry.size.height *  0.06)
                         DatePicker("Fecha registro", selection: $date, displayedComponents: [.date, .hourAndMinute])
                             .padding(.vertical,30)
-                            .foregroundColor(Color("blueGreen")) // sale identico??
-                            .tint(Color("blueGreen"))
+                            .foregroundColor(Color(hex: symptom.color)) // sale identico??
+                            .tint(Color(hex: symptom.color))
                             .bold()
                         //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
                         if(!symptom.cuantitativo){
                             Text("¿Qué tanto malestar tienes?")
                                 .font(.system(size: 18))
-                                .foregroundStyle(Color("blueGreen"))
+                                .foregroundStyle(Color(hex: symptom.color))
                                 .bold()
                             CustomSlider(valueFinal: $metric)
                                 .padding(.horizontal, 5)
                                 .frame(height: geometry.size.height * 0.06)
-                                .padding(.vertical)
+                                .padding(.vertical, 35)
                         }
                         else{
                             Text("Ingresa el valor")
+                                .font(.system(size: 18))
+                                .foregroundStyle(Color(hex: symptom.color))
+                                .bold()
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.gray, lineWidth: 0.5)
@@ -59,7 +63,7 @@ struct RegisterSymptomView: View {
                                 
                                 HStack {
                                     Image(systemName: "heart.text.square.fill")
-                                        .foregroundColor(Color("blueGreen"))
+                                        .foregroundColor(Color(hex: symptom.color))
                                         .font(.title)
                                     TextField("", text: $metricsString, prompt: Text("Valor").foregroundColor(.gray))
                                         .font(.title2)
@@ -97,7 +101,7 @@ struct RegisterSymptomView: View {
                         }label:{
                             Label("Añadir información", systemImage: "cross.circle.fill")
                         }
-                        .buttonStyle(Button1MedTracker())
+                        .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
                         .frame(height: geometry.size.height *  0.12)
                         
                     }
@@ -128,7 +132,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "")))
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList())
     }
 }
 
