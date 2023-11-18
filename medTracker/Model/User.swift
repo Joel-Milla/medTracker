@@ -16,6 +16,16 @@ struct User : Codable, Hashable {
     var antecedentes : String
     var estatura : Double
     
+    init() {
+        self.telefono = ""
+        self.nombre = ""
+        self.apellidoPaterno = ""
+        self.apellidoMaterno = ""
+        self.sexo = ""
+        self.antecedentes = ""
+        self.estatura = 0.0
+    }
+    
     init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, sexo: String, antecedentes: String, estatura: Double) {
         self.telefono = telefono
         self.nombre = nombre

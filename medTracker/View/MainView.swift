@@ -14,6 +14,7 @@ struct MainView: View {
     
     @StateObject var symptoms = SymptomList()
     @StateObject var registers = RegisterList()
+    @StateObject var user = UserModel()
     @State var currentTab: Tab = .Inicio
     
     init() {
@@ -27,7 +28,7 @@ struct MainView: View {
                 .tag(Tab.Analisis)
             HomeView(listaDatos: symptoms, registers: registers)
                 .tag(Tab.Inicio)
-            ProfileView()
+            ProfileView(user: user)
                 .tag(Tab.Perfil)
         }
         .overlay(
