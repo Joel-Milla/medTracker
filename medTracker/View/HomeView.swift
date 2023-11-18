@@ -20,11 +20,10 @@ struct HomeView: View {
                         if listaDatos.symptoms[index].activo {
                             let symptom = listaDatos.symptoms[index]
                             NavigationLink{
-                                RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers)
+                                RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, createAction: registers.makeCreateAction())
                             } label: {
                                 Celda(unDato : symptom)
                             }
-                            //.foregroundColor(Color(hex: symptom.color))
                             .padding(10)
                             
                         }
@@ -34,7 +33,7 @@ struct HomeView: View {
             .navigationTitle("Datos de salud")
             .navigationBarItems(trailing:
                 Button {
-                muestraAgregarDatos = true
+                muestraEditarSintomas = true
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
@@ -42,16 +41,9 @@ struct HomeView: View {
             .fullScreenCover(isPresented: $muestraEditarSintomas) {
                 EditSymptomView(listaDatos: listaDatos)
             }
-            .sheet(isPresented: $muestraAgregarDatos) {
-                // Call add symptom
-                AddSymptom(createAction: listaDatos.makeCreateAction(), listaDatos: listaDatos)
-            }
         }
         .background(Color("mainGray"))
         .ignoresSafeArea()
-        .onAppear {
-            listaDatos.fetchPosts()
-        }
     }
 }
 

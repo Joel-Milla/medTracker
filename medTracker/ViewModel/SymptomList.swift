@@ -9,24 +9,24 @@ import Foundation
 import SwiftUI
 
 class SymptomList : ObservableObject {
-    @Published var symptoms = [Symptom]() /*{
+    @Published var symptoms = [Symptom]() {
         didSet {
             if let codificado = try? JSONEncoder().encode(symptoms) {
                 try? codificado.write(to: rutaArchivos())
             }
         }
-    }*/
+    }
     
-    func makeCreateAction() -> AddSymptom.CreateAction {
+    func makeCreateAction() -> AddSymptomView.CreateAction {
         return { [weak self] symptom in
-            try await SymptomRespository.create(symptom)
+            try await Repository.createSymptom(symptom)
         }
     }
     
     func fetchPosts() {
         Task {
             do {
-                symptoms = try await SymptomRespository.fetchPosts()
+                symptoms = try await Repository.fetchSymptoms()
             } catch {
                 print("[PostsViewModel] Cannot fetch posts: \(error)")
             }
@@ -39,7 +39,7 @@ class SymptomList : ObservableObject {
         return pathArchivo
     }
     
-    /*init() {
+    init() {
         if let datosRecuperados = try? Data.init(contentsOf: rutaArchivos()) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
                 symptoms = datosDecodificados
@@ -47,8 +47,11 @@ class SymptomList : ObservableObject {
             }
         }
         
-        //symptoms = []
-        symptoms = getDefaultSymptoms()
+        //If no JSON, fetch info
+        fetchPosts()
+        
+        // For testing
+        // symptoms = getDefaultSymptoms()
     }
     
     private func getDefaultSymptoms() -> [Symptom] {

@@ -39,8 +39,7 @@
 		FBEC062D2B080A82007AC73B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FBEC062C2B080A82007AC73B /* FirebaseFirestore */; };
 		FBEC062F2B080A82007AC73B /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FBEC062E2B080A82007AC73B /* FirebaseFirestoreSwift */; };
 		FBEC06322B080B3E007AC73B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FBEC06312B080B3E007AC73B /* GoogleService-Info.plist */; };
-		FBEC06342B081324007AC73B /* AddSymptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC06332B081324007AC73B /* AddSymptom.swift */; };
-		FBEC06372B0814B6007AC73B /* SymptomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC06362B0814B6007AC73B /* SymptomRepository.swift */; };
+		FBEC06372B0814B6007AC73B /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC06362B0814B6007AC73B /* Repository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,8 +73,7 @@
 		FBE3812B2ADF3C2E004737C9 /* AnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisView.swift; sourceTree = "<group>"; };
 		FBE41E732AF6D464007B48E5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FBEC06312B080B3E007AC73B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		FBEC06332B081324007AC73B /* AddSymptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymptom.swift; sourceTree = "<group>"; };
-		FBEC06362B0814B6007AC73B /* SymptomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomRepository.swift; sourceTree = "<group>"; };
+		FBEC06362B0814B6007AC73B /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,6 @@
 				FBD940B42AFD759D00C3BD11 /* LogInView.swift */,
 				FB87FED02ADDEE9800F6273B /* MainView.swift */,
 				FBD940B62AFD763000C3BD11 /* HomeView.swift */,
-				FBEC06332B081324007AC73B /* AddSymptom.swift */,
 				FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */,
 				FB320FA62AEB2754005865F5 /* AddSymptomView.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */,
@@ -214,7 +211,7 @@
 		FBEC06352B081497007AC73B /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				FBEC06362B0814B6007AC73B /* SymptomRepository.swift */,
+				FBEC06362B0814B6007AC73B /* Repository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -300,7 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBEC06372B0814B6007AC73B /* SymptomRepository.swift in Sources */,
+				FBEC06372B0814B6007AC73B /* Repository.swift in Sources */,
 				FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */,
 				FBE3812A2ADF3BC9004737C9 /* ProfileView.swift in Sources */,
 				FB86F0732AFEC42A0051C6A6 /* RegisterList.swift in Sources */,
@@ -316,7 +313,6 @@
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
-				FBEC06342B081324007AC73B /* AddSymptom.swift in Sources */,
 				FB45BFF62B08270E0019C0A1 /* SymbolLoader.swift in Sources */,
 				FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */,

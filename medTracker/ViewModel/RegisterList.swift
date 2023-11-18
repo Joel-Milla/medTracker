@@ -16,6 +16,22 @@ class RegisterList : ObservableObject {
         }
     }*/
     
+    func makeCreateAction() -> RegisterSymptomView.CreateAction {
+        return { [weak self] register in
+            try await Repository.createRegister(register)
+        }
+    }
+    
+    func fetchPosts() {
+        Task {
+            do {
+                registers = try await Repository.fetchRegisters()
+            } catch {
+                print("[PostsViewModel] Cannot fetch posts: \(error)")
+            }
+        }
+    }
+    
     func rutaArchivos() -> URL {
         let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
         let pathArchivo = url.appendingPathComponent("Registers.JSON")
@@ -29,8 +45,12 @@ class RegisterList : ObservableObject {
                 return
             }
         }
-        //registers = []
-        registers = getDefaultRegisters()
+        
+        //If no JSON, fetch info
+        fetchPosts()
+        
+        // For testing
+        //registers = getDefaultRegisters()
     }
     
     private func getDefaultRegisters() -> [Register] {

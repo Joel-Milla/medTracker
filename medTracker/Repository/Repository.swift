@@ -1,5 +1,5 @@
 //
-//  SymptomRepository.swift
+//  Repository.swift
 //  medTracker
 //
 //  Created by Alumno on 17/11/23.
@@ -9,21 +9,38 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct SymptomRespository {
+struct Repository {
     static let symptomReference = Firestore.firestore().collection("symptoms")
+    static let registerReference = Firestore.firestore().collection("registers")
+    //static let id = UUID()
     
-    static func create(_ symptom: Symptom) async throws {
+    static func createSymptom(_ symptom: Symptom) async throws {
         let document = symptomReference.document(String(symptom.id))
         try await document.setData(from: symptom)
     }
     
-    static func fetchPosts() async throws -> [Symptom] {
+    static func fetchSymptoms() async throws -> [Symptom] {
         let snapshot = try await symptomReference
             .order(by: "id", descending: false)
             .getDocuments()
         // Convert the returning documents into the class Symptom
         return snapshot.documents.compactMap { document in
             try! document.data(as: Symptom.self)
+        }
+    }
+    
+    static func createRegister(_ register: Register) async throws {
+        let document = registerReference.document(UUID().uuidString)
+        try await document.setData(from: register)
+    }
+    
+    static func fetchRegisters() async throws -> [Register] {
+        let snapshot = try await registerReference
+            .order(by: "idSymptom", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Symptom
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Register.self)
         }
     }
 }
