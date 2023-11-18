@@ -9,9 +9,9 @@ import SwiftUI
 import Charts
 
 struct AnalysisView: View {
-    
-    @ObservedObject var listSymp : SymptomList
-    @ObservedObject var registers : RegisterList
+    @State private var refreshID = UUID()
+    @ObservedObject var listSymp: SymptomList
+    @ObservedObject var registers: RegisterList
     
     var body: some View {
         VStack {
@@ -20,10 +20,16 @@ struct AnalysisView: View {
                     AnalysisItemView(symptom: symptom, registers: registers)
                 }
             }
+            .id(refreshID)  // Force the TabView to update
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
             
             Spacer(minLength: 50)
+        }
+        .background(Color("mainWhite"))
+        .onChange(of: registers.registers) { _ in
+            // This will be called when registers change
+            refreshID = UUID()  // Force the TabView to update
         }
     }
 }
@@ -40,7 +46,7 @@ struct AnalysisItemView: View {
                 .bold()
                 .padding(.top, 30)
             
-            Text("Descripción: \(symptom.id)")
+            Text("Descripción:")
                 .font(.system(size: 24))
                 .padding(.vertical, 10)
             

@@ -96,8 +96,16 @@ struct RegisterSymptomView: View {
                             if(self.notes == "Agrega alguna nota..."){
                                 notes = ""
                             }
-                            print("Done!")
-                            dismiss()
+                            
+                            if symptom.cuantitativo {
+                                if let cantidad = Float(metricsString) {
+                                    registers.registers.append(Register(idSymptom: symptom.id, fecha: date, cantidad: cantidad, notas: notes))
+                                    dismiss()
+                                }
+                            } else {
+                                registers.registers.append(Register(idSymptom: symptom.id, fecha: date, cantidad: Float(metric), notas: notes))
+                                dismiss()
+                            }
                         }label:{
                             Label("Añadir información", systemImage: "cross.circle.fill")
                         }
@@ -128,7 +136,6 @@ struct OvalTextFieldStyle: TextFieldStyle {
             .frame(width: 150)
     }
 }
-
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
