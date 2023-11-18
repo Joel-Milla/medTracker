@@ -8,6 +8,7 @@ struct RegisterView: View {
     @State var sexo = ""
     @State var aPaterno = ""
     @State var aMaterno = ""
+    @State var email = ""
     @State private var muestraBienvenida = false
     @State private var muestraHome = false
 
@@ -43,6 +44,10 @@ struct RegisterView: View {
                         HStack {
                             Text("Telefono:")
                             TextField("", value: $telefono, format: .number)
+                        }
+                        HStack {
+                            Text("Correo:")
+                            TextField("", text: $email)
                         }
                         HStack {
                             Text("Contraseña:")
