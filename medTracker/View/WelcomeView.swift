@@ -11,34 +11,47 @@ struct WelcomeView: View {
     @State var muestraLogin = false
     @State var muestraRegistro = false
     var body: some View {
-        ZStack {
-            Color(red: 108/255, green: 171/255, blue: 219/255)
-                .ignoresSafeArea()
-            VStack{
-                Text("¡Bienvenido a MedTracker!")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(.white)
-                Button("Registrarse") {
-                    muestraRegistro = true
+        NavigationStack {
+            ZStack {
+                Color(red: 108/255, green: 171/255, blue: 219/255)
+                    .ignoresSafeArea()
+                VStack{
+                    Text("¡Bienvenido a MedTracker!")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                    NavigationLink {
+                        LogInView()
+                    } label: {
+                        Text("Iniciar Sesión")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 220, height: 50)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
+                    }
+                    
+                    NavigationLink {
+                        LogInView()
+                    } label: {
+                        Text("Registrarse")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 220, height: 50)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
+                    }
                 }
-                .fullScreenCover(isPresented: $muestraRegistro, content: {
-                    RegisterView()
-                })
-                .buttonStyle(.borderedProminent)
-                .padding()
-                Button("Iniciar Sesión") {
-                    muestraLogin = true
-                }
-                .fullScreenCover(isPresented: $muestraLogin, content: {
-                    LogInView()
-                })
-                .buttonStyle(.borderedProminent)
                 
             }
-            
+            .toolbar(.hidden)
         }
-        .toolbar(.hidden)
     }
 }
 

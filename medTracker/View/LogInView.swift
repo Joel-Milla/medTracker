@@ -36,16 +36,10 @@ struct LogInView: View {
                 })
                 .buttonStyle(Button1MedTracker())
             }
-            .navigationBarItems(leading: NavigationLink(
-                            destination: WelcomeView(),
-                            label: {
-                                Image(systemName: "arrow.left")
-                                Text("Regresar")
-                            }
-                        ))
             .navigationTitle("Inicia Sesión")
             
         }
+        
     }
 }
 
