@@ -6,6 +6,8 @@ struct LogInView: View {
     @State var contrasena = ""
     @State private var muestraBienvenida = false
     @State private var muestraHome = false
+    
+    @ObservedObject var authentication: AuthViewModel
 
     var body: some View {
         NavigationStack {
@@ -32,7 +34,7 @@ struct LogInView: View {
                     muestraHome = true
                 }
                 .fullScreenCover(isPresented: $muestraHome, content: {
-                    MainView()
+                    MainView(authentication: authentication)
                 })
                 .buttonStyle(Button1MedTracker())
             }
@@ -45,7 +47,7 @@ struct LogInView: View {
 
 struct loginView_Previews: PreviewProvider {
     static var previews: some View {
-        LogInView()
+        LogInView(authentication: AuthViewModel())
     }
 }
 

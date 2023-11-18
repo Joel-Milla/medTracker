@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ProfileView: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
@@ -16,11 +17,17 @@ struct ProfileView: View {
     @State private var estatura : String = ""
     
     @State private var isEditing = false
+
+    @ObservedObject var authentication: AuthViewModel
     
     let defaults = UserDefaults.standard
     
     var body: some View {
         VStack() {
+            Button("Sign Out", action: {
+                try! Auth.auth().signOut()
+            })
+    
             NavigationStack {
                 Image(systemName: "person.crop.circle.fill")
                     .resizable()
@@ -29,6 +36,7 @@ struct ProfileView: View {
                     .clipShape(Circle())
                     .clipped()
                 Form {
+                    
                     Section {
                         if isEditing {
                             HStack {
@@ -86,9 +94,14 @@ struct ProfileView: View {
                             Text("\(user.user.antecedentes)")
                                 .lineLimit(10)
                         }
+                        
+                        
                     } header: {
                         Text("Historial Clinico")
                     }
+                    
+                    
+                    
                 }
                 .navigationTitle("Profile")
                 .toolbar {
@@ -131,6 +144,6 @@ struct ProfileView: View {
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(user: UserModel())
+        ProfileView(user: UserModel(), authentication: AuthViewModel())
     }
 }

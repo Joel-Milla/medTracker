@@ -15,9 +15,11 @@ struct MainView: View {
     @StateObject var symptoms = SymptomList()
     @StateObject var registers = RegisterList()
     @StateObject var user = UserModel()
+    @ObservedObject var authentication: AuthViewModel
     @State var currentTab: Tab = .Inicio
     
-    init() {
+    init(authentication: AuthViewModel) {
+        self.authentication = authentication
         UITabBar.appearance().isHidden = true
     }
     
@@ -28,7 +30,7 @@ struct MainView: View {
                 .tag(Tab.Analisis)
             HomeView(listaDatos: symptoms, registers: registers)
                 .tag(Tab.Inicio)
-            ProfileView(user: user)
+            ProfileView(user: user, authentication: authentication)
                 .tag(Tab.Perfil)
         }
         .overlay(
@@ -89,7 +91,7 @@ struct MainView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(authentication: AuthViewModel())
     }
 }
 

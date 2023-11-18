@@ -10,6 +10,8 @@ import SwiftUI
 struct WelcomeView: View {
     @State var muestraLogin = false
     @State var muestraRegistro = false
+    @ObservedObject var authentication: AuthViewModel
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -21,7 +23,7 @@ struct WelcomeView: View {
                         .bold()
                         .foregroundColor(.white)
                     NavigationLink {
-                        LogInView()
+                        LogInView(authentication: authentication)
                     } label: {
                         Text("Iniciar Sesión")
                             .font(.headline)
@@ -35,7 +37,7 @@ struct WelcomeView: View {
                     }
                     
                     NavigationLink {
-                        LogInView()
+                        LogInView(authentication: authentication)
                     } label: {
                         Text("Registrarse")
                             .font(.headline)
@@ -57,6 +59,6 @@ struct WelcomeView: View {
 
 struct Bienvenida_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomeView()
+        WelcomeView(authentication: AuthViewModel())
     }
 }

@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct medTrackerApp: App {
+    init() {
+        FirebaseApp.configure()
+    }
+
     var body: some Scene {
         WindowGroup {
-            // if SavedUser
-            MainView()
+            AuthView()
         }
     }
 }

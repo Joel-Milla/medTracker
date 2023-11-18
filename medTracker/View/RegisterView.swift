@@ -11,6 +11,8 @@ struct RegisterView: View {
     @State var email = ""
     @State private var muestraBienvenida = false
     @State private var muestraHome = false
+    
+    @ObservedObject var authentication: AuthViewModel
 
     var body: some View {
         NavigationStack {
@@ -61,13 +63,13 @@ struct RegisterView: View {
                     muestraHome = true
                 }
                 .fullScreenCover(isPresented: $muestraHome, content: {
-                    MainView()
+                    MainView(authentication: authentication)
                 })
                 .buttonStyle(Button1MedTracker())
                 
             }
             .navigationBarItems(leading: NavigationLink(
-                            destination: WelcomeView(),
+                            destination: WelcomeView(authentication: authentication),
                             label: {
                                 Image(systemName: "arrow.left")
                                 Text("Regresar")
@@ -82,7 +84,7 @@ struct RegisterView: View {
 
 struct registroUsuario_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView()
+        RegisterView(authentication: AuthViewModel())
     }
 }
 

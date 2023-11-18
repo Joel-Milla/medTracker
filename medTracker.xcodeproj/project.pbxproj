@@ -17,6 +17,15 @@
 		FB45BFF62B08270E0019C0A1 /* SymbolLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF52B08270E0019C0A1 /* SymbolLoader.swift */; };
 		FB45BFF82B08274C0019C0A1 /* SymbolsPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF72B08274C0019C0A1 /* SymbolsPicker.swift */; };
 		FB45BFFA2B082B2B0019C0A1 /* UsageExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF92B082B2B0019C0A1 /* UsageExample.swift */; };
+		FB58218D2B0856A000514908 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB58218C2B08569F00514908 /* GoogleService-Info.plist */; };
+		FB5821902B08572A00514908 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = FB58218F2B08572A00514908 /* FirebaseAnalytics */; };
+		FB5821922B08572A00514908 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FB5821912B08572A00514908 /* FirebaseAuth */; };
+		FB5821942B08572A00514908 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FB5821932B08572A00514908 /* FirebaseFirestore */; };
+		FB5821962B08572A00514908 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FB5821952B08572A00514908 /* FirebaseFirestoreSwift */; };
+		FB5821992B0857AF00514908 /* AuthServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5821982B0857AF00514908 /* AuthServices.swift */; };
+		FB58219B2B0857F300514908 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB58219A2B0857F300514908 /* AuthViewModel.swift */; };
+		FB5821A12B08593D00514908 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5821A02B08593D00514908 /* AuthView.swift */; };
+		FB5821A32B08604400514908 /* signOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5821A22B08604400514908 /* signOut.swift */; };
 		FB86F0712AFEC4160051C6A6 /* SymptomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0702AFEC4160051C6A6 /* SymptomList.swift */; };
 		FB86F0732AFEC42A0051C6A6 /* RegisterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
@@ -49,6 +58,11 @@
 		FB45BFF52B08270E0019C0A1 /* SymbolLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolLoader.swift; sourceTree = "<group>"; };
 		FB45BFF72B08274C0019C0A1 /* SymbolsPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolsPicker.swift; sourceTree = "<group>"; };
 		FB45BFF92B082B2B0019C0A1 /* UsageExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageExample.swift; sourceTree = "<group>"; };
+		FB58218C2B08569F00514908 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FB5821982B0857AF00514908 /* AuthServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServices.swift; sourceTree = "<group>"; };
+		FB58219A2B0857F300514908 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		FB5821A02B08593D00514908 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		FB5821A22B08604400514908 /* signOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signOut.swift; sourceTree = "<group>"; };
 		FB86F0702AFEC4160051C6A6 /* SymptomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomList.swift; sourceTree = "<group>"; };
 		FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterList.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +88,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB5821962B08572A00514908 /* FirebaseFirestoreSwift in Frameworks */,
+				FB5821902B08572A00514908 /* FirebaseAnalytics in Frameworks */,
+				FB5821942B08572A00514908 /* FirebaseFirestore in Frameworks */,
+				FB5821922B08572A00514908 /* FirebaseAuth in Frameworks */,
 				FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,11 +115,13 @@
 				FBD940B22AFD754A00C3BD11 /* RegisterView.swift */,
 				FB87FED02ADDEE9800F6273B /* MainView.swift */,
 				FBD940B62AFD763000C3BD11 /* HomeView.swift */,
+				FB5821A22B08604400514908 /* signOut.swift */,
 				FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */,
 				FB320FA62AEB2754005865F5 /* AddSymptomView.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */,
 				FBE3812B2ADF3C2E004737C9 /* AnalysisView.swift */,
 				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
+				FB5821A02B08593D00514908 /* AuthView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -128,12 +148,29 @@
 			path = IconPicker;
 			sourceTree = "<group>";
 		};
+		FB58218B2B08568000514908 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				FB58218C2B08569F00514908 /* GoogleService-Info.plist */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		FB5821972B0857A100514908 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FB5821982B0857AF00514908 /* AuthServices.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		FB86F06F2AFEC3DD0051C6A6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				FB86F0702AFEC4160051C6A6 /* SymptomList.swift */,
 				FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */,
 				FBC7EF732B08263A00EDD70F /* UserModel.swift */,
+				FB58219A2B0857F300514908 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -143,6 +180,7 @@
 			children = (
 				FB87FECD2ADDEE9800F6273B /* medTracker */,
 				FB87FECC2ADDEE9800F6273B /* Products */,
+				FB58218B2B08568000514908 /* API */,
 				F83767772B0172850092CDED /* Recovered References */,
 			);
 			sourceTree = "<group>";
@@ -160,6 +198,7 @@
 			children = (
 				FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */,
 				FB1A55552AFD793C00F9A74A /* View */,
+				FB5821972B0857A100514908 /* Services */,
 				FB86F06F2AFEC3DD0051C6A6 /* ViewModel */,
 				FB1A55572AFD795200F9A74A /* Model */,
 				FB9BBE092AFD7C0F0045AACE /* Elements */,
@@ -206,6 +245,10 @@
 			name = medTracker;
 			packageProductDependencies = (
 				FBC80D972AF5AE0700820A3A /* SegmentedPicker */,
+				FB58218F2B08572A00514908 /* FirebaseAnalytics */,
+				FB5821912B08572A00514908 /* FirebaseAuth */,
+				FB5821932B08572A00514908 /* FirebaseFirestore */,
+				FB5821952B08572A00514908 /* FirebaseFirestoreSwift */,
 			);
 			productName = medTracker;
 			productReference = FB87FECB2ADDEE9800F6273B /* medTracker.app */;
@@ -237,6 +280,7 @@
 			mainGroup = FB87FEC22ADDEE9800F6273B;
 			packageReferences = (
 				FBC80D962AF5AE0700820A3A /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */,
+				FB58218E2B08572A00514908 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = FB87FECC2ADDEE9800F6273B /* Products */;
 			projectDirPath = "";
@@ -254,6 +298,7 @@
 			files = (
 				FB87FED62ADDEEA100F6273B /* Preview Assets.xcassets in Resources */,
 				FB87FED32ADDEEA100F6273B /* Assets.xcassets in Resources */,
+				FB58218D2B0856A000514908 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,15 +316,19 @@
 				F839EFF12AE0C4AE00CB5327 /* RegisterSymptomView.swift in Sources */,
 				FB86F0712AFEC4160051C6A6 /* SymptomList.swift in Sources */,
 				FBE3812C2ADF3C2E004737C9 /* AnalysisView.swift in Sources */,
+				FB5821992B0857AF00514908 /* AuthServices.swift in Sources */,
 				FBD940B32AFD754A00C3BD11 /* RegisterView.swift in Sources */,
 				FB45BFF82B08274C0019C0A1 /* SymbolsPicker.swift in Sources */,
 				FBD940B52AFD759D00C3BD11 /* LogInView.swift in Sources */,
 				FB45BFF42B08266B0019C0A1 /* SymbolIcon.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
+				FB5821A32B08604400514908 /* signOut.swift in Sources */,
+				FB5821A12B08593D00514908 /* AuthView.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
 				FB45BFF62B08270E0019C0A1 /* SymbolLoader.swift in Sources */,
+				FB58219B2B0857F300514908 /* AuthViewModel.swift in Sources */,
 				FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */,
@@ -491,6 +540,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FB58218E2B08572A00514908 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		FBC80D962AF5AE0700820A3A /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/KazaiMazai/SwiftySegmentedPicker.git";
@@ -502,6 +559,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FB58218F2B08572A00514908 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB58218E2B08572A00514908 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		FB5821912B08572A00514908 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB58218E2B08572A00514908 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		FB5821932B08572A00514908 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB58218E2B08572A00514908 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		FB5821952B08572A00514908 /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB58218E2B08572A00514908 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
 		FBC80D972AF5AE0700820A3A /* SegmentedPicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FBC80D962AF5AE0700820A3A /* XCRemoteSwiftPackageReference "SwiftySegmentedPicker" */;
