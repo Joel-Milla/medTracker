@@ -28,6 +28,7 @@ struct SymptomRespository {
     }
 }
 
+// This method is to not show an error for some of the methods above
 private extension DocumentReference {
     func setData<T: Encodable>(from value: T) async throws {
         return try await withCheckedThrowingContinuation { continuation in

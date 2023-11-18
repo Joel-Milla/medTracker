@@ -40,6 +40,7 @@ struct HomeView: View {
                 EditSymptomView(listaDatos: listaDatos)
             }
             .sheet(isPresented: $muestraAgregarDatos) {
+                // Call add symptom
                 AddSymptom(createAction: listaDatos.makeCreateAction(), listaDatos: listaDatos)
             }
         }

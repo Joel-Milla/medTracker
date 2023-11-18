@@ -33,12 +33,14 @@ struct AddSymptom: View {
     }
 
     private func createSymptom() {
+        // Just append the symptom to the list
         symptom.id = listaDatos.symptoms.count
         symptom.nombre = "\(symptom.id)"
         listaDatos.symptoms.append(symptom)
+        // will wait until the createAction(symptom) finishes
         Task {
             do {
-                try await createAction(symptom)
+                try await createAction(symptom) //call the function that adds the symptom to the database
                 dismiss()
             } catch {
                 print("[NewPostForm] Cannot create post: \(error)")
