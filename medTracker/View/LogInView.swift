@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct LogInView: View {
-    @State var nombre = ""
     @State var telefono = 0
+    @State var email = ""
     @State var contrasena = ""
     @State private var muestraBienvenida = false
     @State private var muestraHome = false
@@ -15,6 +15,10 @@ struct LogInView: View {
                         HStack {
                             Text("Telefono:")
                             TextField("", value: $telefono, format: .number)
+                        }
+                        HStack {
+                            Text("Correo:")
+                            TextField("", text: $email)
                         }
                         HStack {
                             Text("Contraseña:")
