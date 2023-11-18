@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User : Codable {
+struct User : Codable, Hashable {
     var telefono : String // Unique identifier
     var nombre : String
     var apellidoPaterno : String
@@ -15,6 +15,16 @@ struct User : Codable {
     var sexo : String
     var antecedentes : String
     var estatura : Double
+    
+    init() {
+        self.telefono = ""
+        self.nombre = ""
+        self.apellidoPaterno = ""
+        self.apellidoMaterno = ""
+        self.sexo = ""
+        self.antecedentes = ""
+        self.estatura = 0.0
+    }
     
     init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, sexo: String, antecedentes: String, estatura: Double) {
         self.telefono = telefono

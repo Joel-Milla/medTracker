@@ -8,7 +8,9 @@ struct RegisterView: View {
     @State var sexo = ""
     @State var aPaterno = ""
     @State var aMaterno = ""
+    @State var email = ""
     @State private var muestraBienvenida = false
+    @State private var muestraHome = false
 
     var body: some View {
         NavigationStack {
@@ -44,6 +46,10 @@ struct RegisterView: View {
                             TextField("", value: $telefono, format: .number)
                         }
                         HStack {
+                            Text("Correo:")
+                            TextField("", text: $email)
+                        }
+                        HStack {
                             Text("Contraseña:")
                             SecureField("", text: $contrasena)
                         }
@@ -51,6 +57,14 @@ struct RegisterView: View {
                         Text("Datos de tu cuenta")
                     }
                 }
+                Button("Registrarme") {
+                    muestraHome = true
+                }
+                .fullScreenCover(isPresented: $muestraHome, content: {
+                    MainView()
+                })
+                .buttonStyle(Button1MedTracker())
+                
             }
             .navigationBarItems(leading: NavigationLink(
                             destination: WelcomeView(),
@@ -60,6 +74,7 @@ struct RegisterView: View {
                             }
                         ))
             .navigationTitle("Registro")
+            
             
         }
     }

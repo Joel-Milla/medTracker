@@ -9,14 +9,19 @@ import SwiftUI
 import SegmentedPicker
 
 struct AddSymptomView: View {
+    @Environment(\.dismiss) var dismiss
     @State var nombreSintoma = ""
     @State var descripcion = ""
     @State private var colorSymptom = Color.blue
     @State private var colorString = ""
     @State var notificaciones = false
+    @State private var icon = "star.fill"
+    @State private var isPresented = false
     @State var selectedIndex: Int?
     var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
     @State var notificaciones_seleccion = "Todos los días"
+    @ObservedObject var symptoms : SymptomList
+    
     
     var body: some View {
         NavigationView {
@@ -26,6 +31,16 @@ struct AddSymptomView: View {
                         .font(.system(size: 28))
                         .lineSpacing(4)
                         .foregroundColor(colorSymptom)
+
+                    Button {
+                        isPresented.toggle()
+                    } label: {
+                        Image(systemName: icon).font(.title)
+                            .foregroundColor(colorSymptom)
+                    }
+                        .sheet(isPresented: $isPresented, content: {
+                            SymbolsPicker(selection: $icon, title: "Choose your symbol", autoDismiss: true)
+                        }).padding()
                     
                     ColorPicker("", selection: $colorSymptom)
                         .labelsHidden()
@@ -47,7 +62,7 @@ struct AddSymptomView: View {
                 
                 Text("Tipo")
                     .font(.system(size: 24))
-                    .padding(.top, 22)
+                    .padding(.top, 40)
                 
                 HStack {
                     Spacer()
@@ -91,7 +106,14 @@ struct AddSymptomView: View {
                 HStack {
                     Spacer()
                     Button {
-                        
+                        if nombreSintoma != "" &&
+                            descripcion != "" &&
+                            selectedIndex == 0 || selectedIndex == 1 {
+                            let newID = symptoms.symptoms.generateUniqueID()
+                            let cuantitativo = selectedIndex == 0 ? true : false
+                            symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
+                            dismiss()
+                        }
                     } label: {
                         Label("Añadir síntoma", systemImage: "cross.circle.fill")
                     }
@@ -140,8 +162,18 @@ struct AddSymptomView: View {
     }
 }
 
+extension Array where Element == Symptom {
+    func generateUniqueID() -> Int {
+        if let maxID = self.max(by: { $0.id < $1.id }) {
+            return maxID.id + 1
+        } else {
+            return 1 // If the array is empty, start with ID 1
+        }
+    }
+}
+
 struct newSymptom_Previews: PreviewProvider {
     static var previews: some View {
-        AddSymptomView()
+        AddSymptomView(symptoms: SymptomList())
     }
 }

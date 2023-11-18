@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
     
-    @State private var user: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
+    @State var user: UserModel
     @State private var draftUser: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
     @State private var sexo : String = ""
     @State private var estatura : String = ""
@@ -45,10 +45,10 @@ struct ProfileView: View {
                                 Text("Telefono")
                                 TextField("+81 2611 1857", text: $draftUser.telefono)}
                         } else {
-                            Text("Nombre: \(user.nombre)")
-                            Text("Apellido Paterno: \(user.apellidoPaterno)")
-                            Text("Apellido Materno: \(user.apellidoMaterno)")
-                            Text("Telefono: \(user.telefono)")
+                            Text("Nombre: \(user.user.nombre)")
+                            Text("Apellido Paterno: \(user.user.apellidoPaterno)")
+                            Text("Apellido Materno: \(user.user.apellidoMaterno)")
+                            Text("Telefono: \(user.user.telefono)")
                         }
                     } header: {
                         Text("Datos personales")
@@ -70,8 +70,8 @@ struct ProfileView: View {
                             }
                             
                         } else {
-                            Text("Estatura: \(String(format: "%.1f", user.estatura))")
-                            Text("Sexo: \(user.sexo)")
+                            Text("Estatura: \(String(format: "%.1f", user.user.estatura))")
+                            Text("Sexo: \(user.user.sexo)")
                         }
                     } header: {
                         Text("Datos fijos")
@@ -83,7 +83,7 @@ struct ProfileView: View {
                             TextEditor(text: $draftUser.antecedentes)
                         } else {
                             Text("Antecedentes:")
-                            Text("\(user.antecedentes)")
+                            Text("\(user.user.antecedentes)")
                                 .lineLimit(10)
                         }
                     } header: {
@@ -96,7 +96,7 @@ struct ProfileView: View {
                         if isEditing {
                             Button("Cancel") {
                                 // Borrar informacion de draft user
-                                draftUser = user
+                                draftUser = user.user
                                 isEditing = false
                             }
                         }
@@ -107,49 +107,30 @@ struct ProfileView: View {
                                 // Guardar informacion en user y sandbox
                                 draftUser.estatura = Double(estatura) ?? 0.0
                                 draftUser.sexo = sexo
-                                user = draftUser
-                                saveUser()
+                                user.user = draftUser
+                                user.saveUser()
                                 isEditing = false
                             }
                         } else {
                             Button("Edit") {
                                 // Modo normal
-                                draftUser = user
+                                draftUser = user.user
                                 isEditing = true
                             }
                         }
                     }
                 }
                 .onAppear {
-                    draftUser = user
-                }
-                .onAppear {
-                    loadUser()
+                    //draftUser = user
                 }
             }
         }
     }
-    
-    /* Guardar informacion y obtenerla */
-    func saveUser() {
-        if let encoded = try? JSONEncoder().encode(user) {
-            UserDefaults.standard.set(encoded, forKey: "savedUser")
-        }
-    }
-    
-    func loadUser() {
-        if let savedUserData = UserDefaults.standard.object(forKey: "savedUser") as? Data {
-            if let loadedUser = try? JSONDecoder().decode(User.self, from: savedUserData) {
-                user = loadedUser
-            }
-        }
-    }
-    
 }
 
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(user: UserModel())
     }
 }

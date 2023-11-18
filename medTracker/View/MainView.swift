@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct MainView: View {
+    /*
+     MOVER MENU UN POCO HACIA ARRIBA
+     */
+    
     @StateObject var symptoms = SymptomList()
     @StateObject var registers = RegisterList()
+    @StateObject var user = UserModel()
     @State var currentTab: Tab = .Inicio
     
     init() {
@@ -21,9 +26,9 @@ struct MainView: View {
         TabView (selection: $currentTab) {
             AnalysisView(listSymp: symptoms, registers: registers)
                 .tag(Tab.Analisis)
-            HomeView(listaDatos: symptoms)
+            HomeView(listaDatos: symptoms, registers: registers)
                 .tag(Tab.Inicio)
-            ProfileView()
+            ProfileView(user: user)
                 .tag(Tab.Perfil)
         }
         .overlay(

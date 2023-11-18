@@ -9,21 +9,27 @@ import SwiftUI
 import Charts
 
 struct AnalysisView: View {
-    
-    @ObservedObject var listSymp : SymptomList
-    @ObservedObject var registers : RegisterList
+    @State private var refreshID = UUID()
+    @ObservedObject var listSymp: SymptomList
+    @ObservedObject var registers: RegisterList
     
     var body: some View {
         VStack {
             TabView {
-                ForEach(listSymp.symptoms, id: \.id) { symptom in
+                ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
                     AnalysisItemView(symptom: symptom, registers: registers)
                 }
             }
+            .id(refreshID)  // Force the TabView to update
             .tabViewStyle(.page)
             .indexViewStyle(.page(backgroundDisplayMode: .always))
             
             Spacer(minLength: 50)
+        }
+        .background(Color("mainWhite"))
+        .onChange(of: registers.registers) { _ in
+            // This will be called when registers change
+            refreshID = UUID()  // Force the TabView to update
         }
     }
 }
@@ -40,7 +46,7 @@ struct AnalysisItemView: View {
                 .bold()
                 .padding(.top, 30)
             
-            Text("Descripción: ")
+            Text("Descripción:")
                 .font(.system(size: 24))
                 .padding(.vertical, 10)
             
@@ -48,7 +54,7 @@ struct AnalysisItemView: View {
                 .padding(.trailing, 20)
                 .foregroundColor(Color(hex: symptom.color))
                 .lineSpacing(4)
-                .font(.system(size: 18))
+                .font(.system(size: 20))
                 .frame(height: 120, alignment: .top)
             
             Text("Últimos registros:")
@@ -77,7 +83,7 @@ struct AnalysisItemView: View {
                     .border(Color.black, width: 2)
             }
             
-            Spacer(minLength: 20)
+            Spacer(minLength: 50)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 20)

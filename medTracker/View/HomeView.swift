@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var muestraEditarSintomas = false
     @ObservedObject var listaDatos : SymptomList
-    @State var muestraAgregarDatos = false
+    @ObservedObject var registers : RegisterList
     
     var body: some View {
         NavigationStack {
@@ -20,10 +20,13 @@ struct HomeView: View {
                         if listaDatos.symptoms[index].activo {
                             let symptom = listaDatos.symptoms[index]
                             NavigationLink{
-                                RegisterSymptomView(symptom: $listaDatos.symptoms[index])
+                                RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers)
                             } label: {
                                 Celda(unDato : symptom)
                             }
+                            //.foregroundColor(Color(hex: symptom.color))
+                            .padding(10)
+                            
                         }
                     }
                 }
@@ -36,7 +39,7 @@ struct HomeView: View {
                     Image(systemName: "square.and.pencil")
                 }
             )
-            .sheet(isPresented: $muestraEditarSintomas) {
+            .fullScreenCover(isPresented: $muestraEditarSintomas) {
                 EditSymptomView(listaDatos: listaDatos)
             }
             .sheet(isPresented: $muestraAgregarDatos) {
@@ -54,7 +57,7 @@ struct HomeView: View {
 
 struct pagInicio_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(listaDatos: SymptomList())
+        HomeView(listaDatos: SymptomList(), registers: RegisterList())
     }
 }
 
@@ -63,12 +66,14 @@ struct Celda: View {
 
     var body: some View {
         HStack {
-            //Poner aquí el ícono del dato:)
+            Image(systemName: unDato.icon)
+                .foregroundColor(Color(hex: unDato.color))
             VStack(alignment: .leading) {
                 Text(unDato.nombre)
-                    .font(.title3)
+                    .font(.title2)
                 
             }
         }
     }
 }
+

@@ -12,6 +12,11 @@
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
 		FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* AddSymptomView.swift */; };
+		FB45BFF22B0825AF0019C0A1 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF12B0825AF0019C0A1 /* SearchBar.swift */; };
+		FB45BFF42B08266B0019C0A1 /* SymbolIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF32B08266B0019C0A1 /* SymbolIcon.swift */; };
+		FB45BFF62B08270E0019C0A1 /* SymbolLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF52B08270E0019C0A1 /* SymbolLoader.swift */; };
+		FB45BFF82B08274C0019C0A1 /* SymbolsPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF72B08274C0019C0A1 /* SymbolsPicker.swift */; };
+		FB45BFFA2B082B2B0019C0A1 /* UsageExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB45BFF92B082B2B0019C0A1 /* UsageExample.swift */; };
 		FB86F0712AFEC4160051C6A6 /* SymptomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0702AFEC4160051C6A6 /* SymptomList.swift */; };
 		FB86F0732AFEC42A0051C6A6 /* RegisterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
@@ -20,6 +25,7 @@
 		FB87FED62ADDEEA100F6273B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */; };
 		FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */; };
 		FBB5AD362AFC2829003918CA /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB5AD352AFC2829003918CA /* Register.swift */; };
+		FBC7EF742B08263A00EDD70F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC7EF732B08263A00EDD70F /* UserModel.swift */; };
 		FBC80D982AF5AE0700820A3A /* SegmentedPicker in Frameworks */ = {isa = PBXBuildFile; productRef = FBC80D972AF5AE0700820A3A /* SegmentedPicker */; };
 		FBD940AF2AFD73E800C3BD11 /* EditSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */; };
 		FBD940B12AFD74D100C3BD11 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD940B02AFD74D100C3BD11 /* WelcomeView.swift */; };
@@ -44,6 +50,11 @@
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
 		FB320FA62AEB2754005865F5 /* AddSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymptomView.swift; sourceTree = "<group>"; };
+		FB45BFF12B0825AF0019C0A1 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		FB45BFF32B08266B0019C0A1 /* SymbolIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolIcon.swift; sourceTree = "<group>"; };
+		FB45BFF52B08270E0019C0A1 /* SymbolLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolLoader.swift; sourceTree = "<group>"; };
+		FB45BFF72B08274C0019C0A1 /* SymbolsPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolsPicker.swift; sourceTree = "<group>"; };
+		FB45BFF92B082B2B0019C0A1 /* UsageExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageExample.swift; sourceTree = "<group>"; };
 		FB86F0702AFEC4160051C6A6 /* SymptomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomList.swift; sourceTree = "<group>"; };
 		FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterList.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +64,7 @@
 		FB87FED52ADDEEA100F6273B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexToColor.swift; sourceTree = "<group>"; };
 		FBB5AD352AFC2829003918CA /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		FBC7EF732B08263A00EDD70F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSymptomView.swift; sourceTree = "<group>"; };
 		FBD940B02AFD74D100C3BD11 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		FBD940B22AFD754A00C3BD11 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -117,11 +129,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		FB45BFF02B0825640019C0A1 /* IconPicker */ = {
+			isa = PBXGroup;
+			children = (
+				FB45BFF12B0825AF0019C0A1 /* SearchBar.swift */,
+				FB45BFF32B08266B0019C0A1 /* SymbolIcon.swift */,
+				FB45BFF52B08270E0019C0A1 /* SymbolLoader.swift */,
+				FB45BFF72B08274C0019C0A1 /* SymbolsPicker.swift */,
+				FB45BFF92B082B2B0019C0A1 /* UsageExample.swift */,
+			);
+			path = IconPicker;
+			sourceTree = "<group>";
+		};
 		FB86F06F2AFEC3DD0051C6A6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				FB86F0702AFEC4160051C6A6 /* SymptomList.swift */,
 				FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */,
+				FBC7EF732B08263A00EDD70F /* UserModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -173,6 +198,7 @@
 				FB1A55512AFD772900F9A74A /* CustomSlider.swift */,
 				FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */,
 				FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */,
+				FB45BFF02B0825640019C0A1 /* IconPicker */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -283,17 +309,23 @@
 				FB86F0712AFEC4160051C6A6 /* SymptomList.swift in Sources */,
 				FBE3812C2ADF3C2E004737C9 /* AnalysisView.swift in Sources */,
 				FBD940B32AFD754A00C3BD11 /* RegisterView.swift in Sources */,
+				FB45BFF82B08274C0019C0A1 /* SymbolsPicker.swift in Sources */,
 				FBD940B52AFD759D00C3BD11 /* LogInView.swift in Sources */,
+				FB45BFF42B08266B0019C0A1 /* SymbolIcon.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
 				FBEC06342B081324007AC73B /* AddSymptom.swift in Sources */,
+				FB45BFF62B08270E0019C0A1 /* SymbolLoader.swift in Sources */,
 				FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */,
 				FB87FED12ADDEE9800F6273B /* MainView.swift in Sources */,
 				FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */,
 				FBD940B12AFD74D100C3BD11 /* WelcomeView.swift in Sources */,
+				FB45BFF22B0825AF0019C0A1 /* SearchBar.swift in Sources */,
 				FBD940AF2AFD73E800C3BD11 /* EditSymptomView.swift in Sources */,
+				FBC7EF742B08263A00EDD70F /* UserModel.swift in Sources */,
+				FB45BFFA2B082B2B0019C0A1 /* UsageExample.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

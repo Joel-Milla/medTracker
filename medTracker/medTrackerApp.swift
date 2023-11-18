@@ -17,6 +17,7 @@ struct medTrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
+            // if SavedUser
             MainView()
         }
     }
