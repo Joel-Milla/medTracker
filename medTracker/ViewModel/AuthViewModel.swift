@@ -15,6 +15,7 @@ class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
 
     @Published var signInErrorMessage: String?
+    @Published var registrationErrorMessage: String?
     
     private let authService = AuthService()
     
@@ -49,7 +50,12 @@ class AuthViewModel: ObservableObject {
     }
 
     func makeCreateAccountViewModel() -> CreateAccountViewModel {
-        return CreateAccountViewModel(action: authService.createAccount(name:email:password:))
+        let viewModel = CreateAccountViewModel(initialValue: (name: "", email: "", password: ""), action: authService.createAccount)
+        viewModel.$error
+            .compactMap { $0 }
+            .map { $0.localizedDescription }
+            .assign(to: &$registrationErrorMessage)
+        return viewModel
     }
 }
 

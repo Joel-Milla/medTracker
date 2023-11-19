@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct RegisterView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
-
+    @State private var showAlert = false
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -26,8 +28,21 @@ struct RegisterView: View {
                     .background(Color.accentColor)
                     .cornerRadius(10)
             }
-            .navigationTitle("Registrar")
             .onSubmit(authentication.submit)
+            .onReceive(authViewModel.$registrationErrorMessage) { errorMessage in
+                if errorMessage != nil {
+                    showAlert = true
+                }
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Registration Error"),
+                    message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .navigationTitle("Registrar")
+            
         }
     }
 }
