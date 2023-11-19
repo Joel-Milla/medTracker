@@ -27,12 +27,10 @@ struct LogInView: View {
                 .background(Color.accentColor)
                 .cornerRadius(10)
             }
-            .alert("Sign In Error", isPresented: $showErrorAlert) {
+            .alert("Valores incorrectos", isPresented: $showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
-                if let message = authentication.signInErrorMessage {
-                    Text(message)
-                }
+                    Text("La direccion de correo electronico o la contraseña que has introducido no son correctas.")
             }
             .onReceive(authentication.$signInErrorMessage) { newValue in
                 showErrorAlert = newValue != nil
