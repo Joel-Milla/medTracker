@@ -1,55 +1,38 @@
 import SwiftUI
 
 struct LogInView: View {
-    @State var telefono = 0
-    @State var email = ""
-    @State var contrasena = ""
-    @State private var muestraBienvenida = false
-    @State private var muestraHome = false
-
+    @EnvironmentObject var authentication: AuthViewModel
+    
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
-                    Section {
-                        HStack {
-                            Text("Telefono:")
-                            TextField("", value: $telefono, format: .number)
-                        }
-                        HStack {
-                            Text("Correo:")
-                            TextField("", text: $email)
-                        }
-                        HStack {
-                            Text("Contraseña:")
-                            SecureField("", text: $contrasena)
-                        }
-                    } header: {
-                        Text("Ingresa tus datos:")
-                    }
+            Form {
+                Group {
+                    TextField("Email", text: $authentication.email)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                    SecureField("Contraseña", text: $authentication.password)
+                        .textContentType(.newPassword)
                 }
-                Button("Iniciar Sesión") {
-                    muestraHome = true
-                }
-                .fullScreenCover(isPresented: $muestraHome, content: {
-                    MainView()
+                .padding()
+                .background(Color.secondary.opacity(0.15))
+                .cornerRadius(10)
+                
+                Button("Sign In", action: {
+                    authentication.signIn()
                 })
-                .buttonStyle(Button1MedTracker())
+                .padding()
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.white)
+                .background(Color.accentColor)
+                .cornerRadius(10)
             }
-            .navigationBarItems(leading: NavigationLink(
-                            destination: WelcomeView(),
-                            label: {
-                                Image(systemName: "arrow.left")
-                                Text("Regresar")
-                            }
-                        ))
-            .navigationTitle("Inicia Sesión")
-            
+            .navigationTitle("Registrar")
         }
     }
 }
 
 struct loginView_Previews: PreviewProvider {
+    static var temporary = AuthViewModel()
     static var previews: some View {
         LogInView()
     }

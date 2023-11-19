@@ -1,88 +1,41 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State var nombre = ""
-    @State var telefono = 0
-    @State var estatura = 0.0
-    @State var contrasena = ""
-    @State var sexo = ""
-    @State var aPaterno = ""
-    @State var aMaterno = ""
-    @State var email = ""
-    @State private var muestraBienvenida = false
-    @State private var muestraHome = false
+    @StateObject var authentication: AuthViewModel.CreateAccountViewModel
 
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
-                    Section {
-                        HStack {
-                            Text("Nombre:")
-                            TextField("", text: $nombre)
-                        }
-                        HStack {
-                            Text("Apellido Paterno:")
-                            TextField("", text: $aPaterno)
-                        }
-                        HStack {
-                            Text("Apellido Materno:")
-                            TextField("", text: $aMaterno)
-                        }
-                        HStack {
-                            Text("Estatura:")
-                            TextField("", value: $estatura, format: .number)
-                        }
-                        HStack {
-                            Text("Sexo:")
-                            TextField("", text: $sexo)
-                        }
-                    } header: {
-                        Text("datos perosnales")
-                    }
-                    Section{
-                        HStack {
-                            Text("Telefono:")
-                            TextField("", value: $telefono, format: .number)
-                        }
-                        HStack {
-                            Text("Correo:")
-                            TextField("", text: $email)
-                        }
-                        HStack {
-                            Text("Contraseña:")
-                            SecureField("", text: $contrasena)
-                        }
-                    }header: {
-                        Text("Datos de tu cuenta")
-                    }
+            Form {
+                TextField("Nombre", text: $authentication.name)
+                    .textContentType(.name)
+                    .textInputAutocapitalization(.words)
+                Group {
+                    TextField("Email", text: $authentication.email)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                    SecureField("Contraseña", text: $authentication.password)
+                        .textContentType(.newPassword)
                 }
-                Button("Registrarme") {
-                    muestraHome = true
-                }
-                .fullScreenCover(isPresented: $muestraHome, content: {
-                    MainView()
-                })
-                .buttonStyle(Button1MedTracker())
-                
+                .padding()
+                .background(Color.secondary.opacity(0.15))
+                .cornerRadius(10)
+                Button("Crear Cuenta", action: authentication.submit)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.white)
+                    .background(Color.accentColor)
+                    .cornerRadius(10)
             }
-            .navigationBarItems(leading: NavigationLink(
-                            destination: WelcomeView(),
-                            label: {
-                                Image(systemName: "arrow.left")
-                                Text("Regresar")
-                            }
-                        ))
-            .navigationTitle("Registro")
-            
-            
+            .navigationTitle("Registrar")
+            .onSubmit(authentication.submit)
         }
     }
 }
 
 struct registroUsuario_Previews: PreviewProvider {
+    static var viewModels = AuthViewModel()
     static var previews: some View {
-        RegisterView()
+        RegisterView(authentication: viewModels.makeCreateAccountViewModel())
     }
 }
 

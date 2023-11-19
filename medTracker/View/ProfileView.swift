@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ProfileView: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
@@ -16,6 +17,7 @@ struct ProfileView: View {
     @State private var estatura : String = ""
     
     @State private var isEditing = false
+    @EnvironmentObject var authentication: AuthViewModel
     
     let defaults = UserDefaults.standard
     
@@ -29,6 +31,10 @@ struct ProfileView: View {
                     .clipShape(Circle())
                     .clipped()
                 Form {
+                    Button("Sign Out", action: {
+                        authentication.signOut()
+                    }).foregroundStyle(Color.red)
+
                     Section {
                         if isEditing {
                             HStack {

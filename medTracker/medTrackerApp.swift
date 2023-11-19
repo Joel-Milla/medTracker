@@ -14,11 +14,17 @@ struct medTrackerApp: App {
     init() {
         FirebaseApp.configure()
     }
+    @StateObject var authentication = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
-            // if SavedUser
-            MainView()
+            if authentication.isAuthenticated {
+                MainView()
+                    .environmentObject(authentication)
+            } else {
+                WelcomeView()
+                    .environmentObject(authentication)
+            }
         }
     }
 }
