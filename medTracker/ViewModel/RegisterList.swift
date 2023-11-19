@@ -16,6 +16,7 @@ class RegisterList : ObservableObject {
         }
     }*/
     let repository = Repository()
+
     func makeCreateAction() -> RegisterSymptomView.CreateAction {
         return { [weak self] register in
             try await self?.repository.createRegister(register)

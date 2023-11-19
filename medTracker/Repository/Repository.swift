@@ -24,6 +24,7 @@ struct Repository {
         }
         return ""
     }
+
     private var symptomReference: CollectionReference
     private var registerReference: CollectionReference
     private var email: String

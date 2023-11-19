@@ -27,7 +27,7 @@ struct LogInView: View {
                 .background(Color.accentColor)
                 .cornerRadius(10)
             }
-            .alert("LogIn Error", isPresented: $showErrorAlert) {
+            .alert("Error", isPresented: $showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
                     Text("Password or email are invalid.")

@@ -11,7 +11,7 @@ import Foundation
 class AuthViewModel: ObservableObject {
     @Published var email = "" {
         didSet {
-            escribirJSON(email)
+            escribirJSON(email, path: "email.JSON")
         }
     }
     @Published var password = ""
@@ -23,15 +23,15 @@ class AuthViewModel: ObservableObject {
     
     private let authService = AuthService()
     
-    func rutaArchivos() -> URL {
+    func rutaArchivos(_ path: String) -> URL {
         let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pathArchivo = url.appendingPathComponent("email.JSON")
+        let pathArchivo = url.appendingPathComponent(path)
         return pathArchivo
     }
     
-    func escribirJSON(_ value: String) {
+    func escribirJSON(_ value: String, path: String) {
         if let codificado = try? JSONEncoder().encode(value) {
-            try? codificado.write(to: rutaArchivos())
+            try? codificado.write(to: rutaArchivos(path))
         }
     }
 
@@ -55,9 +55,13 @@ class AuthViewModel: ObservableObject {
                 try authService.signOut()
                 email = ""
                 password = ""
-                signInErrorMessage = ""
-                registrationErrorMessage = ""
-                escribirJSON("")
+                signInErrorMessage = nil
+                registrationErrorMessage = nil
+                let eliminar = ["email.JSON", "Registers.JSON", "Symptoms.JSON"]
+                for path in eliminar {
+                    escribirJSON("", path: path)
+                }
+
             } catch {
                 signInErrorMessage = error.localizedDescription
             }
