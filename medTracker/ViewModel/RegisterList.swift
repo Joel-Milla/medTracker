@@ -15,17 +15,17 @@ class RegisterList : ObservableObject {
             }
         }
     }*/
-    
+    let repository = Repository()
     func makeCreateAction() -> RegisterSymptomView.CreateAction {
         return { [weak self] register in
-            try await Repository.createRegister(register)
+            try await self?.repository.createRegister(register)
         }
     }
     
     func fetchPosts() {
         Task {
             do {
-                registers = try await Repository.fetchRegisters()
+                registers = try await self.repository.fetchRegisters()
             } catch {
                 print("[PostsViewModel] Cannot fetch posts: \(error)")
             }

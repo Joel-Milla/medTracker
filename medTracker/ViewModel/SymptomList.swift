@@ -16,17 +16,17 @@ class SymptomList : ObservableObject {
             }
         }
     }
-    
+    let repository = Repository()
     func makeCreateAction() -> AddSymptomView.CreateAction {
         return { [weak self] symptom in
-            try await Repository.createSymptom(symptom)
+            try await self?.repository.createSymptom(symptom)
         }
     }
     
     func fetchPosts() {
         Task {
             do {
-                symptoms = try await Repository.fetchSymptoms()
+                symptoms = try await self.repository.fetchSymptoms()
             } catch {
                 print("[PostsViewModel] Cannot fetch posts: \(error)")
             }

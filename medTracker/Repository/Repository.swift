@@ -10,16 +10,38 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Repository {
-    static let symptomReference = Firestore.firestore().collection("symptoms")
-    static let registerReference = Firestore.firestore().collection("registers")
+    static func rutaArchivos() -> URL {
+        let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+        let pathArchivo = url.appendingPathComponent("email.JSON")
+        return pathArchivo
+    }
+    
+    static func getEmail() -> String {
+        if let email = try? Data.init(contentsOf: rutaArchivos()) {
+            if let email = try? JSONDecoder().decode(String.self, from: email) {
+                return email
+            }
+        }
+        return ""
+    }
+    private var symptomReference: CollectionReference
+    private var registerReference: CollectionReference
+    private var email: String
+    
+    init() {
+        email = Repository.getEmail()
+        // Assuming you want to append the email to the collection name
+        symptomReference = Firestore.firestore().collection("symptoms_\(email)")
+        registerReference = Firestore.firestore().collection("registers_\(email)")
+    }
     //static let id = UUID()
     
-    static func createSymptom(_ symptom: Symptom) async throws {
+    func createSymptom(_ symptom: Symptom) async throws {
         let document = symptomReference.document(String(symptom.id))
         try await document.setData(from: symptom)
     }
     
-    static func fetchSymptoms() async throws -> [Symptom] {
+    func fetchSymptoms() async throws -> [Symptom] {
         let snapshot = try await symptomReference
             .order(by: "id", descending: false)
             .getDocuments()
@@ -29,12 +51,12 @@ struct Repository {
         }
     }
     
-    static func createRegister(_ register: Register) async throws {
+    func createRegister(_ register: Register) async throws {
         let document = registerReference.document(UUID().uuidString)
         try await document.setData(from: register)
     }
     
-    static func fetchRegisters() async throws -> [Register] {
+    func fetchRegisters() async throws -> [Register] {
         let snapshot = try await registerReference
             .order(by: "idSymptom", descending: false)
             .getDocuments()
