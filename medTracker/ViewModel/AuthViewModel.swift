@@ -13,6 +13,7 @@ class AuthViewModel: ObservableObject {
     @Published var password = ""
 
     @Published var isAuthenticated = false
+
     @Published var signInErrorMessage: String?
     
     private let authService = AuthService()
