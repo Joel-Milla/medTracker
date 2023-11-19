@@ -13,6 +13,7 @@ class AuthViewModel: ObservableObject {
     @Published var password = ""
 
     @Published var isAuthenticated = false
+    @Published var signInErrorMessage: String?
     
     private let authService = AuthService()
     
@@ -25,7 +26,7 @@ class AuthViewModel: ObservableObject {
             do {
                 try await authService.signIn(email: email, password: password)
             } catch {
-                print("[AuthViewModel] Cannot sign in: \(error)")
+                signInErrorMessage = error.localizedDescription
             }
         }
     }
@@ -37,7 +38,7 @@ class AuthViewModel: ObservableObject {
                 email = ""
                 password = ""
             } catch {
-                print("Error signing out")
+                signInErrorMessage = error.localizedDescription
             }
         }
     }

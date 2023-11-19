@@ -2,6 +2,7 @@ import SwiftUI
 
 struct LogInView: View {
     @EnvironmentObject var authentication: AuthViewModel
+    @State private var showErrorAlert = false
     
     var body: some View {
         NavigationStack {
@@ -25,6 +26,16 @@ struct LogInView: View {
                 .foregroundColor(.white)
                 .background(Color.accentColor)
                 .cornerRadius(10)
+            }
+            .alert("Sign In Error", isPresented: $showErrorAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                if let message = authentication.signInErrorMessage {
+                    Text(message)
+                }
+            }
+            .onReceive(authentication.$signInErrorMessage) { newValue in
+                showErrorAlert = newValue != nil
             }
             .navigationTitle("Registrar")
         }
