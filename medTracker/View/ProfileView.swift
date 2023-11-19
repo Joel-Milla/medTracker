@@ -18,6 +18,7 @@ struct ProfileView: View {
     
     @State private var isEditing = false
     @EnvironmentObject var authentication: AuthViewModel
+    let email = Repository.getEmail()
     
     let defaults = UserDefaults.standard
     
@@ -96,7 +97,7 @@ struct ProfileView: View {
                         Text("Historial Clinico")
                     }
                 }
-                .navigationTitle("Profile")
+                .navigationTitle("_\(email)_")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         if isEditing {

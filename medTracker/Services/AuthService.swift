@@ -27,10 +27,23 @@ class AuthService: ObservableObject {
         do {
             let result = try await auth.createUser(withEmail: email, password: password)
                     try await result.user.updateProfile(\.displayName, to: name)
+            AuthService.writeEmail(email)
         } catch {
             throw error
         }
         
+    }
+    
+    static func rutaArchivos() -> URL {
+        let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+        let pathArchivo = url.appendingPathComponent("email.JSON")
+        return pathArchivo
+    }
+    
+    static func writeEmail(_ value: String) {
+        if let codificado = try? JSONEncoder().encode(value) {
+            try? codificado.write(to: rutaArchivos())
+        }
     }
     
     func signIn(email: String, password: String) async throws {

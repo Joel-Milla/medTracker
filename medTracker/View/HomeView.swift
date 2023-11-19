@@ -11,6 +11,7 @@ struct HomeView: View {
     @State var muestraEditarSintomas = false
     @ObservedObject var listaDatos : SymptomList
     @ObservedObject var registers : RegisterList
+    let email = Repository.getEmail()
     
     var body: some View {
         NavigationStack {
@@ -30,7 +31,7 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationTitle("Datos de salud")
+            .navigationTitle(email)
             .navigationBarItems(trailing:
                 Button {
                 muestraEditarSintomas = true
