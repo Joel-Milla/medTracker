@@ -15,38 +15,55 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-        VStack {
-                List{
-                    ForEach(listaDatos.symptoms.indices, id: \.self) { index in
-                        if listaDatos.symptoms[index].activo {
-                            let symptom = listaDatos.symptoms[index]
-                            NavigationLink{
-                                RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, createAction: registers.makeCreateAction())
-                            } label: {
-                                Celda(unDato : symptom)
+            switch listaDatos.state {
+            case .isLoading:
+                ProgressView()
+            case .isEmpty:
+                VStack(alignment: .center, spacing: 10) {
+                    Text("No hay sintomas registrados")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                    Text("Porfavor de agregar sintomas para poder empezar a registrar.")
+                }
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.secondary)
+                .padding()
+            case .complete:
+                VStack {
+                    List{
+                        ForEach(listaDatos.symptoms.indices, id: \.self) { index in
+                            if listaDatos.symptoms[index].activo {
+                                let symptom = listaDatos.symptoms[index]
+                                NavigationLink{
+                                    RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, createAction: registers.makeCreateAction())
+                                } label: {
+                                    Celda(unDato : symptom)
+                                }
+                                .padding(10)
+                                
                             }
-                            .padding(10)
-                            
                         }
                     }
                 }
-            }
-            .navigationTitle(email)
-            .navigationBarItems(trailing:
-                Button {
-                muestraEditarSintomas = true
+                .navigationTitle(email)
+                .navigationBarItems(trailing:
+                                        Button {
+                    muestraEditarSintomas = true
                 } label: {
                     Image(systemName: "square.and.pencil")
                 }
-            )
-            .fullScreenCover(isPresented: $muestraEditarSintomas) {
-                EditSymptomView(listaDatos: listaDatos)
+                )
+                .fullScreenCover(isPresented: $muestraEditarSintomas) {
+                    EditSymptomView(listaDatos: listaDatos)
+                }
             }
         }
-        .background(Color("mainGray"))
-        .ignoresSafeArea()
+                .background(Color("mainGray"))
+                .ignoresSafeArea()
+        }
     }
-}
 
 struct pagInicio_Previews: PreviewProvider {
     static var previews: some View {
@@ -56,7 +73,7 @@ struct pagInicio_Previews: PreviewProvider {
 
 struct Celda: View {
     var unDato : Symptom
-
+    
     var body: some View {
         HStack {
             Image(systemName: unDato.icon)

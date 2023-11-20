@@ -16,6 +16,14 @@ class SymptomList : ObservableObject {
             }
         }
     }
+    @Published var state: State
+    
+    enum State {
+        case complete
+        case isLoading
+        case isEmpty
+    }
+
     let repository = Repository()
     func makeCreateAction() -> AddSymptomView.CreateAction {
         return { [weak self] symptom in
@@ -24,9 +32,11 @@ class SymptomList : ObservableObject {
     }
     
     func fetchPosts() {
+        state = .isLoading
         Task {
             do {
                 symptoms = try await self.repository.fetchSymptoms()
+                state = symptoms.isEmpty ? .isEmpty : .complete
             } catch {
                 print("[PostsViewModel] Cannot fetch posts: \(error)")
             }
@@ -40,16 +50,16 @@ class SymptomList : ObservableObject {
     }
     
     init() {
+        state = .isLoading
         if let datosRecuperados = try? Data.init(contentsOf: rutaArchivos()) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
                 symptoms = datosDecodificados
+                state = symptoms.isEmpty ? .isEmpty : .complete
                 return
             }
         }
-        
         //If no JSON, fetch info
         fetchPosts()
-        
         // For testing
         // symptoms = getDefaultSymptoms()
     }

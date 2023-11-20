@@ -97,7 +97,7 @@ struct ProfileView: View {
                         Text("Historial Clinico")
                     }
                 }
-                .navigationTitle("_\(email)_")
+                .navigationTitle("Profile")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         if isEditing {
