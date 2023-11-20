@@ -25,13 +25,18 @@ struct RegisterView: View {
                     AuthService.writeEmail(authentication.email)
                     authentication.submit()
                 }, label: {
-                    Text("Crear Cuenta")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.white)
-                        .background(Color.accentColor)
-                        .cornerRadius(10)
+                    switch authentication.state {
+                    case .idle:
+                        Text("Crear Cuenta")
+                    case .isLoading:
+                        ProgressView()
+                    }
                 })
+                .padding()
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.white)
+                .background(Color.accentColor)
+                .cornerRadius(10)
             }
             .onSubmit(authentication.submit)
             // The alert and onReceive check when there is a registrationError and show it.
