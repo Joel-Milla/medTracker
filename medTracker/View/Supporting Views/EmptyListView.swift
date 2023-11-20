@@ -21,7 +21,7 @@ struct EmptyListView: View {
             Text(message)
             if let action = action {
                 Button(action: action) {
-                    Text("Add symptom")
+                    Text("Agregar sintoma")
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 5).stroke(Color.secondary))
                 }
