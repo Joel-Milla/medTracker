@@ -11,6 +11,7 @@ struct HomeView: View {
     @ObservedObject var listaDatos : SymptomList
     @ObservedObject var registers : RegisterList
     @State private var muestraEditarSintomas = false
+    @State private var muestraNewSymptom = false
     
     var body: some View {
         NavigationStack {
@@ -22,8 +23,12 @@ struct HomeView: View {
                     case .isEmpty:
                     EmptyListView(
                         title: "No hay sintomas registrados",
-                        message: "Porfavor de agregar sintomas para poder empezar a registrar."
+                        message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                        action: { muestraNewSymptom = true }
                     )
+                    .sheet(isPresented: $muestraNewSymptom) {
+                        AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                    }
                     case .complete:
                         List{
                             ForEach(listaDatos.symptoms.indices, id: \.self) { index in
