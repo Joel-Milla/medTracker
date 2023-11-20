@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditSymptomView: View {
+    @State private var refreshID = UUID()
     @State var muestraAddSymptomView = false
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var listaDatos: SymptomList
@@ -30,6 +31,7 @@ struct EditSymptomView: View {
                             }
                         }
                     }
+                    .id(refreshID)  // Force the view to update
                     .font(.title3)
                     .navigationTitle("Edita tus datos de salud")
                 }
@@ -53,6 +55,7 @@ struct EditSymptomView: View {
             }
             .sheet(isPresented: $muestraAddSymptomView) {
                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                refreshID = UUID()
             }
         }
     }
