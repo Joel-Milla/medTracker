@@ -8,39 +8,55 @@
 import Foundation
 import SwiftUI
 
+/**********************
+ This class contains all the symptoms of the user.
+ **********************************/
 class SymptomList : ObservableObject {
     @Published var symptoms = [Symptom]() {
         didSet {
             updateStateBasedOnSymptoms()
-            if let codificado = try? JSONEncoder().encode(symptoms) {
-                try? codificado.write(to: rutaArchivos())
-            }
+                HelperFunctions.write(self.symptoms, inPath: "Symptoms.JSON")
         }
     }
-    @Published var state: State = .isLoading
+    @Published var state: State = .isLoading //State of the symptoms array
+    let repository = Repository() // Variable to call the functions inside the repository
     
+    /**********************
+     Important initialization methods
+     **********************************/
     enum State {
         case complete
         case isLoading
         case isEmpty
     }
+    
+    init() {
+        if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Symptoms.JSON")) {
+            if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
+                symptoms = datosDecodificados
+                return
+            }
+        }
+        //If there is no info in JSON, fetdh
+        fetchSymptoms()
 
-    let repository = Repository()
+        // For testing, the next function can be used for dummy data.
+        // symptoms = getDefaultSymptoms()
+    }
+    
+    /**********************
+     Helper functions
+     **********************************/
+
+    // The functions returns a closure that is used to write information in firebase
     func makeCreateAction() -> AddSymptomView.CreateAction {
         return { [weak self] symptom in
             try await self?.repository.createSymptom(symptom)
         }
     }
     
-    private func updateStateBasedOnSymptoms() {
-            if symptoms.isEmpty {
-                state = .isEmpty
-            } else {
-                state = .complete
-            }
-        }
-    
-    func fetchPosts() {
+    // Fetch symptoms from the database and save them on the symptoms list.
+    func fetchSymptoms() {
         state = .isLoading
         Task {
             do {
@@ -52,26 +68,16 @@ class SymptomList : ObservableObject {
         }
     }
     
-    func rutaArchivos() -> URL {
-        let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pathArchivo = url.appendingPathComponent("Symptoms.JSON")
-        return pathArchivo
-    }
-    
-    init() {
-        if let datosRecuperados = try? Data.init(contentsOf: rutaArchivos()) {
-            if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
-                symptoms = datosDecodificados
-                state = symptoms.isEmpty ? .isEmpty : .complete
-                return
+    // Function to update the state of the syntomsList. This is called each time the list is modified.
+    private func updateStateBasedOnSymptoms() {
+            if symptoms.isEmpty {
+                state = .isEmpty
+            } else {
+                state = .complete
             }
         }
-        //If no JSON, fetch info
-        fetchPosts()
-        // For testing
-        // symptoms = getDefaultSymptoms()
-    }
     
+    // Dummy data for testing purposes.
     private func getDefaultSymptoms() -> [Symptom] {
         return [
             Symptom(id: 1, nombre: "Peso", icon: "star.fill",  description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", cuantitativo: true, unidades: "kg", activo: true, color: "#007AF"),

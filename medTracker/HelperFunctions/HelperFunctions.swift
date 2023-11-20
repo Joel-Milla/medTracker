@@ -10,10 +10,10 @@ import Foundation
 /**********************
  This class will contain all the functions that are needed multiple times among all the project.
  **********************************/
-@MainActor
+
 class HelperFunctions {
     // This function returns a url inside sandbox based on the "path" variable that is being passed.
-    static func rutaArchivos(filename path: String) -> URL {
+    static func filePath(_ path: String) -> URL {
         let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
         let pathArchivo = url.appendingPathComponent(path)
         return pathArchivo
@@ -23,7 +23,7 @@ class HelperFunctions {
     static func write<T: Encodable>(_ value: T, inPath file: String) {
         DispatchQueue.main.async {
             if let codificado = try? JSONEncoder().encode(value) {
-                try? codificado.write(to: rutaArchivos(filename: file)) //writes the value passed into the file passed.
+                try? codificado.write(to: filePath(file)) //writes the value passed into the file passed.
             }
         }
     }
