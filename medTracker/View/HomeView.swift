@@ -15,23 +15,21 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            switch listaDatos.state {
-            case .isLoading:
-                ProgressView()
-            case .isEmpty:
-                VStack(alignment: .center, spacing: 10) {
+            VStack {
+                switch listaDatos.state {
+                case .isLoading:
+                    ProgressView()
+                case .isEmpty:
                     Text("No hay sintomas registrados")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
+                        .padding()
                     Text("Porfavor de agregar sintomas para poder empezar a registrar.")
-                }
-                .font(.subheadline)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
-                .padding()
-            case .complete:
-                VStack {
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                case .complete:
                     List{
                         ForEach(listaDatos.symptoms.indices, id: \.self) { index in
                             if listaDatos.symptoms[index].activo {
@@ -47,23 +45,23 @@ struct HomeView: View {
                         }
                     }
                 }
-                .navigationTitle(email)
-                .navigationBarItems(trailing:
-                                        Button {
-                    muestraEditarSintomas = true
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                }
-                )
-                .fullScreenCover(isPresented: $muestraEditarSintomas) {
-                    EditSymptomView(listaDatos: listaDatos)
-                }
+            }
+            .navigationTitle("Datos de salud")
+            .navigationBarItems(trailing:
+                                    Button {
+                muestraEditarSintomas = true
+            } label: {
+                Image(systemName: "square.and.pencil")
+            }
+            )
+            .fullScreenCover(isPresented: $muestraEditarSintomas) {
+                EditSymptomView(listaDatos: listaDatos)
             }
         }
-                .background(Color("mainGray"))
-                .ignoresSafeArea()
-        }
+        .background(Color("mainGray"))
+        .ignoresSafeArea()
     }
+}
 
 struct pagInicio_Previews: PreviewProvider {
     static var previews: some View {

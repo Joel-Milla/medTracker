@@ -11,12 +11,13 @@ import SwiftUI
 class SymptomList : ObservableObject {
     @Published var symptoms = [Symptom]() {
         didSet {
+            updateStateBasedOnSymptoms()
             if let codificado = try? JSONEncoder().encode(symptoms) {
                 try? codificado.write(to: rutaArchivos())
             }
         }
     }
-    @Published var state: State
+    @Published var state: State = .isLoading
     
     enum State {
         case complete
@@ -30,6 +31,14 @@ class SymptomList : ObservableObject {
             try await self?.repository.createSymptom(symptom)
         }
     }
+    
+    private func updateStateBasedOnSymptoms() {
+            if symptoms.isEmpty {
+                state = .isEmpty
+            } else {
+                state = .complete
+            }
+        }
     
     func fetchPosts() {
         state = .isLoading
@@ -50,7 +59,6 @@ class SymptomList : ObservableObject {
     }
     
     init() {
-        state = .isLoading
         if let datosRecuperados = try? Data.init(contentsOf: rutaArchivos()) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
                 symptoms = datosDecodificados
