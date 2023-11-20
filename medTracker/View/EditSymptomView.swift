@@ -18,7 +18,8 @@ struct EditSymptomView: View {
                 if listaDatos.symptoms.isEmpty {
                     EmptyListView(
                         title: "No hay sintomas registrados",
-                        message: "Porfavor de agregar sintomas para poder empezar a registrar."
+                        message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                        action: { muestraAddSymptomView = true }
                     )
                 }
                 else {
