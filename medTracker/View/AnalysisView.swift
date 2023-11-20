@@ -14,22 +14,30 @@ struct AnalysisView: View {
     @ObservedObject var registers: RegisterList
     
     var body: some View {
-        VStack {
-            TabView {
-                ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
-                    AnalysisItemView(symptom: symptom, registers: registers)
-                }
-            }
-            .id(refreshID)  // Force the TabView to update
-            .tabViewStyle(.page)
-            .indexViewStyle(.page(backgroundDisplayMode: .always))
-            
-            Spacer(minLength: 50)
+        if listSymp.symptoms.isEmpty {
+            EmptyListView(
+                title: "No hay sintomas registrados",
+                message: "Porfavor de agregar sintomas para poder empezar a registrar."
+            )
         }
-        .background(Color("mainWhite"))
-        .onChange(of: registers.registers) { _ in
-            // This will be called when registers change
-            refreshID = UUID()  // Force the TabView to update
+        else {
+            VStack {
+                TabView {
+                    ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
+                        AnalysisItemView(symptom: symptom, registers: registers)
+                    }
+                }
+                .id(refreshID)  // Force the TabView to update
+                .tabViewStyle(.page)
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                
+                Spacer(minLength: 50)
+            }
+            .background(Color("mainWhite"))
+            .onChange(of: registers.registers) { _ in
+                // This will be called when registers change
+                refreshID = UUID()  // Force the TabView to update
+        }
         }
     }
 }
