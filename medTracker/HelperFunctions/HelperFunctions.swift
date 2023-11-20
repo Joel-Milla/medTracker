@@ -19,7 +19,7 @@ class HelperFunctions {
         return pathArchivo
     }
     // The function write(), writes the "value" being passed into the "file" passed.
-    static func write(_ value: String, inPath file: String) {
+    static func write<T: Encodable>(_ value: T, inPath file: String) {
         if let codificado = try? JSONEncoder().encode(value) {
             try? codificado.write(to: rutaArchivos(filename: file)) //writes the value passed into the file passed.
         }
