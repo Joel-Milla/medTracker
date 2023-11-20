@@ -15,7 +15,7 @@ class SymptomList : ObservableObject {
     @Published var symptoms = [Symptom]() {
         didSet {
             updateStateBasedOnSymptoms()
-                HelperFunctions.write(self.symptoms, inPath: "Symptoms.JSON")
+            HelperFunctions.write(self.symptoms, inPath: "Symptoms.JSON")
         }
     }
     @Published var state: State = .isLoading //State of the symptoms array
@@ -39,7 +39,7 @@ class SymptomList : ObservableObject {
         }
         //If there is no info in JSON, fetdh
         fetchSymptoms()
-
+        
         // For testing, the next function can be used for dummy data.
         // symptoms = getDefaultSymptoms()
     }
@@ -47,7 +47,7 @@ class SymptomList : ObservableObject {
     /**********************
      Helper functions
      **********************************/
-
+    
     // The functions returns a closure that is used to write information in firebase
     func makeCreateAction() -> AddSymptomView.CreateAction {
         return { [weak self] symptom in
@@ -70,12 +70,12 @@ class SymptomList : ObservableObject {
     
     // Function to update the state of the syntomsList. This is called each time the list is modified.
     private func updateStateBasedOnSymptoms() {
-            if symptoms.isEmpty {
-                state = .isEmpty
-            } else {
-                state = .complete
-            }
+        if symptoms.isEmpty {
+            state = .isEmpty
+        } else {
+            state = .complete
         }
+    }
     
     // Dummy data for testing purposes.
     private func getDefaultSymptoms() -> [Symptom] {
@@ -85,7 +85,7 @@ class SymptomList : ObservableObject {
             Symptom(id: 3, nombre: "Insomnio", icon: "star.fill", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", cuantitativo: true, unidades: "", activo: false, color: "#D03A20"),
             Symptom(id: 4, nombre: "Estado cardíaco", icon: "star.fill", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "#86B953"),
             Symptom(id: 5, nombre: "Estado cardíaco 2", icon: "star.fill", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "#86B953")
-        
+            
         ]
     }
 }
