@@ -27,13 +27,14 @@ struct LogInView: View {
                 .background(Color.accentColor)
                 .cornerRadius(10)
             }
+            // The alert and onReceive check when there is a signIn error and show it.
+            .onReceive(authentication.$signInErrorMessage) { newValue in
+                showErrorAlert = newValue != nil
+            }
             .alert("Error", isPresented: $showErrorAlert) {
                 Button("OK", role: .cancel) { }
             } message: {
-                    Text("Password or email are invalid.")
-            }
-            .onReceive(authentication.$signInErrorMessage) { newValue in
-                showErrorAlert = newValue != nil
+                Text("Password or email are invalid.")
             }
             .navigationTitle("Iniciar Sesión")
         }
