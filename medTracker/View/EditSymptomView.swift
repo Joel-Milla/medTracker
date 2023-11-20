@@ -55,7 +55,9 @@ struct EditSymptomView: View {
             }
             .sheet(isPresented: $muestraAddSymptomView) {
                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                refreshID = UUID()
+                    .onChange(of: listaDatos.symptoms) { _ in
+                        refreshID = UUID()
+                    }
             }
         }
     }
