@@ -20,15 +20,10 @@ struct HomeView: View {
                     case .isLoading:
                         ProgressView()
                     case .isEmpty:
-                        Text("No hay sintomas registrados")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
-                            .padding()
-                        Text("Porfavor de agregar sintomas para poder empezar a registrar.")
-                            .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.secondary)
+                    EmptyListView(
+                        title: "No hay sintomas registrados",
+                        message: "Porfavor de agregar sintomas para poder empezar a registrar."
+                    )
                     case .complete:
                         List{
                             ForEach(listaDatos.symptoms.indices, id: \.self) { index in
