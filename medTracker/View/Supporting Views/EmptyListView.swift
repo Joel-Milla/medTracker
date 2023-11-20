@@ -10,7 +10,7 @@ import SwiftUI
 struct EmptyListView: View {
     let title: String
     let message: String
-    var retryAction: (() -> Void)?
+    var action: (() -> Void)?
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
@@ -19,9 +19,9 @@ struct EmptyListView: View {
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)
             Text(message)
-            if let retryAction = retryAction {
-                Button(action: retryAction) {
-                    Text("Try Again")
+            if let action = action {
+                Button(action: action) {
+                    Text("Add symptom")
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 5).stroke(Color.secondary))
                 }
@@ -41,7 +41,7 @@ struct EmptyListView_Previews: PreviewProvider {
         EmptyListView(
             title: "Cannot Load Posts",
             message: "Something went wrong while loading posts. Please check your Internet connection.",
-            retryAction: {}
+            action: {}
         )
         EmptyListView(
             title: "No Posts",
