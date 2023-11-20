@@ -29,6 +29,7 @@ struct HomeView: View {
                     EmptyListView(
                         title: "No hay sintomas registrados",
                         message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                        nameButton: "Agregar Sintoma",
                         action: { muestraNewSymptom = true }
                     )
                     // The sheets sends the user to the view to create a new symptom.

@@ -13,6 +13,7 @@ import SwiftUI
 struct EmptyListView: View {
     let title: String
     let message: String
+    let nameButton: String
     var action: (() -> Void)?
     
     var body: some View {
@@ -24,7 +25,7 @@ struct EmptyListView: View {
             Text(message)
             if let action = action {
                 Button(action: action) {
-                    Text("Agregar sintoma")
+                    Text(nameButton)
                         .padding(10)
                         .background(RoundedRectangle(cornerRadius: 5).stroke(Color.secondary))
                 }
@@ -44,11 +45,13 @@ struct EmptyListView_Previews: PreviewProvider {
         EmptyListView(
             title: "Cannot Load Posts",
             message: "Something went wrong while loading posts. Please check your Internet connection.",
+            nameButton: "Test",
             action: {}
         )
         EmptyListView(
             title: "No Posts",
-            message: "There aren’t any posts yet."
+            message: "There aren’t any posts yet.",
+            nameButton: "Test"
         )
     }
 }

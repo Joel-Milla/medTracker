@@ -24,6 +24,7 @@ struct AnalysisView: View {
             EmptyListView(
                 title: "No hay sintomas registrados",
                 message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                nameButton: "Agregar Sintoma",
                 action: { muestraNewSymptom = true }
             )
             .sheet(isPresented: $muestraNewSymptom) {
@@ -83,6 +84,7 @@ struct AnalysisItemView: View {
                 EmptyListView(
                     title: "No hay registros de este sintoma",
                     message: "Porfavor de agregar un estado a este sintoma para mostrar avances.",
+                    nameButton: "Agregar Registro",
                     action: { muestraRegisterSymptomView = true }
                 )
                 .sheet(isPresented: $muestraRegisterSymptomView) {

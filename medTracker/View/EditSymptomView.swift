@@ -24,6 +24,7 @@ struct EditSymptomView: View {
                     EmptyListView(
                         title: "No hay sintomas registrados",
                         message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                        nameButton: "Agregar Sintoma",
                         action: { muestraAddSymptomView = true }
                     )
                 }
