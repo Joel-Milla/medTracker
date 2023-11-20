@@ -21,12 +21,17 @@ struct RegisterView: View {
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
-                Button("Crear Cuenta", action: authentication.submit)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.white)
-                    .background(Color.accentColor)
-                    .cornerRadius(10)
+                Button(action: {
+                    AuthService.writeEmail(authentication.email)
+                    authentication.submit()
+                }, label: {
+                    Text("Crear Cuenta")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .background(Color.accentColor)
+                        .cornerRadius(10)
+                })
             }
             .onSubmit(authentication.submit)
             .onReceive(authViewModel.$registrationErrorMessage) { errorMessage in
