@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 
+/**********************
+ This view shows the profile data of the user and allows the user to edit it.
+ **********************************/
 struct ProfileView: View {
     var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
     

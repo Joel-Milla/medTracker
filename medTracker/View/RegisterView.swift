@@ -1,5 +1,9 @@
 import SwiftUI
 
+/**********************
+ This view submits a request to firebase to create a new user. The view first gets the name, email, and password and then makes the request.
+ **********************************/
+
 struct RegisterView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
@@ -23,8 +27,9 @@ struct RegisterView: View {
                 .cornerRadius(10)
                 Button(action: {
                     AuthService.writeEmail(authentication.email)
-                    authentication.submit()
+                    authentication.submit() //Submits the request to firebase to create a new user.
                 }, label: {
+                    // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
                         Text("Crear Cuenta")

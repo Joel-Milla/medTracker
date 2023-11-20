@@ -1,5 +1,8 @@
 import SwiftUI
 
+/**********************
+ This view sends the request to firebase to log in and show any errors as alerts.
+ **********************************/
 struct LogInView: View {
     @EnvironmentObject var authentication: AuthViewModel
     @State private var showErrorAlert = false
@@ -19,8 +22,9 @@ struct LogInView: View {
                 .cornerRadius(10)
                 
                 Button(action: {
-                    authentication.signIn()
+                    authentication.signIn() //Makes the request to firebase to check if it is correct.
                 }, label: {
+                    // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
                         Text("Sign In")

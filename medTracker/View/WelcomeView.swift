@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/**********************
+ This view only displays a welcome message and two buttons to log in or register.
+ **********************************/
 struct WelcomeView: View {
     @EnvironmentObject var authentication: AuthViewModel
     

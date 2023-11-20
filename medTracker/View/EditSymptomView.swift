@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+/**********************
+ This view edits the symptoms that are being tracked.
+ **********************************/
 struct EditSymptomView: View {
-    @State private var refreshID = UUID()
+    @State private var refreshID = UUID() //Serves to force the view to update
     @State var muestraAddSymptomView = false
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var listaDatos: SymptomList
@@ -16,6 +19,7 @@ struct EditSymptomView: View {
     var body: some View {
         NavigationView {
             VStack {
+                // Show a view with a message indicating the user that there are no symptoms being checked.
                 if listaDatos.symptoms.isEmpty {
                     EmptyListView(
                         title: "No hay sintomas registrados",
@@ -23,6 +27,7 @@ struct EditSymptomView: View {
                         action: { muestraAddSymptomView = true }
                     )
                 }
+                // If there are symptoms, then show them on a list.
                 else {
                     List {
                         Section(header: Text("Lista de datos de salud")) {
@@ -37,6 +42,7 @@ struct EditSymptomView: View {
                 }
             }
             .toolbar {
+                // Shows the back button to homeView
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
@@ -45,6 +51,7 @@ struct EditSymptomView: View {
                         Text("Regresar")
                     })
                 }
+                // Button to add a new symptom.
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         muestraAddSymptomView = true
@@ -56,7 +63,7 @@ struct EditSymptomView: View {
             .sheet(isPresented: $muestraAddSymptomView) {
                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
                     .onChange(of: listaDatos.symptoms) { _ in
-                        refreshID = UUID()
+                        refreshID = UUID() //Refresh the id to force the view to update.
                     }
             }
         }

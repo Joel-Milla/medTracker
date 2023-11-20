@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/**********************
+ This view receives a title, message and an action and displays the view where its bein called. The action can be to activate a button, among other actions.
+ **********************************/
 struct EmptyListView: View {
     let title: String
     let message: String
