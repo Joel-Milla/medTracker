@@ -21,6 +21,7 @@
 		FB6BBA122B09791A008EFA9A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BBA112B09791A008EFA9A /* AuthService.swift */; };
 		FB6BBA142B0979B6008EFA9A /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BBA132B0979B6008EFA9A /* AuthViewModel.swift */; };
 		FB6BBA162B0A990C008EFA9A /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB6BBA152B0A990C008EFA9A /* FormViewModel.swift */; };
+		FB7EBC602B0BDF0B00FBAE8D /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7EBC5F2B0BDF0B00FBAE8D /* EmptyListView.swift */; };
 		FB86F0712AFEC4160051C6A6 /* SymptomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0702AFEC4160051C6A6 /* SymptomList.swift */; };
 		FB86F0732AFEC42A0051C6A6 /* RegisterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */; };
 		FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB87FECE2ADDEE9800F6273B /* medTrackerApp.swift */; };
@@ -61,6 +62,7 @@
 		FB6BBA112B09791A008EFA9A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		FB6BBA132B0979B6008EFA9A /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		FB6BBA152B0A990C008EFA9A /* FormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
+		FB7EBC5F2B0BDF0B00FBAE8D /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 		FB86F0702AFEC4160051C6A6 /* SymptomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomList.swift; sourceTree = "<group>"; };
 		FB86F0722AFEC42A0051C6A6 /* RegisterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterList.swift; sourceTree = "<group>"; };
 		FB87FECB2ADDEE9800F6273B /* medTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = medTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +112,7 @@
 		FB1A55552AFD793C00F9A74A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FB7EBC5E2B0BDEF200FBAE8D /* Supporting Views */,
 				FBD940B02AFD74D100C3BD11 /* WelcomeView.swift */,
 				FBD940B22AFD754A00C3BD11 /* RegisterView.swift */,
 				FBD940B42AFD759D00C3BD11 /* LogInView.swift */,
@@ -159,6 +162,14 @@
 				FB6BBA112B09791A008EFA9A /* AuthService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		FB7EBC5E2B0BDEF200FBAE8D /* Supporting Views */ = {
+			isa = PBXGroup;
+			children = (
+				FB7EBC5F2B0BDF0B00FBAE8D /* EmptyListView.swift */,
+			);
+			path = "Supporting Views";
 			sourceTree = "<group>";
 		};
 		FB86F06F2AFEC3DD0051C6A6 /* ViewModel */ = {
@@ -339,6 +350,7 @@
 				FBD940B52AFD759D00C3BD11 /* LogInView.swift in Sources */,
 				FB45BFF42B08266B0019C0A1 /* SymbolIcon.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */,
+				FB7EBC602B0BDF0B00FBAE8D /* EmptyListView.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
