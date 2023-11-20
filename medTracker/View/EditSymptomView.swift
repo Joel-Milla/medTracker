@@ -31,9 +31,8 @@ struct EditSymptomView: View {
                         }
                     }
                     .id(refreshID)
-                    .background(Color("mainGray"))
                     .font(.title3)
-                .navigationTitle("Edita tus datos de salud")
+                    .navigationTitle("Edita tus datos de salud")
                 }
             }
             .toolbar {
