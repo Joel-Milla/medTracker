@@ -48,8 +48,10 @@ struct AnalysisView: View {
 }
 
 struct AnalysisItemView: View {
-    let symptom: Symptom
+    @State var symptom: Symptom
+    //let symptom: Symptom
     let registers: RegisterList
+    @State private var muestraRegisterSymptomView = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -58,8 +60,8 @@ struct AnalysisItemView: View {
                 .font(.largeTitle)
                 .bold()
                 .padding(.top, 30)
-            
-            Text("Descripción:")
+
+                Text("Descripción:")
                 .font(.system(size: 24))
                 .padding(.vertical, 10)
             
@@ -69,6 +71,17 @@ struct AnalysisItemView: View {
                 .lineSpacing(4)
                 .font(.system(size: 20))
                 .frame(height: 120, alignment: .top)
+            
+            if registers.registers.filter({ $0.idSymptom == symptom.id }).isEmpty {
+                EmptyListView(
+                    title: "No hay registros de este sintoma",
+                    message: "Porfavor de agregar un estado a este sintoma para mostrar avances.",
+                    action: { muestraRegisterSymptomView = true }
+                )
+                .sheet(isPresented: $muestraRegisterSymptomView) {
+                    RegisterSymptomView(symptom: $symptom, registers: registers, createAction: registers.makeCreateAction())
+                }
+            } else {
             
             Text("Últimos registros:")
                 .font(.system(size: 24))
@@ -98,7 +111,8 @@ struct AnalysisItemView: View {
             
             Spacer(minLength: 50)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 20)
     }
 }
