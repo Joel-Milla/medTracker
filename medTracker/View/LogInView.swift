@@ -18,8 +18,15 @@ struct LogInView: View {
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
                 
-                Button("Sign In", action: {
+                Button(action: {
                     authentication.signIn()
+                }, label: {
+                    switch authentication.state {
+                    case .idle:
+                        Text("Sign In")
+                    case .isLoading:
+                        ProgressView()
+                    }
                 })
                 .padding()
                 .frame(maxWidth: .infinity)

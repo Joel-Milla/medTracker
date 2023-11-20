@@ -20,6 +20,8 @@ class AuthViewModel: ObservableObject {
 
     @Published var signInErrorMessage: String?
     @Published var registrationErrorMessage: String?
+
+    @Published var state: State = .idle
     
     private let authService = AuthService()
     
@@ -39,13 +41,20 @@ class AuthViewModel: ObservableObject {
         authService.$isAuthenticated.assign(to: &$isAuthenticated)
     }
     
+    enum State {
+        case idle
+        case isLoading
+    }
+    
     func signIn() {
         Task {
+            state = .isLoading
             do {
                 try await authService.signIn(email: email, password: password)
             } catch {
                 signInErrorMessage = error.localizedDescription
             }
+            state = .idle
         }
     }
     
