@@ -12,13 +12,18 @@ struct AnalysisView: View {
     @State private var refreshID = UUID()
     @ObservedObject var listSymp: SymptomList
     @ObservedObject var registers: RegisterList
+    @State private var muestraNewSymptom = false
     
     var body: some View {
         if listSymp.symptoms.isEmpty {
             EmptyListView(
                 title: "No hay sintomas registrados",
-                message: "Porfavor de agregar sintomas para poder empezar a registrar."
+                message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                action: { muestraNewSymptom = true }
             )
+            .sheet(isPresented: $muestraNewSymptom) {
+                AddSymptomView(symptoms: listSymp, createAction: listSymp.makeCreateAction())
+            }
         }
         else {
             VStack {
