@@ -19,9 +19,12 @@ class HelperFunctions {
         return pathArchivo
     }
     // The function write(), writes the "value" being passed into the "file" passed.
+    // Uses the t:encodable to accept any type of value.
     static func write<T: Encodable>(_ value: T, inPath file: String) {
-        if let codificado = try? JSONEncoder().encode(value) {
-            try? codificado.write(to: rutaArchivos(filename: file)) //writes the value passed into the file passed.
+        DispatchQueue.main.async {
+            if let codificado = try? JSONEncoder().encode(value) {
+                try? codificado.write(to: rutaArchivos(filename: file)) //writes the value passed into the file passed.
+            }
         }
     }
 }
