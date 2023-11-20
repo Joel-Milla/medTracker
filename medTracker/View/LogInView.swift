@@ -35,7 +35,7 @@ struct LogInView: View {
             .onReceive(authentication.$signInErrorMessage) { newValue in
                 showErrorAlert = newValue != nil
             }
-            .navigationTitle("Registrar")
+            .navigationTitle("Iniciar Sesión")
         }
     }
 }

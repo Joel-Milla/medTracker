@@ -46,7 +46,7 @@ struct RegisterView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-            .navigationTitle("Registrar")
+            .navigationTitle("Registrarse")
             
         }
     }
