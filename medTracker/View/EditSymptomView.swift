@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct EditSymptomView: View {
-    @State private var refreshID = UUID()
-    @State var muestraNewSymptom = false
+    @State var muestraAddSymptomView = false
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var listaDatos: SymptomList
     
@@ -30,7 +29,6 @@ struct EditSymptomView: View {
                             }
                         }
                     }
-                    .id(refreshID)
                     .font(.title3)
                     .navigationTitle("Edita tus datos de salud")
                 }
@@ -46,17 +44,14 @@ struct EditSymptomView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        muestraNewSymptom = true
+                        muestraAddSymptomView = true
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $muestraNewSymptom) {
+            .sheet(isPresented: $muestraAddSymptomView) {
                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                    .onChange(of: listaDatos.symptoms) { _ in
-                        refreshID = UUID()
-                    }
             }
         }
     }
