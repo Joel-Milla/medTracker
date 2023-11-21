@@ -13,6 +13,8 @@ struct User : Codable, Hashable {
     var apellidoPaterno : String
     var apellidoMaterno : String
     var antecedentes : String
+    var sexo: String
+    var fechaNacimiento: Date
     var estatura : Double
     
     var estaturaString: String {
@@ -34,15 +36,19 @@ struct User : Codable, Hashable {
         self.apellidoPaterno = ""
         self.apellidoMaterno = ""
         self.antecedentes = ""
+        self.sexo = ""
+        self.fechaNacimiento = Date()
         self.estatura = 0.0
     }
     
-    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, antecedentes: String, estatura: Double) {
+    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: Double) {
         self.telefono = telefono
         self.nombre = nombre
         self.apellidoPaterno = apellidoPaterno
         self.apellidoMaterno = apellidoMaterno
         self.antecedentes = antecedentes
+        self.sexo = sexo
+        self.fechaNacimiento = fechaNacimiento
         self.estatura = estatura
     }
     
