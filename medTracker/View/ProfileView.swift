@@ -14,9 +14,12 @@ struct ProfileView: View {
     @ObservedObject var user: UserModel
     @EnvironmentObject var authentication: AuthViewModel
     @State private var draftUser: UserModel = UserModel()
-
+    
     @State private var isEditing = false
-
+    
+    var sexo = ["Masculino", "Femenino", "Prefiero no decir"]
+    @State var estatura = ""
+    
     @State private var error:Bool = false
     @State private var errorMessage: String = ""
     
@@ -24,7 +27,7 @@ struct ProfileView: View {
     let createAction: CreateAction
     
     var body: some View {
-        VStack() {
+        VStack {
             NavigationStack {
                 Image(systemName: "person.crop.circle.fill")
                     .resizable()
@@ -66,12 +69,26 @@ struct ProfileView: View {
                         if isEditing {
                             HStack {
                                 Text("Estatura")
-                                TextField("1.80", text: $draftUser.user.estaturaString)
+                                TextField("1.80", text: $draftUser.user.estatura)
                                     .keyboardType(.decimalPad)
                             }
+                            DatePicker("Fecha de Nacimiento",
+                                       selection: $draftUser.user.fechaNacimiento,
+                                       displayedComponents: .date)
                             
+                            Picker("Sexo", selection: $draftUser.user.sexo) {
+                                ForEach(sexo, id: \.self) {
+                                    Text($0)
+                                }
+                            }
                         } else {
-                            Text("Estatura: \(String(format: "%.1f", user.user.estatura))")
+                            Text("Estatura: \(user.user.estatura)")
+                            HStack {
+                                Text("Fecha de nacimiento:")
+                                Spacer()
+                                Text(user.user.formattedDateOfBirth)
+                            }
+                            Text("Sexo: \(draftUser.user.sexo)")
                         }
                     } header: {
                         Text("Datos fijos")

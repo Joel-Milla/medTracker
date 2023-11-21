@@ -86,7 +86,6 @@ struct Repository {
     
     // Functin to obtain the user info that exist on database.
     func fetchUser() async throws -> User {
-        //let email = "sdf"
         let documentReference = userReference.document(email)
         let documentSnapshot = try await documentReference.getDocument()
         

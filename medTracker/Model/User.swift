@@ -15,18 +15,13 @@ struct User : Codable, Hashable {
     var antecedentes : String
     var sexo: String
     var fechaNacimiento: Date
-    var estatura : Double
+    var estatura : String
     
-    var estaturaString: String {
+    var formattedDateOfBirth: String {
         get {
-            if estatura == 0.0 {
-                return String("")
-            } else {
-                return String(format: "%.2f", self.estatura)
-            }
-        }
-        set {
-            self.estatura = Double(newValue) ?? 0.0
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd" // Set the date format as needed
+            return dateFormatter.string(from: fechaNacimiento)
         }
     }
     
@@ -38,10 +33,10 @@ struct User : Codable, Hashable {
         self.antecedentes = ""
         self.sexo = ""
         self.fechaNacimiento = Date()
-        self.estatura = 0.0
+        self.estatura = ""
     }
     
-    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: Double) {
+    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: String) {
         self.telefono = telefono
         self.nombre = nombre
         self.apellidoPaterno = apellidoPaterno
@@ -53,10 +48,16 @@ struct User : Codable, Hashable {
     }
     
     func error() -> (Bool, String) {
-        if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.estatura == 0.0) {
-            return (true, "Datos faltantes. Porfavor llenar todos los campos obligatorios.")
-        } else if (self.estatura < 0.20 || self.estatura > 2.5) {
-            return (true, "Estatura invalida. Porfavor de poner estatura valid en cms.")
+        if let height = Double(self.estatura) {
+            if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.estatura == "" || self.sexo == "") {
+                return (true, "Datos faltantes. Por favor llenar todos los campos obligatorios.")
+            } else if (height < 0.20 || height > 2.5) {
+                return (true, "Estatura invalida. Por favor de poner una estatura valid en unidad centimetros.")
+            } else if (self.fechaNacimiento == Date.now || self.fechaNacimiento > Date.now) {
+                return (true, "Por favor poner una fecha valida.")
+            }
+        } else {
+            return (true, "Estatura invalida. Por favor de poner una estatura valida en unidad centimetros.")
         }
         return (false, "")
     }
