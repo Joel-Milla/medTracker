@@ -30,7 +30,7 @@ struct AddSymptomView: View {
         NavigationView {
             VStack(alignment: .leading) {
                 HStack {
-                    TextField("Nombre del síntoma", text: $nombreSintoma, axis : .vertical)
+                    TextField("Nombre síntoma", text: $nombreSintoma, axis : .vertical)
                         .font(.system(size: 28))
                         .lineSpacing(4)
                         .foregroundColor(colorSymptom)
@@ -79,11 +79,15 @@ struct AddSymptomView: View {
                                 .foregroundColor(isSelected ? Color.white : Color.black )
                                 .padding(.horizontal, 45)
                                 .padding(.vertical, 8)
+                        
                         },
                         selection: {
                             Capsule()
                                 .fill(colorSymptom)
                         })
+                    .onAppear {
+                        selectedIndex = 0
+                    }
                     .animation(.easeInOut(duration: 0.3))
                     Spacer()
                 }
