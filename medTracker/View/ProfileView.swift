@@ -15,9 +15,12 @@ struct ProfileView: View {
     
     @ObservedObject var user: UserModel
     @EnvironmentObject var authentication: AuthViewModel
-
     @State private var draftUser: UserModel = UserModel()
+
     @State private var isEditing = false
+
+    @State private var error:Bool = false
+    @State private var errorMessage: String = ""
     
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
@@ -35,7 +38,7 @@ struct ProfileView: View {
                     Button("Sign Out", action: {
                         authentication.signOut()
                     }).foregroundStyle(Color.red)
-
+                    
                     Section {
                         if isEditing {
                             HStack {
@@ -104,9 +107,16 @@ struct ProfileView: View {
                         if isEditing {
                             Button("Done") {
                                 // Guardar informacion en user y sandbox
-                                user.user = draftUser.user
-                                createUser(user: user.user)
-                                isEditing = false
+                                let validationResult = draftUser.user.error()
+                                if validationResult.0 {
+                                    error = true
+                                    errorMessage = validationResult.1
+                                }
+                                else {
+                                    user.user = draftUser.user
+                                    createUser(user: user.user)
+                                    isEditing = false
+                                }
                             }
                         } else {
                             Button("Edit") {
@@ -115,6 +125,13 @@ struct ProfileView: View {
                             }
                         }
                     }
+                }
+                .alert(isPresented: $error) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(errorMessage),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
             }
         }

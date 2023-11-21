@@ -46,10 +46,12 @@ struct User : Codable, Hashable {
         self.estatura = estatura
     }
     
-    func datosFaltantes() -> Bool {
-        if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.antecedentes == "" || self.estatura == 0.0) {
-            return true
+    func error() -> (Bool, String) {
+        if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.estatura == 0.0) {
+            return (true, "Datos faltantes. Porfavor llenar todos los campos obligatorios.")
+        } else if (self.estatura < 0.20 || self.estatura > 2.5) {
+            return (true, "Estatura invalida. Porfavor de poner estatura valid en cms.")
         }
-        return false
+        return (false, "")
     }
 }
