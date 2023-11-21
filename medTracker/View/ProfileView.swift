@@ -14,13 +14,10 @@ struct ProfileView: View {
     let tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
     
     @ObservedObject var user: UserModel
-    @State private var draftUser: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
-    @State private var sexo : String = ""
-    @State private var estatura : String = ""
-    
-    @State private var isEditing = false
     @EnvironmentObject var authentication: AuthViewModel
-    let email = Repository.getEmail()
+
+    @State private var draftUser: UserModel = UserModel()
+    @State private var isEditing = false
     
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
@@ -43,17 +40,17 @@ struct ProfileView: View {
                         if isEditing {
                             HStack {
                                 Text("Nombre(s)")
-                                TextField("Joel Alejandro", text: $draftUser.nombre)
+                                TextField("Joel Alejandro", text: $draftUser.user.nombre)
                             }
                             HStack {
                                 Text("Apellido Paterno")
-                                TextField("Milla", text: $draftUser.apellidoPaterno)}
+                                TextField("Milla", text: $draftUser.user.apellidoPaterno)}
                             HStack {
                                 Text("Apellido Materno")
-                                TextField("Lopez", text: $draftUser.apellidoMaterno)}
+                                TextField("Lopez", text: $draftUser.user.apellidoMaterno)}
                             HStack {
                                 Text("Telefono")
-                                TextField("+81 2611 1857", text: $draftUser.telefono)}
+                                TextField("+81 2611 1857", text: $draftUser.user.telefono)}
                         } else {
                             Text("Nombre: \(user.user.nombre)")
                             Text("Apellido Paterno: \(user.user.apellidoPaterno)")
@@ -68,20 +65,12 @@ struct ProfileView: View {
                         if isEditing {
                             HStack {
                                 Text("Estatura")
-                                TextField("1.80", text: $estatura)
+                                TextField("1.80", text: $draftUser.user.estaturaString)
                                     .keyboardType(.decimalPad)
-                            }
-                            Picker(selection: $sexo) {
-                                ForEach(tipos, id: \.self) { tipo in
-                                    Text(tipo)
-                                }
-                            } label: {
-                                Text("Sexo")
                             }
                             
                         } else {
                             Text("Estatura: \(String(format: "%.1f", user.user.estatura))")
-                            Text("Sexo: \(user.user.sexo)")
                         }
                     } header: {
                         Text("Datos fijos")
@@ -90,7 +79,7 @@ struct ProfileView: View {
                     Section {
                         if isEditing {
                             Text("Antecedentes:")
-                            TextEditor(text: $draftUser.antecedentes)
+                            TextEditor(text: $draftUser.user.antecedentes)
                         } else {
                             Text("Antecedentes:")
                             Text("\(user.user.antecedentes)")
@@ -106,7 +95,7 @@ struct ProfileView: View {
                         if isEditing {
                             Button("Cancel") {
                                 // Borrar informacion de draft user
-                                draftUser = user.user
+                                draftUser.user = user.user
                                 isEditing = false
                             }
                         }
@@ -115,24 +104,17 @@ struct ProfileView: View {
                         if isEditing {
                             Button("Done") {
                                 // Guardar informacion en user y sandbox
-                                draftUser.estatura = Double(estatura) ?? 0.0
-                                draftUser.sexo = sexo
-                                user.user = draftUser
+                                user.user = draftUser.user
                                 createUser(user: user.user)
                                 isEditing = false
-                                
                             }
                         } else {
                             Button("Edit") {
                                 // Modo normal
-                                draftUser = user.user
                                 isEditing = true
                             }
                         }
                     }
-                }
-                .onAppear {
-                    //draftUser = user
                 }
             }
         }
