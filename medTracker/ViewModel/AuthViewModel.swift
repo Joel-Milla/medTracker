@@ -18,7 +18,6 @@ class AuthViewModel: ObservableObject {
      **********************************/
     @Published var email = "" {
         didSet {
-            //escribirJSON(email, path: "email.JSON")
             HelperFunctions.write(email, inPath: "email.JSON")
         }
     }

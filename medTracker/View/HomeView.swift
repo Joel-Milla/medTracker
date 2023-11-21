@@ -56,7 +56,7 @@ struct HomeView: View {
             .navigationTitle("Datos de salud")
             .toolbar {
                 // Button to traverse to EditSymptomView.
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         muestraEditarSintomas = true
                     } label: {
