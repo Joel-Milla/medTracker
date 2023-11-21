@@ -7,6 +7,9 @@
 
 import Foundation
 
+/**********************
+ This class contains all the information about the user.
+ **********************************/
 class UserModel: ObservableObject {
     @Published var user = User() {
         didSet {
@@ -15,6 +18,9 @@ class UserModel: ObservableObject {
     }
     let repository = Repository() // Variable to call the functions inside the repository
 
+    /**********************
+     Important initialization methods
+     **********************************/
     init() {
         if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("User.JSON")) {
             if let datosDecodificados = try? JSONDecoder().decode(User.self, from: datosRecuperados) {
@@ -24,15 +30,11 @@ class UserModel: ObservableObject {
         }
         //If there is no info in JSON, fetdh
         fetchUser()
-        
-        // For testing, the next function can be used for dummy data.
-        // symptoms = getDefaultSymptoms()
     }
     
-    enum State {
-        case complete
-        case isLoading
-    }
+    /**********************
+     Helper functions
+     **********************************/
     
     // The functions returns a closure that is used to write information in firebase
     func makeCreateAction() -> ProfileView.CreateAction {
