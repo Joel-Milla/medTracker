@@ -26,7 +26,7 @@ struct RegisterView: View {
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
                 Button(action: {
-                    AuthService.writeEmail(authentication.email)
+                    HelperFunctions.write(authentication.email, inPath: "email.JSON")
                     authentication.submit() //Submits the request to firebase to create a new user.
                 }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
