@@ -11,10 +11,11 @@ struct HomeView: View {
     @State var muestraEditarSintomas = false
     @ObservedObject var listaDatos : SymptomList
     @ObservedObject var registers : RegisterList
+    var csvInfo:[String] = ["Hola", "Adios"]
     
     var body: some View {
         NavigationStack {
-        VStack {
+            VStack {
                 List{
                     ForEach(listaDatos.symptoms.indices, id: \.self) { index in
                         
@@ -31,14 +32,21 @@ struct HomeView: View {
                         }
                     }
                 }
+//                Section{
+//                    ShareLink(
+//                        "Share",
+//                        item: [csvInfo.].joined(separator: "\n"),
+//                        preview: SharePreview("Comparte tus datos")
+//                    )
+//                }
             }
             .navigationTitle("Datos de salud")
             .navigationBarItems(trailing:
-                Button {
+                                    Button {
                 muestraEditarSintomas = true
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                }
+            } label: {
+                Image(systemName: "square.and.pencil")
+            }
             )
             .fullScreenCover(isPresented: $muestraEditarSintomas) {
                 EditSymptomView(listaDatos: listaDatos)

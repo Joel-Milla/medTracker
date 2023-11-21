@@ -12,20 +12,20 @@ struct WelcomeView: View {
     @State var muestraRegistro = false
     var body: some View {
         ZStack {
-            Color(red: 108/255, green: 171/255, blue: 219/255)
+            Color("mainWhite")
                 .ignoresSafeArea()
             VStack{
                 Text("¡Bienvenido a MedTracker!")
                     .font(.largeTitle)
                     .bold()
-                    .foregroundColor(.white)
+                    .foregroundColor(Color("blueGreen"))
                 Button("Registrarse") {
                     muestraRegistro = true
                 }
                 .fullScreenCover(isPresented: $muestraRegistro, content: {
                     RegisterView()
                 })
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(Button1MedTracker())
                 .padding()
                 Button("Iniciar Sesión") {
                     muestraLogin = true
@@ -33,8 +33,7 @@ struct WelcomeView: View {
                 .fullScreenCover(isPresented: $muestraLogin, content: {
                     LogInView()
                 })
-                .buttonStyle(.borderedProminent)
-                
+                .buttonStyle(Button1MedTracker())
             }
             
         }

@@ -27,4 +27,7 @@ struct Symptom : Codable, Hashable {
         self.activo = activo
         self.color = color
     }
+    func nameString()->String{
+        return self.nombre
+    }
 }
