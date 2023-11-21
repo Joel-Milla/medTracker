@@ -10,9 +10,7 @@ import SwiftUI
 /**********************
  This view shows the profile data of the user and allows the user to edit it.
  **********************************/
-struct ProfileView: View {
-    let tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
-    
+struct ProfileView: View {    
     @ObservedObject var user: UserModel
     @EnvironmentObject var authentication: AuthViewModel
     @State private var draftUser: UserModel = UserModel()
