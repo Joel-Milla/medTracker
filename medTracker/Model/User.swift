@@ -12,27 +12,52 @@ struct User : Codable, Hashable {
     var nombre : String
     var apellidoPaterno : String
     var apellidoMaterno : String
-    var sexo : String
     var antecedentes : String
+    var sexo: String
+    var fechaNacimiento: Date
     var estatura : Double
+    
+    var estaturaString: String {
+        get {
+            if estatura == 0.0 {
+                return String("")
+            } else {
+                return String(format: "%.2f", self.estatura)
+            }
+        }
+        set {
+            self.estatura = Double(newValue) ?? 0.0
+        }
+    }
     
     init() {
         self.telefono = ""
         self.nombre = ""
         self.apellidoPaterno = ""
         self.apellidoMaterno = ""
-        self.sexo = ""
         self.antecedentes = ""
+        self.sexo = ""
+        self.fechaNacimiento = Date()
         self.estatura = 0.0
     }
     
-    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, sexo: String, antecedentes: String, estatura: Double) {
+    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: Double) {
         self.telefono = telefono
         self.nombre = nombre
         self.apellidoPaterno = apellidoPaterno
         self.apellidoMaterno = apellidoMaterno
-        self.sexo = sexo
         self.antecedentes = antecedentes
+        self.sexo = sexo
+        self.fechaNacimiento = fechaNacimiento
         self.estatura = estatura
+    }
+    
+    func error() -> (Bool, String) {
+        if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.estatura == 0.0) {
+            return (true, "Datos faltantes. Porfavor llenar todos los campos obligatorios.")
+        } else if (self.estatura < 0.20 || self.estatura > 2.5) {
+            return (true, "Estatura invalida. Porfavor de poner estatura valid en cms.")
+        }
+        return (false, "")
     }
 }

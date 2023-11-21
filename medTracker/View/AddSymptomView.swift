@@ -22,6 +22,9 @@ struct AddSymptomView: View {
     @State var notificaciones_seleccion = "Todos los días"
     @ObservedObject var symptoms : SymptomList
     
+    typealias CreateAction = (Symptom) async throws -> Void
+    let createAction: CreateAction
+    
     
     var body: some View {
         NavigationView {
@@ -112,6 +115,7 @@ struct AddSymptomView: View {
                             let newID = symptoms.symptoms.generateUniqueID()
                             let cuantitativo = selectedIndex == 0 ? true : false
                             symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
+                            createSymptom()
                             dismiss()
                         }
                     } label: {
@@ -134,6 +138,17 @@ struct AddSymptomView: View {
         .onChange(of: colorSymptom) { newColor in
             // Update hexString when the color changes
             colorString = hexString(from: newColor)
+        }
+    }
+    
+    private func createSymptom() {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await createAction(symptoms.symptoms.last ?? Symptom(id: 0, nombre: "", icon: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "")) //call the function that adds the symptom to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
+            }
         }
     }
     
@@ -174,6 +189,6 @@ extension Array where Element == Symptom {
 
 struct newSymptom_Previews: PreviewProvider {
     static var previews: some View {
-        AddSymptomView(symptoms: SymptomList())
+        AddSymptomView(symptoms: SymptomList(), createAction: { _ in })
     }
 }

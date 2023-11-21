@@ -1,88 +1,72 @@
 import SwiftUI
 
-struct RegisterView: View {
-    @State var nombre = ""
-    @State var telefono = 0
-    @State var estatura = 0.0
-    @State var contrasena = ""
-    @State var sexo = ""
-    @State var aPaterno = ""
-    @State var aMaterno = ""
-    @State var email = ""
-    @State private var muestraBienvenida = false
-    @State private var muestraHome = false
+/**********************
+ This view submits a request to firebase to create a new user. The view first gets the name, email, and password and then makes the request.
+ **********************************/
 
+struct RegisterView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @StateObject var authentication: AuthViewModel.CreateAccountViewModel
+    @State private var showAlert = false
+    
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
-                    Section {
-                        HStack {
-                            Text("Nombre:")
-                            TextField("", text: $nombre)
-                        }
-                        HStack {
-                            Text("Apellido Paterno:")
-                            TextField("", text: $aPaterno)
-                        }
-                        HStack {
-                            Text("Apellido Materno:")
-                            TextField("", text: $aMaterno)
-                        }
-                        HStack {
-                            Text("Estatura:")
-                            TextField("", value: $estatura, format: .number)
-                        }
-                        HStack {
-                            Text("Sexo:")
-                            TextField("", text: $sexo)
-                        }
-                    } header: {
-                        Text("datos perosnales")
-                    }
-                    Section{
-                        HStack {
-                            Text("Telefono:")
-                            TextField("", value: $telefono, format: .number)
-                        }
-                        HStack {
-                            Text("Correo:")
-                            TextField("", text: $email)
-                        }
-                        HStack {
-                            Text("Contraseña:")
-                            SecureField("", text: $contrasena)
-                        }
-                    }header: {
-                        Text("Datos de tu cuenta")
-                    }
+            Form {
+                TextField("Nombre", text: $authentication.name)
+                    .textContentType(.name)
+                    .textInputAutocapitalization(.words)
+                Group {
+                    TextField("Email", text: $authentication.email)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                    SecureField("Contraseña", text: $authentication.password)
+                        .textContentType(.newPassword)
                 }
-                Button("Registrarme") {
-                    muestraHome = true
-                }
-                .fullScreenCover(isPresented: $muestraHome, content: {
-                    MainView()
+                .padding()
+                .background(Color.secondary.opacity(0.15))
+                .cornerRadius(10)
+                Button(action: {
+                    authentication.submit() //Submits the request to firebase to create a new user.
+                    authViewModel.email = authentication.email // set the email of the current user.
+                }, label: {
+                    // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
+                    switch authentication.state {
+                    case .idle:
+                        Text("Crear Cuenta")
+                    case .isLoading:
+                        ProgressView()
+                    }
                 })
-                .buttonStyle(Button1MedTracker())
-                
+                .padding()
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.white)
+                .background(Color.accentColor)
+                .cornerRadius(10)
             }
-            .navigationBarItems(leading: NavigationLink(
-                            destination: WelcomeView(),
-                            label: {
-                                Image(systemName: "arrow.left")
-                                Text("Regresar")
-                            }
-                        ))
-            .navigationTitle("Registro")
-            
+            .onSubmit(authentication.submit)
+            // The alert and onReceive check when there is a registrationError and show it.
+            .onReceive(authViewModel.$registrationErrorMessage) { errorMessage in
+                if errorMessage != nil {
+                    showAlert = true
+                }
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Registration Error"),
+                    message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .navigationTitle("Registrarse")
             
         }
     }
 }
 
 struct registroUsuario_Previews: PreviewProvider {
+    static var viewModels = AuthViewModel()
     static var previews: some View {
-        RegisterView()
+        RegisterView(authentication: viewModels.makeCreateAccountViewModel())
     }
 }
 

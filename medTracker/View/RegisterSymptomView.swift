@@ -22,6 +22,10 @@ struct RegisterSymptomView: View {
     @State var metric: Double = 0
     //@StateObject var symptom = Symptom()
     //let mainWhite = Color
+    
+    typealias CreateAction = (Register) async throws -> Void
+    let createAction: CreateAction
+    
     var body: some View {
         GeometryReader { geometry in
             NavigationStack(){
@@ -100,10 +104,12 @@ struct RegisterSymptomView: View {
                             if symptom.cuantitativo {
                                 if let cantidad = Float(metricsString) {
                                     registers.registers.append(Register(idSymptom: symptom.id, fecha: date, cantidad: cantidad, notas: notes))
+                                    createRegister()
                                     dismiss()
                                 }
                             } else {
                                 registers.registers.append(Register(idSymptom: symptom.id, fecha: date, cantidad: Float(metric), notas: notes))
+                                createRegister()
                                 dismiss()
                             }
                         }label:{
@@ -119,6 +125,17 @@ struct RegisterSymptomView: View {
                     .navigationTitle("Agregar síntoma")
                     .navigationBarTitleDisplayMode(.inline)
                 }
+            }
+        }
+    }
+    
+    private func createRegister() {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await createAction(registers.registers.last ?? Register(idSymptom: 0, fecha: Date.now, cantidad: 0, notas: "")) //call the function that adds the symptom to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
             }
         }
     }
@@ -139,7 +156,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList())
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList(), createAction: { _ in })
     }
 }
 

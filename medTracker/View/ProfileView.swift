@@ -7,17 +7,21 @@
 
 import SwiftUI
 
-struct ProfileView: View {
-    var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
-    
-    @State var user: UserModel
-    @State private var draftUser: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
-    @State private var sexo : String = ""
-    @State private var estatura : String = ""
-    
+/**********************
+ This view shows the profile data of the user and allows the user to edit it.
+ **********************************/
+struct ProfileView: View {    
+    @ObservedObject var user: UserModel
+    @EnvironmentObject var authentication: AuthViewModel
+    @State private var draftUser: UserModel = UserModel()
+
     @State private var isEditing = false
+
+    @State private var error:Bool = false
+    @State private var errorMessage: String = ""
     
-    let defaults = UserDefaults.standard
+    typealias CreateAction = (User) async throws -> Void
+    let createAction: CreateAction
     
     var body: some View {
         VStack() {
@@ -29,21 +33,25 @@ struct ProfileView: View {
                     .clipShape(Circle())
                     .clipped()
                 Form {
+                    Button("Sign Out", action: {
+                        authentication.signOut()
+                    }).foregroundStyle(Color.red)
+                    
                     Section {
                         if isEditing {
                             HStack {
                                 Text("Nombre(s)")
-                                TextField("Joel Alejandro", text: $draftUser.nombre)
+                                TextField("Joel Alejandro", text: $draftUser.user.nombre)
                             }
                             HStack {
                                 Text("Apellido Paterno")
-                                TextField("Milla", text: $draftUser.apellidoPaterno)}
+                                TextField("Milla", text: $draftUser.user.apellidoPaterno)}
                             HStack {
                                 Text("Apellido Materno")
-                                TextField("Lopez", text: $draftUser.apellidoMaterno)}
+                                TextField("Lopez", text: $draftUser.user.apellidoMaterno)}
                             HStack {
                                 Text("Telefono")
-                                TextField("+81 2611 1857", text: $draftUser.telefono)}
+                                TextField("+81 2611 1857", text: $draftUser.user.telefono)}
                         } else {
                             Text("Nombre: \(user.user.nombre)")
                             Text("Apellido Paterno: \(user.user.apellidoPaterno)")
@@ -58,20 +66,12 @@ struct ProfileView: View {
                         if isEditing {
                             HStack {
                                 Text("Estatura")
-                                TextField("1.80", text: $estatura)
+                                TextField("1.80", text: $draftUser.user.estaturaString)
                                     .keyboardType(.decimalPad)
-                            }
-                            Picker(selection: $sexo) {
-                                ForEach(tipos, id: \.self) { tipo in
-                                    Text(tipo)
-                                }
-                            } label: {
-                                Text("Sexo")
                             }
                             
                         } else {
                             Text("Estatura: \(String(format: "%.1f", user.user.estatura))")
-                            Text("Sexo: \(user.user.sexo)")
                         }
                     } header: {
                         Text("Datos fijos")
@@ -80,7 +80,7 @@ struct ProfileView: View {
                     Section {
                         if isEditing {
                             Text("Antecedentes:")
-                            TextEditor(text: $draftUser.antecedentes)
+                            TextEditor(text: $draftUser.user.antecedentes)
                         } else {
                             Text("Antecedentes:")
                             Text("\(user.user.antecedentes)")
@@ -96,7 +96,7 @@ struct ProfileView: View {
                         if isEditing {
                             Button("Cancel") {
                                 // Borrar informacion de draft user
-                                draftUser = user.user
+                                draftUser.user = user.user
                                 isEditing = false
                             }
                         }
@@ -105,24 +105,44 @@ struct ProfileView: View {
                         if isEditing {
                             Button("Done") {
                                 // Guardar informacion en user y sandbox
-                                draftUser.estatura = Double(estatura) ?? 0.0
-                                draftUser.sexo = sexo
-                                user.user = draftUser
-                                user.saveUser()
-                                isEditing = false
+                                let validationResult = draftUser.user.error()
+                                if validationResult.0 {
+                                    error = true
+                                    errorMessage = validationResult.1
+                                }
+                                else {
+                                    user.user = draftUser.user
+                                    createUser(user: user.user)
+                                    isEditing = false
+                                }
                             }
                         } else {
                             Button("Edit") {
                                 // Modo normal
-                                draftUser = user.user
                                 isEditing = true
                             }
                         }
                     }
                 }
-                .onAppear {
-                    //draftUser = user
+                .alert(isPresented: $error) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(errorMessage),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
+            }
+        }
+    }
+    
+    private func createUser(user: User) {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await
+                createAction(user) //call the function that adds the user to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
             }
         }
     }
@@ -131,6 +151,6 @@ struct ProfileView: View {
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(user: UserModel())
+        ProfileView(user: UserModel(), createAction: { _ in })
     }
 }

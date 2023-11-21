@@ -7,37 +7,54 @@
 
 import SwiftUI
 
+/**********************
+ This view only displays a welcome message and two buttons to log in or register.
+ **********************************/
 struct WelcomeView: View {
-    @State var muestraLogin = false
-    @State var muestraRegistro = false
+    @EnvironmentObject var authentication: AuthViewModel
+    
     var body: some View {
-        ZStack {
-            Color("mainWhite")
-                .ignoresSafeArea()
-            VStack{
-                Text("¡Bienvenido a MedTracker!")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(Color("blueGreen"))
-                Button("Registrarse") {
-                    muestraRegistro = true
+        NavigationStack {
+            ZStack {
+                Color(red: 108/255, green: 171/255, blue: 219/255)
+                    .ignoresSafeArea()
+                VStack{
+                    Text("¡Bienvenido a MedTracker!")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                    NavigationLink {
+                        LogInView()
+                    } label: {
+                        Text("Iniciar Sesión")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 220, height: 50)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
+                    }
+                    
+                    NavigationLink {
+                        RegisterView(authentication: authentication.makeCreateAccountViewModel())
+                    } label: {
+                        Text("Registrarse")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(width: 220, height: 50)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
+                    }
+                    
                 }
-                .fullScreenCover(isPresented: $muestraRegistro, content: {
-                    RegisterView()
-                })
-                .buttonStyle(Button1MedTracker())
-                .padding()
-                Button("Iniciar Sesión") {
-                    muestraLogin = true
-                }
-                .fullScreenCover(isPresented: $muestraLogin, content: {
-                    LogInView()
-                })
-                .buttonStyle(Button1MedTracker())
+                
             }
-            
         }
-        .toolbar(.hidden)
     }
 }
 
