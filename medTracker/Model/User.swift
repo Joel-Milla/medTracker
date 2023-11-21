@@ -45,4 +45,11 @@ struct User : Codable, Hashable {
         self.antecedentes = antecedentes
         self.estatura = estatura
     }
+    
+    func datosFaltantes() -> Bool {
+        if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.antecedentes == "" || self.estatura == 0.0) {
+            return true
+        }
+        return false
+    }
 }
