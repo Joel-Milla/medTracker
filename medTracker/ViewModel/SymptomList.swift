@@ -24,12 +24,6 @@ class SymptomList : ObservableObject {
     /**********************
      Important initialization methods
      **********************************/
-    enum State {
-        case complete
-        case isLoading
-        case isEmpty
-    }
-    
     init() {
         if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Symptoms.JSON")) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
@@ -42,6 +36,12 @@ class SymptomList : ObservableObject {
         
         // For testing, the next function can be used for dummy data.
         // symptoms = getDefaultSymptoms()
+    }
+    
+    enum State {
+        case complete
+        case isLoading
+        case isEmpty
     }
     
     /**********************
