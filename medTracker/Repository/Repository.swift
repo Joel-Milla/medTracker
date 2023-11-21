@@ -9,39 +9,47 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Repository {
-    static func rutaArchivos() -> URL {
-        let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pathArchivo = url.appendingPathComponent("email.JSON")
-        return pathArchivo
-    }
-    
-    static func getEmail() -> String {
-        if let email = try? Data.init(contentsOf: rutaArchivos()) {
-            if let email = try? JSONDecoder().decode(String.self, from: email) {
-                return email
-            }
-        }
-        return ""
-    }
+/**********************
+ This struct contains helper functions to make the connection to the database (firebase)
+ **********************************/
 
+struct Repository {
+    // Variables to make the connection to firebase.
     private var symptomReference: CollectionReference
     private var registerReference: CollectionReference
     private var email: String
     
+    /**********************
+     Important initialization methods
+     **********************************/
     init() {
         email = Repository.getEmail()
         // Assuming you want to append the email to the collection name
         symptomReference = Firestore.firestore().collection("symptoms_\(email)")
         registerReference = Firestore.firestore().collection("registers_\(email)")
     }
-    //static let id = UUID()
     
+    /**********************
+     Helper functions
+     **********************************/
+    
+    // Function to get the email of the current user.
+    static func getEmail() -> String {
+        if let email = try? Data.init(contentsOf: HelperFunctions.filePath("email.JSON")) {
+            if let email = try? JSONDecoder().decode(String.self, from: email) {
+                return email
+            }
+        }
+        return ""
+    }
+    
+    // Function to write a symptom in database.
     func createSymptom(_ symptom: Symptom) async throws {
         let document = symptomReference.document(String(symptom.id))
         try await document.setData(from: symptom)
     }
     
+    // Function to fetch all the symptoms in firebase.
     func fetchSymptoms() async throws -> [Symptom] {
         let snapshot = try await symptomReference
             .order(by: "id", descending: false)
@@ -52,23 +60,25 @@ struct Repository {
         }
     }
     
+    // Function to write a register in database.
     func createRegister(_ register: Register) async throws {
         let document = registerReference.document(UUID().uuidString)
         try await document.setData(from: register)
     }
     
+    // Functin to obtain the registers that exist on database.
     func fetchRegisters() async throws -> [Register] {
         let snapshot = try await registerReference
             .order(by: "idSymptom", descending: false)
             .getDocuments()
-        // Convert the returning documents into the class Symptom
+        // Convert the returning documents into the class Register
         return snapshot.documents.compactMap { document in
             try! document.data(as: Register.self)
         }
     }
 }
 
-// This method is to not show an error for some of the methods above
+// This method is to not show an error for some of the methods above.
 private extension DocumentReference {
     func setData<T: Encodable>(from value: T) async throws {
         return try await withCheckedThrowingContinuation { continuation in
