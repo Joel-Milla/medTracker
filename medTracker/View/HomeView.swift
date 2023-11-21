@@ -11,7 +11,6 @@ struct HomeView: View {
     @State var muestraEditarSintomas = false
     @ObservedObject var listaDatos : SymptomList
     @ObservedObject var registers : RegisterList
-    var csvInfo:[String] = ["Hola", "Adios"]
     
     var body: some View {
         NavigationStack {
@@ -28,17 +27,17 @@ struct HomeView: View {
                             }
                             //.foregroundColor(Color(hex: symptom.color))
                             .padding(10)
-                            
+//                            Section{
+//                                ShareLink(
+//                                    "Share",
+//                                    item: csvInfo.joined(separator: "\n"),
+//                                    preview: SharePreview("Comparte tus datos")
+//                                )
+//                            }
                         }
                     }
                 }
-//                Section{
-//                    ShareLink(
-//                        "Share",
-//                        item: [csvInfo.].joined(separator: "\n"),
-//                        preview: SharePreview("Comparte tus datos")
-//                    )
-//                }
+
             }
             .navigationTitle("Datos de salud")
             .navigationBarItems(trailing:
@@ -49,7 +48,8 @@ struct HomeView: View {
             }
             )
             .fullScreenCover(isPresented: $muestraEditarSintomas) {
-                EditSymptomView(listaDatos: listaDatos)
+                ShareView(listaDatos: listaDatos, registers: registers)
+                //EditSymptomView(listaDatos: listaDatos)
             }
         }
         
