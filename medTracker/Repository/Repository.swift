@@ -17,6 +17,7 @@ struct Repository {
     // Variables to make the connection to firebase.
     private var symptomReference: CollectionReference
     private var registerReference: CollectionReference
+    private var userReference = Firestore.firestore().collection("Users")
     private var email: String
     
     /**********************
@@ -74,6 +75,28 @@ struct Repository {
         // Convert the returning documents into the class Register
         return snapshot.documents.compactMap { document in
             try! document.data(as: Register.self)
+        }
+    }
+    
+    // Function to write a user in database.
+    func createUser(_ user: User) async throws {
+        let document = userReference.document(email)
+        try await document.setData(from: user)
+    }
+    
+    // Functin to obtain the user info that exist on database.
+    func fetchUser() async throws -> User {
+        //let email = "sdf"
+        let documentReference = userReference.document(email)
+        let documentSnapshot = try await documentReference.getDocument()
+        
+        // Try to decode the document data into a User object
+        do {
+            let userData = try documentSnapshot.data(as: User.self)
+            return userData
+        } catch {
+            // Handle the error if decoding fails
+            throw NSError(domain: "DataDecodingError", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to decode user data: \(error.localizedDescription)"])
         }
     }
 }

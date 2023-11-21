@@ -8,35 +8,46 @@
 import Foundation
 
 class UserModel: ObservableObject {
-    @Published var user = User() /*{
+    @Published var user = User() {
         didSet {
-            if let codificado = try? JSONEncoder().encode(user) {
-                try? codificado.write(to: rutaArchivos())
-            }
+            HelperFunctions.write(self.user, inPath: "User.JSON")
         }
-    }*/
-
-    func rutaArchivos() -> URL {
-        let url = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pathArchivo = url.appendingPathComponent("User.JSON")
-        return pathArchivo
     }
+    let repository = Repository() // Variable to call the functions inside the repository
 
     init() {
-        loadUser()
+        if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("User.JSON")) {
+            if let datosDecodificados = try? JSONDecoder().decode(User.self, from: datosRecuperados) {
+                user = datosDecodificados
+                return
+            }
+        }
+        //If there is no info in JSON, fetdh
+        fetchUser()
+        
+        // For testing, the next function can be used for dummy data.
+        // symptoms = getDefaultSymptoms()
     }
-
-    // Load user from the file or use default values
-    func saveUser() {
-        if let encoded = try? JSONEncoder().encode(user) {
-            UserDefaults.standard.set(encoded, forKey: "savedUser")
+    
+    enum State {
+        case complete
+        case isLoading
+    }
+    
+    // The functions returns a closure that is used to write information in firebase
+    func makeCreateAction() -> ProfileView.CreateAction {
+        return { [weak self] user in
+            try await self?.repository.createUser(user)
         }
     }
     
-    func loadUser() {
-        if let savedUserData = UserDefaults.standard.object(forKey: "savedUser") as? Data {
-            if let loadedUser = try? JSONDecoder().decode(User.self, from: savedUserData) {
-                user = loadedUser
+    // Fetch user information from the database and save them on the users list.
+    func fetchUser() {
+        Task {
+            do {
+                user = try await self.repository.fetchUser()
+            } catch {
+                print("[PostsViewModel] Cannot fetch posts: \(error)")
             }
         }
     }

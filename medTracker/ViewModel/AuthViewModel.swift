@@ -78,7 +78,7 @@ class AuthViewModel: ObservableObject {
                 password = ""
                 signInErrorMessage = nil
                 registrationErrorMessage = nil
-                let eliminar = ["email.JSON", "Registers.JSON", "Symptoms.JSON"]
+                let eliminar = ["email.JSON", "Registers.JSON", "Symptoms.JSON", "User.JSON"]
                 for path in eliminar {
                     HelperFunctions.write("", inPath: path)
                 }

@@ -11,9 +11,9 @@ import SwiftUI
  This view shows the profile data of the user and allows the user to edit it.
  **********************************/
 struct ProfileView: View {
-    var tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
+    let tipos = ["Masculino", "Femeninio", "Prefiero no decir"]
     
-    @State var user: UserModel
+    @ObservedObject var user: UserModel
     @State private var draftUser: User = User(telefono: "", nombre: "", apellidoPaterno: "", apellidoMaterno: "", sexo: "", antecedentes: "", estatura: 0.0)
     @State private var sexo : String = ""
     @State private var estatura : String = ""
@@ -22,7 +22,8 @@ struct ProfileView: View {
     @EnvironmentObject var authentication: AuthViewModel
     let email = Repository.getEmail()
     
-    let defaults = UserDefaults.standard
+    typealias CreateAction = (User) async throws -> Void
+    let createAction: CreateAction
     
     var body: some View {
         VStack() {
@@ -117,8 +118,9 @@ struct ProfileView: View {
                                 draftUser.estatura = Double(estatura) ?? 0.0
                                 draftUser.sexo = sexo
                                 user.user = draftUser
-                                user.saveUser()
+                                createUser(user: user.user)
                                 isEditing = false
+                                
                             }
                         } else {
                             Button("Edit") {
@@ -135,11 +137,23 @@ struct ProfileView: View {
             }
         }
     }
+    
+    private func createUser(user: User) {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await
+                createAction(user) //call the function that adds the user to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
+            }
+        }
+    }
 }
 
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(user: UserModel())
+        ProfileView(user: UserModel(), createAction: { _ in })
     }
 }
