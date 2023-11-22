@@ -25,6 +25,19 @@ struct User : Codable, Hashable {
         }
     }
     
+    var formattedAntecedentes: String {
+        get {
+            return self.antecedentes
+        }
+        set {
+            if newValue.count > 1000 {
+                self.antecedentes = String(newValue.prefix(1000))
+            } else {
+                self.antecedentes = newValue
+            }
+        }
+    }
+    
     init() {
         self.telefono = ""
         self.nombre = ""

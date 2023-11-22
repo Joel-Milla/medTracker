@@ -10,7 +10,7 @@ import SwiftUI
 /**********************
  This view shows the profile data of the user and allows the user to edit it.
  **********************************/
-struct ProfileView: View {    
+struct ProfileView: View {
     @ObservedObject var user: UserModel
     @EnvironmentObject var authentication: AuthViewModel
     @State private var draftUser: UserModel = UserModel()
@@ -98,7 +98,7 @@ struct ProfileView: View {
                     Section {
                         if isEditing {
                             Text("Antecedentes:")
-                            TextEditor(text: $draftUser.user.antecedentes)
+                            TextEditor(text: $draftUser.user.formattedAntecedentes)
                         } else {
                             Text("Antecedentes:")
                             Text("\(user.user.antecedentes)")
