@@ -37,10 +37,6 @@ struct ProfileView: View {
                     .frame(width: 100, height: 100, alignment: .center)
                     .clipShape(Circle())
                     .clipped()
-                Button("Sign Out", action: {
-                    authentication.signOut()
-                })
-                .foregroundColor(Color.red)
                 Form {
                     Section {
                         if isEditing {
@@ -115,6 +111,11 @@ struct ProfileView: View {
                     } header: {
                         Text("Historial Clinico")
                     }
+                    Button("Sign Out"){}
+                        .onTapGesture {
+                            authentication.signOut()
+                        }
+                        .foregroundColor(Color.red)
                 }
                 .navigationTitle("Profile")
                 .toolbar {
@@ -159,26 +160,26 @@ struct ProfileView: View {
                 }
             }
             .onTapGesture {
-             UIApplication.shared.endEditing()
-             }
+                UIApplication.shared.endEditing()
+            }
         }
-            // Keyboard modifier
-            .padding(.bottom, keyboardHeight) // Apply the dynamic padding here
-            .onAppear {
-                // Set up keyboard show/hide observers
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { notification in
-                    if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                        keyboardHeight = keyboardFrame.height - 40
-                    }
-                }
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                    keyboardHeight = 35 // No extra padding when keyboard is hidden
+        // Keyboard modifier
+        .padding(.bottom, keyboardHeight) // Apply the dynamic padding here
+        .onAppear {
+            // Set up keyboard show/hide observers
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { notification in
+                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                    keyboardHeight = keyboardFrame.height - 40
                 }
             }
-            .onDisappear {
-                NotificationCenter.default.removeObserver(self)
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                keyboardHeight = 35 // No extra padding when keyboard is hidden
             }
-            .ignoresSafeArea(.keyboard)
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self)
+        }
+        .ignoresSafeArea(.keyboard)
     }
     
     private func createUser(user: User) {
