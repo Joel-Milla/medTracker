@@ -36,10 +36,6 @@ struct ProfileView: View {
                     .clipShape(Circle())
                     .clipped()
                 Form {
-                    Button("Sign Out", action: {
-                        authentication.signOut()
-                    }).foregroundStyle(Color.red)
-                    
                     Section {
                         if isEditing {
                             HStack {
@@ -106,11 +102,13 @@ struct ProfileView: View {
                         } else {
                             Text("Antecedentes:")
                             Text("\(user.user.antecedentes)")
-                                .lineLimit(10)
                         }
                     } header: {
                         Text("Historial Clinico")
                     }
+                    Button("Sign Out", action: {
+                        authentication.signOut()
+                    }).foregroundStyle(Color.red)
                 }
                 .navigationTitle("Profile")
                 .toolbar {
@@ -154,6 +152,9 @@ struct ProfileView: View {
                     )
                 }
             }
+            Rectangle()
+                .fill(.red)
+                .frame(width: 10, height: 30)
         }
     }
     
