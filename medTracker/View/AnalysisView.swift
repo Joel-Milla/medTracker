@@ -71,6 +71,14 @@ struct AnalysisItemView: View {
             Text("Descripción:")
                 .font(.system(size: 24))
                 .padding(.vertical, 10)
+//            Section{
+//                ShareLink(
+//                    "",
+//                    item: ["Hola", "adios"].joined(separator: "\n"),
+//                    preview: SharePreview("Comparte tus datos")
+//                )
+//            }
+
             
             Text("\(symptom.description)")
                 .padding(.trailing, 20)

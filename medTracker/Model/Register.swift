@@ -19,4 +19,8 @@ struct Register : Codable, Hashable {
         self.cantidad = cantidad
         self.notas = notas
     }
+    
+    func returnString()->String{
+        return "\(self.fecha), \(String(self.cantidad)), \(self.notas)"
+    }
 }

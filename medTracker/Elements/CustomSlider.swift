@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 struct CustomSlider: View {
+    
     @Binding var valueFinal: Double
+    var valor : Double = 0.155
     @State var lastCoordinateValue: CGFloat = 0
     @State var value : Double = 0
     var body: some View {
@@ -49,7 +51,7 @@ struct CustomSlider: View {
                             .resizable()
                             .scaledToFit()
                             .aspectRatio(contentMode: .fit)
-                            .offset(x:self.value - gr.size.width * 0.155 + 3)
+                            .offset(x:self.value - gr.size.width * valor + 3)
                             .gesture (
                                 DragGesture (minimumDistance: 0)
                                     .onChanged { v in
