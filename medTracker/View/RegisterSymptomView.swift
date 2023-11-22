@@ -178,4 +178,5 @@ Mandar parametro a slider para que se acomode la vista
  Hacer share con nombre de síntoma y sortearlo
  widgets
  alertas
+ cambiar pantalla de inicio por colores verdes/azules
  */
