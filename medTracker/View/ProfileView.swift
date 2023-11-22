@@ -77,8 +77,8 @@ struct ProfileView: View {
                                        displayedComponents: .date)
                             
                             Picker("Sexo", selection: $draftUser.user.sexo) {
-                                ForEach(sexo, id: \.self) {
-                                    Text($0)
+                                ForEach(sexo, id: \.self) {sexo in
+                                    Text(sexo)
                                 }
                             }
                         } else {
@@ -88,7 +88,12 @@ struct ProfileView: View {
                                 Spacer()
                                 Text(user.user.formattedDateOfBirth)
                             }
-                            Text("Sexo: \(draftUser.user.sexo)")
+                            
+                            HStack {
+                                Text("Sexo:")
+                                Spacer()
+                                Text(draftUser.user.sexo)
+                            }
                         }
                     } header: {
                         Text("Datos fijos")
