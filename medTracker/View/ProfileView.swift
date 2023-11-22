@@ -89,6 +89,7 @@ struct ProfileView: View {
                     } header: {
                         Text("Historial Clinico")
                     }
+
                 }
                 .navigationTitle("Profile")
                 .toolbar {

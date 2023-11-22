@@ -21,4 +21,8 @@ struct Register : Codable, Hashable {
         self.notas = notas
         self.animacion = false
     }
+    
+    func returnString()->String{
+        return "\(self.fecha), \(String(self.cantidad)), \(self.notas)"
+    }
 }

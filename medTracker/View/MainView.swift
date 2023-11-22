@@ -14,6 +14,7 @@ struct MainView: View {
     
     @StateObject var symptoms = SymptomList()
     @StateObject var registers = RegisterList()
+    @State private var muestraEditarSintomas = false
     @StateObject var user = UserModel()
     @State var currentTab: Tab = .Inicio
     
@@ -39,7 +40,7 @@ struct MainView: View {
                 .padding(.vertical)
                 .padding(.bottom, getSafeArea().bottom == 0 ? 5 :
                             (getSafeArea().bottom - 15))
-                .background(Color("mainGray"))
+                .background(.secondary)
             }
             ,
             alignment: .bottom

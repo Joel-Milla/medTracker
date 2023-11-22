@@ -11,6 +11,7 @@ import SwiftUI
 
 struct RegisterSymptomView: View {
     @Environment(\.dismiss) var dismiss
+    @FocusState private var mostrarTeclado : Bool
     @Binding var symptom : Symptom
     @ObservedObject var registers : RegisterList
     //@StateObject var symptom = Symptom()
@@ -49,7 +50,7 @@ struct RegisterSymptomView: View {
                                 .font(.system(size: 18))
                                 .foregroundStyle(Color(hex: symptom.color))
                                 .bold()
-                            CustomSlider(valueFinal: $metric)
+                            CustomSlider(valueFinal: $metric, valor: 0.155)
                                 .padding(.horizontal, 5)
                                 .frame(height: geometry.size.height * 0.06)
                                 .padding(.vertical, 35)
@@ -76,10 +77,10 @@ struct RegisterSymptomView: View {
                                         .foregroundStyle(.primary)
                                         .multilineTextAlignment(.leading)
                                         .keyboardType(.numberPad)
+                                        .focused($mostrarTeclado)
                                 }
                                 .padding()
                             }
-                            
                         }
                             
                         //Spacer()
@@ -96,6 +97,10 @@ struct RegisterSymptomView: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(5)
                             .frame(height: geometry.size.height *  0.28)
+                            .focused($mostrarTeclado)
+                            .onTapGesture{
+                                mostrarTeclado = false
+                            }
                         Button{
                             if(self.notes == "Agrega alguna nota..."){
                                 notes = ""
@@ -125,6 +130,9 @@ struct RegisterSymptomView: View {
                     .navigationTitle("Agregar síntoma")
                     .navigationBarTitleDisplayMode(.inline)
                 }
+            }
+            .onTapGesture{
+                mostrarTeclado = false
             }
         }
     }
@@ -162,5 +170,13 @@ struct RegistroDatos1_Previews: PreviewProvider {
 
 /*
  NOTAS:
-Hay otra forma de hacer el slider (posicion)? no se si con todos los dispositivos quede asi de bien
+Mandar parametro a slider para que se acomode la vista
+ Hacer que boton de agregar síntoma se quite
+ Modos oscuros
+ Vista de análisis se ve rara
+ Agregar sintoma cambia mucho
+ Hacer share con nombre de síntoma y sortearlo
+ widgets
+ alertas
+ cambiar pantalla de inicio por colores verdes/azules
  */

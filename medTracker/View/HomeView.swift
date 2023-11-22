@@ -14,87 +14,114 @@ struct HomeView: View {
     @ObservedObject var listaDatos : SymptomList
     @ObservedObject var registers : RegisterList
     @State private var muestraEditarSintomas = false
+    @State private var muestraAgregarSintomas = false
     @State private var muestraNewSymptom = false
+    @State private var refreshID = UUID()
+    
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                // Show the view based on symptomList state (loading, emptyArray, arrayWithValues).
-                switch listaDatos.state {
-                case .isLoading:
-                    ProgressView() //Loading animation
-                case .isEmpty:
-                    //Calls a view to show that the symptom list is empty
-                    //The action serves as a button to send the user to a page to create a symptom.
-                    EmptyListView(
-                        title: "No hay sintomas registrados",
-                        message: "Porfavor de agregar sintomas para poder empezar a registrar.",
-                        nameButton: "Agregar Sintoma",
-                        action: { muestraNewSymptom = true }
-                    )
-                    // The sheets sends the user to the view to create a new symptom.
-                    .sheet(isPresented: $muestraNewSymptom) {
-                        AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                    }
-                case .complete:
-                    List{
-                        ForEach(listaDatos.symptoms.indices, id: \.self) { index in
-                            if listaDatos.symptoms[index].activo {
-                                let symptom = listaDatos.symptoms[index]
-                                NavigationLink{
-                                    RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, createAction: registers.makeCreateAction())
-                                } label: {
-                                    Celda(unDato : symptom)
+        ZStack{
+            NavigationStack {
+                VStack {
+                    // Show the view based on symptomList state (loading, emptyArray, arrayWithValues).
+                    switch listaDatos.state {
+                    case .isLoading:
+                        ProgressView() //Loading animation
+                    case .isEmpty:
+                        //Calls a view to show that the symptom list is empty
+                        //The action serves as a button to send the user to a page to create a symptom.
+                        EmptyListView(
+                            title: "No hay sintomas registrados",
+                            message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                            nameButton: "Agregar Sintoma",
+                            action: { muestraNewSymptom = true }
+                        )
+                        // The sheets sends the user to the view to create a new symptom.
+                        .sheet(isPresented: $muestraNewSymptom) {
+                            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                        }
+                    case .complete:
+                        List{
+                            ForEach(listaDatos.symptoms.indices, id: \.self) { index in
+                                if listaDatos.symptoms[index].activo {
+                                    let symptom = listaDatos.symptoms[index]
+                                    NavigationLink{
+                                        RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, createAction: registers.makeCreateAction())
+                                    } label: {
+                                        Celda(unDato : symptom)
+                                    }
+                                    .padding(10)
+                                    //                                .padding(10)
+                                    
                                 }
-                                .padding(10)
-                                
                             }
                         }
                     }
+                    
+                }
+                .navigationTitle("Datos de salud")
+                .toolbar {
+                    // Button to traverse to EditSymptomView.
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            muestraEditarSintomas = true
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            muestraEditarSintomas = true
+                        } label: {
+                            Text("Edit")
+                        }
+                        
+                    }
+                }
+                // Present full screen the EditSymptomView.
+                .fullScreenCover(isPresented: $muestraEditarSintomas) {
+                    //ShareView(listaDatos: listaDatos, registers: registers)
+                    EditSymptomView(listaDatos: listaDatos)
                 }
             }
-            .navigationTitle("Datos de salud")
-            .toolbar {
-                // Button to traverse to EditSymptomView.
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        muestraEditarSintomas = true
-                    } label: {
-                        Image(systemName: "square.and.pencil")
-                    }
+            .background(Color("mainGray"))
+            .ignoresSafeArea()
+            Button{
+                muestraAgregarSintomas = true
+            }label:{
+                Label("Agregar síntoma", systemImage: "square.and.pencil")
+                    .fullScreenCover(isPresented: $muestraAgregarSintomas, content: {
+                        AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                            .onChange(of: listaDatos.symptoms) { _ in
+                                refreshID = UUID()
+                            }
+                    })
+            }
+            .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
+            .offset(x: 80, y: 280)
+        }
+    }
+    
+    // Struct to show the respective icon for each symptom.
+    struct Celda: View {
+        var unDato : Symptom
+        
+        var body: some View {
+            HStack {
+                Image(systemName: unDato.icon)
+                    .foregroundColor(Color(hex: unDato.color))
+                VStack(alignment: .leading) {
+                    Text(unDato.nombre)
+                        .font(.title2)
                     
                 }
             }
-            // Present full screen the EditSymptomView.
-            .fullScreenCover(isPresented: $muestraEditarSintomas) {
-                EditSymptomView(listaDatos: listaDatos)
-            }
         }
-        .background(Color("mainGray"))
-        .ignoresSafeArea()
     }
-}
-
-// Struct to show the respective icon for each symptom.
-struct Celda: View {
-    var unDato : Symptom
     
-    var body: some View {
-        HStack {
-            Image(systemName: unDato.icon)
-                .foregroundColor(Color(hex: unDato.color))
-            VStack(alignment: .leading) {
-                Text(unDato.nombre)
-                    .font(.title2)
-                
-            }
+    struct pagInicio_Previews: PreviewProvider {
+        static var previews: some View {
+            HomeView(listaDatos: SymptomList(), registers: RegisterList())
         }
     }
 }
-
-struct pagInicio_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(listaDatos: SymptomList(), registers: RegisterList())
-    }
-}
-
