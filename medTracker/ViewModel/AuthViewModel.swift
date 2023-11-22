@@ -18,7 +18,8 @@ class AuthViewModel: ObservableObject {
      **********************************/
     @Published var email = "" {
         didSet {
-            HelperFunctions.write(email, inPath: "email.JSON")
+            let lowercasedEmail = email.lowercased()
+            HelperFunctions.write(lowercasedEmail, inPath: "email.JSON")
         }
     }
     @Published var password = ""

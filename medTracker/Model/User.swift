@@ -9,9 +9,7 @@ import Foundation
 
 struct User : Codable, Hashable {
     var telefono : String // Unique identifier
-    var nombre : String
-    var apellidoPaterno : String
-    var apellidoMaterno : String
+    var nombreCompleto : String
     var antecedentes : String
     var sexo: String
     var fechaNacimiento: Date
@@ -40,20 +38,16 @@ struct User : Codable, Hashable {
     
     init() {
         self.telefono = ""
-        self.nombre = ""
-        self.apellidoPaterno = ""
-        self.apellidoMaterno = ""
+        self.nombreCompleto = ""
         self.antecedentes = ""
         self.sexo = ""
         self.fechaNacimiento = Date()
         self.estatura = ""
     }
     
-    init(telefono: String, nombre: String, apellidoPaterno: String, apellidoMaterno: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: String) {
+    init(telefono: String, nombre: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: String) {
         self.telefono = telefono
-        self.nombre = nombre
-        self.apellidoPaterno = apellidoPaterno
-        self.apellidoMaterno = apellidoMaterno
+        self.nombreCompleto = nombre
         self.antecedentes = antecedentes
         self.sexo = sexo
         self.fechaNacimiento = fechaNacimiento
@@ -62,10 +56,10 @@ struct User : Codable, Hashable {
     
     func error() -> (Bool, String) {
         if let height = Double(self.estatura) {
-            if (self.telefono == "" || self.nombre == "" || self.apellidoPaterno == "" || self.apellidoMaterno == "" || self.estatura == "" || self.sexo == "") {
+            if (self.telefono == "" || self.nombreCompleto == "" || self.estatura == "" || self.sexo == "") {
                 return (true, "Datos faltantes. Por favor llenar todos los campos obligatorios.")
             } else if (height < 0.20 || height > 2.5) {
-                return (true, "Estatura invalida. Por favor de poner una estatura valid en unidad centimetros.")
+                return (true, "Estatura invalida. Por favor de poner una estatura valid en unidad metros.")
             } else if (self.fechaNacimiento == Date.now || self.fechaNacimiento > Date.now || (getYear(date: Date.now) - getYear(date: self.fechaNacimiento) > 120)) {
                 return (true, "Por favor poner una fecha valida.")
             }
