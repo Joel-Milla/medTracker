@@ -33,13 +33,19 @@ struct EditSymptomView: View {
                     List {
                         Section(header: Text("Lista de datos de salud")) {
                             ForEach(listaDatos.symptoms.indices, id: \.self) { index in
-                                Toggle(listaDatos.symptoms[index].nombre, isOn: $listaDatos.symptoms[index].activo)
+                                HStack{
+                                    Image(systemName: listaDatos.symptoms[index].icon)
+                                        .foregroundColor(Color(hex: listaDatos.symptoms[index].color))
+                                    Toggle(listaDatos.symptoms[index].nombre, isOn: $listaDatos.symptoms[index].activo)
+                                        .font(.title2)
+                                        .padding(5)
+                                }
                             }
                         }
                     }
                     .id(refreshID)  // Force the view to update
                     .font(.title3)
-                    .navigationTitle("Edita tus datos de salud")
+                    .navigationTitle("Editar Datos")
                 }
             }
             .toolbar {
@@ -53,13 +59,6 @@ struct EditSymptomView: View {
                     })
                 }
                 // Button to add a new symptom.
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        muestraAddSymptomView = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
             }
             .sheet(isPresented: $muestraAddSymptomView) {
                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())

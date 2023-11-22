@@ -118,7 +118,7 @@ struct ProfileView: View {
                                 }
                             }
                         } else {
-                            Button("Edit") {
+                            Button("Editar") {
                                 // Modo normal
                                 isEditing = true
                             }
