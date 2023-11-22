@@ -61,10 +61,6 @@ struct RegisterView: View {
                     })
                 )
             }
-            .onDisappear() {
-                authentication.email = ""
-                authentication.password = ""
-            }
             .navigationTitle("Registrarse")
             
         }

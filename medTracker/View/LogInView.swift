@@ -54,10 +54,6 @@ struct LogInView: View {
                 )
             }
             .navigationTitle("Iniciar Sesión")
-            .onDisappear() {
-                authentication.email = ""
-                authentication.password = ""
-            }
         }
     }
 }
