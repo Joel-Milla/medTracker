@@ -18,6 +18,7 @@ struct RegisterView: View {
                 Group {
                     TextField("Email", text: $authentication.email)
                         .textContentType(.emailAddress)
+                        .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                     SecureField("Contraseña", text: $authentication.password)
                         .textContentType(.newPassword)
@@ -54,7 +55,10 @@ struct RegisterView: View {
                 Alert(
                     title: Text("Registration Error"),
                     message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
-                    dismissButton: .default(Text("OK"))
+                    dismissButton: .default(Text("OK"), action: {
+                        // Reset the registrationErrorMessage to nil when dismissing the alert
+                        authViewModel.registrationErrorMessage = nil
+                    })
                 )
             }
             .navigationTitle("Registrarse")
