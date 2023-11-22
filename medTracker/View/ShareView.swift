@@ -85,10 +85,11 @@ func iterate (registers : RegisterList)->[String]{
         return csvInfo
     }
 
-#Preview {
-    ShareView(listaDatos: SymptomList(), registers: RegisterList())
+struct share_Previews: PreviewProvider {
+    static var previews: some View {
+        ShareView(listaDatos: SymptomList(), registers: RegisterList())
+    }
 }
-
 struct ShareInfo{
     
 }
