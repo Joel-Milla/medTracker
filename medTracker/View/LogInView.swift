@@ -13,6 +13,7 @@ struct LogInView: View {
                 Group {
                     TextField("Email", text: $authentication.email)
                         .textContentType(.emailAddress)
+                        .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                     SecureField("Contraseña", text: $authentication.password)
                         .textContentType(.newPassword)
