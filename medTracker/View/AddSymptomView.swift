@@ -25,25 +25,25 @@ struct AddSymptomView: View {
     typealias CreateAction = (Symptom) async throws -> Void
     let createAction: CreateAction
     
-    
     var body: some View {
-        NavigationView {
+        NavigationStack {
+            ScrollView {
             VStack(alignment: .leading) {
                 HStack {
-                    TextField("Nombre síntoma", text: $nombreSintoma, axis : .vertical)
+                    TextField("Nombre síntoma", text: $nombreSintoma)
                         .font(.system(size: 28))
-                        .lineSpacing(4)
                         .foregroundColor(colorSymptom)
-
+                        .submitLabel(.done)
+                    
                     Button {
                         isPresented.toggle()
                     } label: {
                         Image(systemName: icon).font(.title)
                             .foregroundColor(colorSymptom)
                     }
-                        .sheet(isPresented: $isPresented, content: {
-                            SymbolsPicker(selection: $icon, title: "Choose your symbol", autoDismiss: true)
-                        }).padding()
+                    .sheet(isPresented: $isPresented, content: {
+                        SymbolsPicker(selection: $icon, title: "Choose your symbol", autoDismiss: true)
+                    }).padding()
                     
                     ColorPicker("", selection: $colorSymptom)
                         .labelsHidden()
@@ -55,13 +55,14 @@ struct AddSymptomView: View {
                     .font(.system(size: 24))
                     .padding(.top, 22)
                 
-                TextField("Escriba la descripción del síntoma", text: $descripcion, axis : .vertical)
+                TextField("Escriba la descripción del síntoma", text: $descripcion)//, axis : .vertical)
                     .font(.system(size: 18))
                     .textFieldStyle(.roundedBorder)
                     .lineSpacing(4)
                     .padding(.trailing, 20)
                     .foregroundColor(colorSymptom)
                     .disableAutocorrection(true)
+                    .submitLabel(.done)
                 
                 Text("Tipo")
                     .font(.system(size: 24))
@@ -77,9 +78,9 @@ struct AddSymptomView: View {
                         content: { item, isSelected in
                             Text(item)
                                 .foregroundColor(isSelected ? Color.white : Color.black )
-                                .padding(.horizontal, 45)
+                                .padding(.horizontal, 40)
                                 .padding(.vertical, 8)
-                        
+                            
                         },
                         selection: {
                             Capsule()
@@ -91,6 +92,8 @@ struct AddSymptomView: View {
                     .animation(.easeInOut(duration: 0.3))
                     Spacer()
                 }
+                .padding(.trailing, 20)
+                .frame(height: 50)
                 
                 Toggle("Recibir notificaciones", isOn: $notificaciones)
                     .tint(colorSymptom)
@@ -101,7 +104,7 @@ struct AddSymptomView: View {
                 Picker("Quiero recibirlas:", selection: $notificaciones_seleccion) {
                     ForEach(cada_cuanto, id: \.self) {
                         Text($0)
-                            //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                        //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
                     }
                 }
                 .pickerStyle(.navigationLink)
@@ -132,18 +135,22 @@ struct AddSymptomView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.leading, 20)
-            .background(Color("mainWhite"))
-            .navigationTitle("Nuevo síntoma")
+            .navigationBarTitle("Nuevo síntoma")
+            .ignoresSafeArea(.keyboard)
+        }
         }
         .onAppear {
             // Initialize hexString with the initial color
             colorString = hexString(from: colorSymptom)
+            selectedIndex
         }
         .onChange(of: colorSymptom) { newColor in
             // Update hexString when the color changes
             colorString = hexString(from: newColor)
         }
+        .background(Color("mainWhite"))
     }
+        
     
     private func createSymptom() {
         // will wait until the createAction(symptom) finishes
@@ -188,6 +195,12 @@ extension Array where Element == Symptom {
         } else {
             return 1 // If the array is empty, start with ID 1
         }
+    }
+}
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

@@ -16,8 +16,6 @@ struct HomeView: View {
     @State private var muestraEditarSintomas = false
     @State private var muestraAgregarSintomas = false
     @State private var muestraNewSymptom = false
-    //@State private var refreshID = UUID()
-    
     
     var body: some View {
         ZStack {
@@ -96,9 +94,6 @@ struct HomeView: View {
         }
         .sheet(isPresented: $muestraAgregarSintomas, content: {
             AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                /*.onChange(of: listaDatos.symptoms) { _ in
-                    refreshID = UUID()
-                }*/
         })
     }
     
