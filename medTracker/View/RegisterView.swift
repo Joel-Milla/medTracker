@@ -55,8 +55,15 @@ struct RegisterView: View {
                 Alert(
                     title: Text("Registration Error"),
                     message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
-                    dismissButton: .default(Text("OK"))
+                    dismissButton: .default(Text("OK"), action: {
+                        // Reset the registrationErrorMessage to nil when dismissing the alert
+                        authViewModel.registrationErrorMessage = nil
+                    })
                 )
+            }
+            .onDisappear() {
+                authentication.email = ""
+                authentication.password = ""
             }
             .navigationTitle("Registrarse")
             

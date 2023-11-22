@@ -43,12 +43,21 @@ struct LogInView: View {
             .onReceive(authentication.$signInErrorMessage) { newValue in
                 showErrorAlert = newValue != nil
             }
-            .alert("Error", isPresented: $showErrorAlert) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text("Password or email are invalid.")
+            .alert(isPresented: $showErrorAlert) {
+                Alert(
+                    title: Text("LogIn Error"),
+                    message: Text("Password or email are invalid."),
+                    dismissButton: .default(Text("OK"), action: {
+                        // Reset the registrationErrorMessage to nil when dismissing the alert
+                        authentication.signInErrorMessage = nil
+                    })
+                )
             }
             .navigationTitle("Iniciar Sesión")
+            .onDisappear() {
+                authentication.email = ""
+                authentication.password = ""
+            }
         }
     }
 }
