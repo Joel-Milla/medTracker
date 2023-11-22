@@ -16,11 +16,11 @@ struct HomeView: View {
     @State private var muestraEditarSintomas = false
     @State private var muestraAgregarSintomas = false
     @State private var muestraNewSymptom = false
-    @State private var refreshID = UUID()
+    //@State private var refreshID = UUID()
     
     
     var body: some View {
-        ZStack{
+        ZStack {
             NavigationStack {
                 VStack {
                     // Show the view based on symptomList state (loading, emptyArray, arrayWithValues).
@@ -33,8 +33,8 @@ struct HomeView: View {
                         EmptyListView(
                             title: "No hay sintomas registrados",
                             message: "Porfavor de agregar sintomas para poder empezar a registrar.",
-                            nameButton: "Agregar Sintoma",
-                            action: { muestraNewSymptom = true }
+                            nameButton: "Agregar Sintoma"
+                            //action: { muestraNewSymptom = true }
                         )
                         // The sheets sends the user to the view to create a new symptom.
                         .sheet(isPresented: $muestraNewSymptom) {
@@ -73,7 +73,7 @@ struct HomeView: View {
                         Button {
                             muestraEditarSintomas = true
                         } label: {
-                            Text("Edit")
+                            Text("Editar")
                         }
                         
                     }
@@ -90,16 +90,16 @@ struct HomeView: View {
                 muestraAgregarSintomas = true
             }label:{
                 Label("Agregar síntoma", systemImage: "square.and.pencil")
-                    .fullScreenCover(isPresented: $muestraAgregarSintomas, content: {
-                        AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                            .onChange(of: listaDatos.symptoms) { _ in
-                                refreshID = UUID()
-                            }
-                    })
             }
             .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
             .offset(x: 80, y: 280)
         }
+        .sheet(isPresented: $muestraAgregarSintomas, content: {
+            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                /*.onChange(of: listaDatos.symptoms) { _ in
+                    refreshID = UUID()
+                }*/
+        })
     }
     
     // Struct to show the respective icon for each symptom.
