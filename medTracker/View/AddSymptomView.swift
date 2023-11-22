@@ -21,6 +21,13 @@ struct AddSymptomView: View {
     var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
     @State var notificaciones_seleccion = "Todos los días"
     @ObservedObject var symptoms : SymptomList
+    @State private var selectedFrequency: String = "Todos los días" {
+        didSet {
+            if notificaciones {
+                scheduleNotification(frecuencia: selectedFrequency)
+            }
+        }
+    }
     
     typealias CreateAction = (Symptom) async throws -> Void
     let createAction: CreateAction
@@ -98,10 +105,9 @@ struct AddSymptomView: View {
                     .padding(.top, 40)
                     .font(.system(size: 24))
                 
-                Picker("Quiero recibirlas:", selection: $notificaciones_seleccion) {
+                Picker("Quiero recibirlas:", selection: $selectedFrequency) {
                     ForEach(cada_cuanto, id: \.self) {
                         Text($0)
-                            //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
                     }
                 }
                 .pickerStyle(.navigationLink)
@@ -109,6 +115,11 @@ struct AddSymptomView: View {
                 .foregroundColor(notificaciones ? colorSymptom : Color.gray)
                 .padding(.trailing, 20)
                 .font(.system(size: 18))
+                .onChange(of: selectedFrequency) { newFrequency in
+                    if notificaciones {
+                        scheduleNotification(frecuencia: newFrequency)
+                    }
+                }
                 
                 HStack {
                     Spacer()
@@ -152,6 +163,43 @@ struct AddSymptomView: View {
                 try await createAction(symptoms.symptoms.last ?? Symptom(id: 0, nombre: "", icon: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "")) //call the function that adds the symptom to the database
             } catch {
                 print("[NewPostForm] Cannot create post: \(error)")
+            }
+        }
+    }
+    
+    func scheduleNotification(frecuencia: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "Recordatorio de MedTracker "
+        content.subtitle = "Es hora de registrar \(nombreSintoma)"
+        content.sound = UNNotificationSound.default
+        
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        
+        switch frecuencia {
+            case "Todos los días":
+                dateComponents.hour = 17
+                dateComponents.minute = 02
+            case "Cada semana":
+                dateComponents.weekday = 4
+                dateComponents.hour = 17
+                dateComponents.minute = 02
+            case "Una vez al mes":
+                dateComponents.day = 22
+                dateComponents.hour = 16
+                dateComponents.minute = 43
+            default:
+                break
+            }
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error.localizedDescription)")
+            } else {
+                print("Notification scheduled successfully!")
             }
         }
     }
