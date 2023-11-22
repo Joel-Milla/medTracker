@@ -70,7 +70,7 @@ struct User : Codable, Hashable {
                 return (true, "Por favor poner una fecha valida.")
             }
         } else {
-            return (true, "Estatura invalida. Por favor de poner una estatura valida en unidad centimetros.")
+            return (true, "Estatura invalida. Por favor de poner una estatura valida en unidad metros.")
         }
         return (false, "")
     }
