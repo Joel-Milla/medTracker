@@ -53,12 +53,18 @@ struct User : Codable, Hashable {
                 return (true, "Datos faltantes. Por favor llenar todos los campos obligatorios.")
             } else if (height < 0.20 || height > 2.5) {
                 return (true, "Estatura invalida. Por favor de poner una estatura valid en unidad centimetros.")
-            } else if (self.fechaNacimiento == Date.now || self.fechaNacimiento > Date.now) {
+            } else if (self.fechaNacimiento == Date.now || self.fechaNacimiento > Date.now || (getYear(date: Date.now) - getYear(date: self.fechaNacimiento) > 120)) {
                 return (true, "Por favor poner una fecha valida.")
             }
         } else {
             return (true, "Estatura invalida. Por favor de poner una estatura valida en unidad centimetros.")
         }
         return (false, "")
+    }
+    
+    func getYear(date: Date) -> Int {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year], from: date)
+        return components.year ?? 0
     }
 }
