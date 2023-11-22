@@ -25,17 +25,17 @@ class SymptomList : ObservableObject {
      Important initialization methods
      **********************************/
     init() {
-        if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Symptoms.JSON")) {
+        /*if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Symptoms.JSON")) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
                 symptoms = datosDecodificados
                 return
             }
-        }
+        }*/
         //If there is no info in JSON, fetdh
-        fetchSymptoms()
+        //fetchSymptoms()
         
         // For testing, the next function can be used for dummy data.
-        // symptoms = getDefaultSymptoms()
+        symptoms = getDefaultSymptoms()
     }
     
     enum State {
@@ -81,10 +81,10 @@ class SymptomList : ObservableObject {
     private func getDefaultSymptoms() -> [Symptom] {
         return [
             Symptom(id: 1, nombre: "Peso", icon: "star.fill",  description: "Este es un ejemplo de descripción que es bastante largo y se va haciendo mucho más largo para comprobar la funcionalidad.", cuantitativo: true, unidades: "kg", activo: true, color: "#007AF"),
-            Symptom(id: 2, nombre: "Cansancio", icon: "star.fill", description: "Este es un ejemplo de descripción corto.", cuantitativo: false, unidades: "", activo: false, color: "#AF43EB"),
-            Symptom(id: 3, nombre: "Insomnio", icon: "star.fill", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", cuantitativo: true, unidades: "", activo: false, color: "#D03A20"),
-            Symptom(id: 4, nombre: "Estado cardíaco", icon: "star.fill", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "#86B953"),
-            Symptom(id: 5, nombre: "Estado cardíaco 2", icon: "star.fill", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: false, color: "#86B953")
+            Symptom(id: 2, nombre: "Cansancio", icon: "star.fill", description: "Este es un ejemplo de descripción corto.", cuantitativo: false, unidades: "", activo: true, color: "#AF43EB"),
+            Symptom(id: 3, nombre: "Insomnio", icon: "star.fill", description: "Este es un ejemplo de descripción mediano, es decir, con esto está bien.", cuantitativo: true, unidades: "", activo: true, color: "#D03A20"),
+            Symptom(id: 4, nombre: "Estado cardíaco", icon: "star.fill", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: true, color: "#86B953"),
+            Symptom(id: 5, nombre: "Estado cardíaco 2", icon: "star.fill", description: "Latidos por minuto.", cuantitativo: true, unidades: "BPM", activo: true, color: "#86B953")
             
         ]
     }
