@@ -16,11 +16,13 @@ struct HomeView: View {
     @State private var muestraEditarSintomas = false
     @State private var muestraAgregarSintomas = false
     @State private var muestraNewSymptom = false
+    @State private var muestraShare = false
+    @State private var isHomeViewActive = true
     //@State private var refreshID = UUID()
     
     
     var body: some View {
-        ZStack {
+        ZStack{
             NavigationStack {
                 VStack {
                     // Show the view based on symptomList state (loading, emptyArray, arrayWithValues).
@@ -46,7 +48,7 @@ struct HomeView: View {
                                 if listaDatos.symptoms[index].activo {
                                     let symptom = listaDatos.symptoms[index]
                                     NavigationLink{
-                                        RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, createAction: registers.makeCreateAction())
+                                        RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, sliderValue : .constant(0.155) ,createAction: registers.makeCreateAction())
                                     } label: {
                                         Celda(unDato : symptom)
                                     }
@@ -64,7 +66,7 @@ struct HomeView: View {
                     // Button to traverse to EditSymptomView.
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            muestraEditarSintomas = true
+                            muestraShare = true
                         } label: {
                             Image(systemName: "square.and.arrow.up")
                         }
@@ -83,32 +85,39 @@ struct HomeView: View {
                     //ShareView(listaDatos: listaDatos, registers: registers)
                     EditSymptomView(listaDatos: listaDatos)
                 }
+//                .onChange(of: listaDatos.state) { newState in
+//                    // Update the isHomeViewActive based on the state of listaDatos
+//                    isHomeViewActive = newState != .complete
+//                }
+                .sheet(isPresented: $muestraAgregarSintomas, content: {
+                    AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                    /*.onChange(of: listaDatos.symptoms) { _ in
+                     refreshID = UUID()
+                     }*/
+                })
+                .sheet(isPresented: $muestraShare, content: {
+                    ShareView(listaDatos: listaDatos, registers: registers)
+                })
             }
-            .background(Color("mainGray"))
-            .ignoresSafeArea()
-            
-            Image("logoP")
-                .resizable()
-                .imageScale(.small)
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 50)
-                .offset(x: 0, y: -360)
-            
-            Button{
-                muestraAgregarSintomas = true
-            }label:{
-                Label("Agregar síntoma", systemImage: "square.and.pencil")
-            }
-            .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
-            .offset(x: 80, y: 280)
+            .overlay(
+                Group {
+                    if isHomeViewActive {
+                        Button {
+                            muestraAgregarSintomas = true
+                        } label: {
+                            Label("Agregar nuevo dato", systemImage: "square.and.pencil")
+                        }
+                        .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
+                        .offset(x: -14, y: -75)
+                        .sheet(isPresented: $muestraAgregarSintomas) {
+                            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                        }
+                    }
+                },
+                alignment: .bottomTrailing)
         }
-        .sheet(isPresented: $muestraAgregarSintomas, content: {
-            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                /*.onChange(of: listaDatos.symptoms) { _ in
-                    refreshID = UUID()
-                }*/
-        })
     }
+}
     
     // Struct to show the respective icon for each symptom.
     struct Celda: View {
@@ -132,4 +141,4 @@ struct HomeView: View {
             HomeView(listaDatos: SymptomList(), registers: RegisterList())
         }
     }
-}
+

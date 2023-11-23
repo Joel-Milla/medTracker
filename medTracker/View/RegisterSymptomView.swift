@@ -14,6 +14,7 @@ struct RegisterSymptomView: View {
     @FocusState private var mostrarTeclado : Bool
     @Binding var symptom : Symptom
     @ObservedObject var registers : RegisterList
+    @Binding var sliderValue : Double
     //@StateObject var symptom = Symptom()
     @State var metricsString = ""
     @State private var date = Date.now
@@ -21,6 +22,7 @@ struct RegisterSymptomView: View {
     @State var notes = "Agrega alguna nota..."
     var dummySymptom = "Migraña"
     @State var metric: Double = 0
+    @State var isPresented = false
     //@StateObject var symptom = Symptom()
     //let mainWhite = Color
     
@@ -31,7 +33,7 @@ struct RegisterSymptomView: View {
         GeometryReader { geometry in
             NavigationStack(){
                 ZStack {
-                    Color("mainWhite").ignoresSafeArea()
+                    Color(.white).ignoresSafeArea()
                     VStack() {
                         Text(symptom.nombre)
                             .font(.title)
@@ -40,7 +42,9 @@ struct RegisterSymptomView: View {
                             .padding(.horizontal, -179)
                             .frame(height: geometry.size.height *  0.06)
                         DatePicker("Fecha registro", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                            .datePickerStyle(.automatic)
                             .padding(.vertical,30)
+                            //.preferredDatePickerStyle = .inline
                             .foregroundColor(Color(hex: symptom.color)) // sale identico??
                             .tint(Color(hex: symptom.color))
                             .bold()
@@ -50,7 +54,7 @@ struct RegisterSymptomView: View {
                                 .font(.system(size: 18))
                                 .foregroundStyle(Color(hex: symptom.color))
                                 .bold()
-                            CustomSlider(valueFinal: $metric, valor: 0.155)
+                            CustomSlider(valueFinal: $metric, valor: sliderValue)
                                 .padding(.horizontal, 5)
                                 .frame(height: geometry.size.height * 0.06)
                                 .padding(.vertical, 35)
@@ -112,6 +116,9 @@ struct RegisterSymptomView: View {
                                     createRegister()
                                     dismiss()
                                 }
+                                else{
+                                    isPresented = true
+                                }
                             } else {
                                 registers.registers.append(Register(idSymptom: symptom.id, fecha: date, cantidad: Float(metric), notas: notes))
                                 createRegister()
@@ -120,6 +127,7 @@ struct RegisterSymptomView: View {
                         }label:{
                             Label("Añadir información", systemImage: "cross.circle.fill")
                         }
+                        .alert("Añade información", isPresented: $isPresented, actions: {})
                         .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
                         .frame(height: geometry.size.height *  0.12)
                         
@@ -135,6 +143,7 @@ struct RegisterSymptomView: View {
                 mostrarTeclado = false
             }
         }
+        .ignoresSafeArea(.keyboard)
     }
     
     private func createRegister() {
@@ -164,19 +173,15 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList(), createAction: { _ in })
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList(), sliderValue: .constant(0.0), createAction: { _ in })
     }
 }
 
 /*
  NOTAS:
-Mandar parametro a slider para que se acomode la vista
- Hacer que boton de agregar síntoma se quite
  Modos oscuros
  Vista de análisis se ve rara
- Agregar sintoma cambia mucho
  Hacer share con nombre de síntoma y sortearlo
  widgets
- alertas
  cambiar pantalla de inicio por colores verdes/azules
  */

@@ -52,10 +52,10 @@ struct ShareView: View {
         let fileName = "Datos.csv"
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
         
-        var csvText = "Fecha,Cantidad,Notas\n"
+        var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
         
         for register in registers.registers {
-            let newLine = "\(register.fecha),\(register.cantidad),\(register.notas)\n"
+            let newLine = "\(getName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
             csvText.append(contentsOf: newLine)
         }
 
@@ -84,6 +84,10 @@ func iterate (registers : RegisterList)->[String]{
         }
         return csvInfo
     }
+func getName(register : Register)->String{
+    @ObservedObject var listaDatos = SymptomList()
+    return listaDatos.returnName(id: register.idSymptom)
+}
 
 struct share_Previews: PreviewProvider {
     static var previews: some View {
