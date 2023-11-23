@@ -23,11 +23,11 @@ struct WelcomeView: View {
                         .resizable()
                         .imageScale(.small)
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 250)
-                    Text("¡Bienvenido a MedTracker!")
+                        .frame(height: 300)
+                    /*Text("¡Bienvenido a MedTracker!")
                         .font(.largeTitle)
                         .bold()
-                        .foregroundColor(Color(red: 28/255, green: 32/255, blue: 19/255))
+                        .foregroundColor(Color(red: 28/255, green: 32/255, blue: 19/255))*/
                     NavigationLink {
                         LogInView()
                     } label: {
