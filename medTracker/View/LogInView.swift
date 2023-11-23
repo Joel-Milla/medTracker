@@ -13,6 +13,7 @@ struct LogInView: View {
                 Group {
                     TextField("Email", text: $authentication.email)
                         .textContentType(.emailAddress)
+                        .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                     SecureField("Contraseña", text: $authentication.password)
                         .textContentType(.newPassword)
@@ -42,10 +43,15 @@ struct LogInView: View {
             .onReceive(authentication.$signInErrorMessage) { newValue in
                 showErrorAlert = newValue != nil
             }
-            .alert("Error", isPresented: $showErrorAlert) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text("Password or email are invalid.")
+            .alert(isPresented: $showErrorAlert) {
+                Alert(
+                    title: Text("LogIn Error"),
+                    message: Text("Password or email are invalid."),
+                    dismissButton: .default(Text("OK"), action: {
+                        // Reset the registrationErrorMessage to nil when dismissing the alert
+                        authentication.signInErrorMessage = nil
+                    })
+                )
             }
             .navigationTitle("Iniciar Sesión")
         }

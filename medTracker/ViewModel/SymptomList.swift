@@ -76,6 +76,15 @@ class SymptomList : ObservableObject {
             state = .complete
         }
     }
+    func returnName(id : Int)->String{
+        var name = ""
+        for symptom in self.symptoms{
+            if symptom.id == id{
+                name = symptom.nombre
+            }
+        }
+        return name
+    }
     
     // Dummy data for testing purposes.
     private func getDefaultSymptoms() -> [Symptom] {

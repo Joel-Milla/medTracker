@@ -16,13 +16,18 @@ struct WelcomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 108/255, green: 171/255, blue: 219/255)
+                Color.white
                     .ignoresSafeArea()
                 VStack{
-                    Text("¡Bienvenido a MedTracker!")
+                    Image("logoV")
+                        .resizable()
+                        .imageScale(.small)
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 300)
+                    /*Text("¡Bienvenido a MedTracker!")
                         .font(.largeTitle)
                         .bold()
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(red: 28/255, green: 32/255, blue: 19/255))*/
                     NavigationLink {
                         LogInView()
                     } label: {
@@ -32,7 +37,7 @@ struct WelcomeView: View {
                             .foregroundColor(.white)
                             .padding()
                             .frame(width: 220, height: 50)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
                             .cornerRadius(10)
                             .shadow(radius: 5)
                     }
@@ -46,7 +51,7 @@ struct WelcomeView: View {
                             .foregroundColor(.white)
                             .padding()
                             .frame(width: 220, height: 50)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
                             .cornerRadius(10)
                             .shadow(radius: 5)
                     }
