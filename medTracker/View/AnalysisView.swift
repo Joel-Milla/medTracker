@@ -18,39 +18,47 @@ struct AnalysisView: View {
     @State private var muestraNewSymptom = false
     
     var body: some View {
-        // If there are no symptoms bein checked, then show this view.
-        if listSymp.symptoms.isEmpty {
-            //The action serves as a trigger to show a sheet of the view to add new symptoms.
-            EmptyListView(
-                title: "No hay sintomas registrados",
-                message: "Porfavor de agregar sintomas para poder empezar a registrar.",
-                nameButton: "Agregar Sintoma",
-                action: { muestraNewSymptom = true }
-            )
-            .sheet(isPresented: $muestraNewSymptom) {
-                AddSymptomView(symptoms: listSymp, createAction: listSymp.makeCreateAction())
-            }
-        }
-        // If there are symptoms being checked then show this view.
-        else {
-            VStack {
-                // Show a tab for each symptom that is active.
-                TabView {
-                    ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
-                        AnalysisItemView(symptom: symptom, registers: registers)
-                    }
+        ZStack{
+            // If there are no symptoms bein checked, then show this view.
+            if listSymp.symptoms.isEmpty {
+                //The action serves as a trigger to show a sheet of the view to add new symptoms.
+                EmptyListView(
+                    title: "No hay sintomas registrados",
+                    message: "Porfavor de agregar sintomas para poder empezar a registrar.",
+                    nameButton: "Agregar Sintoma",
+                    action: { muestraNewSymptom = true }
+                )
+                .sheet(isPresented: $muestraNewSymptom) {
+                    AddSymptomView(symptoms: listSymp, createAction: listSymp.makeCreateAction())
                 }
-                .id(refreshID)  // Force the TabView to update
-                .tabViewStyle(.page)
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
-                
-                Spacer(minLength: 50)
             }
-            .background(Color("mainWhite"))
-            .onChange(of: registers.registers) { _ in
-                // This will be called when registers change
-                refreshID = UUID()  // Force the TabView to update
+            // If there are symptoms being checked then show this view.
+            else {
+                VStack {
+                    // Show a tab for each symptom that is active.
+                    TabView {
+                        ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
+                            AnalysisItemView(symptom: symptom, registers: registers)
+                        }
+                    }
+                    .id(refreshID)  // Force the TabView to update
+                    .tabViewStyle(.page)
+                    .indexViewStyle(.page(backgroundDisplayMode: .always))
+                    
+                    Spacer(minLength: 50)
+                }
+                .background(Color("mainWhite"))
+                .onChange(of: registers.registers) { _ in
+                    // This will be called when registers change
+                    refreshID = UUID()  // Force the TabView to update
+                }
             }
+            Image("logoP")
+                .resizable()
+                .imageScale(.small)
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 50)
+                .offset(x: 0, y: -360)
         }
     }
 }

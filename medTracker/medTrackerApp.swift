@@ -10,6 +10,7 @@ import Firebase
 
 @main
 struct medTrackerApp: App {
+    @AppStorage("hasRequestedNotificationPermission") private var hasRequestedNotificationPermission = false
     // Initialize the configuration of the database
     init() {
         FirebaseApp.configure()
@@ -24,7 +25,23 @@ struct medTrackerApp: App {
             } else {
                 WelcomeView()
                     .environmentObject(authentication)
+                    .onAppear(perform: {
+                        if !hasRequestedNotificationPermission {
+                                               requestNotificationPermission()
+                                               hasRequestedNotificationPermission = true
+                                           }
+                    })
             }
+        }
+    }
+}
+
+func requestNotificationPermission() {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+        if success {
+            print("Permission granted!")
+        } else if let error = error {
+            print(error.localizedDescription)
         }
     }
 }

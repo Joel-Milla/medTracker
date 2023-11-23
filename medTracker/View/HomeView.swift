@@ -88,24 +88,25 @@ struct HomeView: View {
                 isHomeViewActive = newState != .complete
             }
             .background(Color("mainGray"))
-            .overlay(
-                Group {
-                    if isHomeViewActive {
-                        Button {
-                            muestraAgregarSintomas = true
-                        } label: {
-                            Label("Agregar nuevo dato", systemImage: "square.and.pencil")
-                        }
-                        .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
-                        .offset(x: -14, y: -75)
-                        .sheet(isPresented: $muestraAgregarSintomas) {
-                            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                        }
-                    }
-                },
-                alignment: .bottomTrailing)
-            .sheet(isPresented: $muestraAgregarSintomas, content: {
-                AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+            .ignoresSafeArea()
+            
+            Image("logoP")
+                .resizable()
+                .imageScale(.small)
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 50)
+                .offset(x: 0, y: -360)
+            
+            Button{
+                muestraAgregarSintomas = true
+            }label:{
+                Label("Agregar síntoma", systemImage: "square.and.pencil")
+            }
+            .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
+            .offset(x: 80, y: 280)
+        }
+        .sheet(isPresented: $muestraAgregarSintomas, content: {
+            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
                 /*.onChange(of: listaDatos.symptoms) { _ in
                  refreshID = UUID()
                  }*/
