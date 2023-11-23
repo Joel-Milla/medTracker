@@ -92,7 +92,7 @@ struct HomeView: View {
                 .imageScale(.small)
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 50)
-                .offset(x: -105, y: -360)
+                .offset(x: 0, y: -360)
             
             Button{
                 muestraAgregarSintomas = true
