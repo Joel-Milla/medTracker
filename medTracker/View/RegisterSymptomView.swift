@@ -33,7 +33,6 @@ struct RegisterSymptomView: View {
         GeometryReader { geometry in
             NavigationStack(){
                 ZStack {
-                    Color(.white).ignoresSafeArea()
                     VStack() {
                         Text(symptom.nombre)
                             .font(.title)

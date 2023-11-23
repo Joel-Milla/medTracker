@@ -18,6 +18,9 @@ struct HomeView: View {
     @State private var muestraNewSymptom = false
     @State private var muestraShare = false
     @State private var isHomeViewActive = true
+    @State private var isNavigationViewActive = false
+
+
     //@State private var refreshID = UUID()
     
     
@@ -35,8 +38,8 @@ struct HomeView: View {
                         EmptyListView(
                             title: "No hay sintomas registrados",
                             message: "Porfavor de agregar sintomas para poder empezar a registrar.",
-                            nameButton: "Agregar Sintoma"
-                            //action: { muestraNewSymptom = true }
+                            nameButton: "Agregar Sintoma",
+                            action: { muestraNewSymptom = true }
                         )
                         // The sheets sends the user to the view to create a new symptom.
                         .sheet(isPresented: $muestraNewSymptom) {
@@ -49,7 +52,8 @@ struct HomeView: View {
                                     let symptom = listaDatos.symptoms[index]
                                     NavigationLink{
                                         RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, sliderValue : .constant(0.155) ,createAction: registers.makeCreateAction())
-                                    } label: {
+                                    }
+                                    label: {
                                         Celda(unDato : symptom)
                                     }
                                     .padding(10)
@@ -61,6 +65,22 @@ struct HomeView: View {
                     }
                     
                 }
+                .overlay(
+                    Group {
+                        if isHomeViewActive && (listaDatos.state != .isEmpty || listaDatos.state == .isLoading || listaDatos.state == .complete) {
+                            Button {
+                                muestraAgregarSintomas = true
+                            } label: {
+                                Label("Agregar nuevo dato", systemImage: "square.and.pencil")
+                            }
+                            .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
+                            .offset(x: -14, y: -75)
+                            .sheet(isPresented: $muestraAgregarSintomas) {
+                                AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+                            }
+                        }
+                    },
+                alignment: .bottomTrailing)
                 .navigationTitle("Datos de salud")
                 .toolbar {
                     // Button to traverse to EditSymptomView.
@@ -77,7 +97,6 @@ struct HomeView: View {
                         } label: {
                             Text("Editar")
                         }
-                        
                     }
                 }
                 // Present full screen the EditSymptomView.
@@ -99,22 +118,6 @@ struct HomeView: View {
                     ShareView(listaDatos: listaDatos, registers: registers)
                 })
             }
-            .overlay(
-                Group {
-                    if isHomeViewActive {
-                        Button {
-                            muestraAgregarSintomas = true
-                        } label: {
-                            Label("Agregar nuevo dato", systemImage: "square.and.pencil")
-                        }
-                        .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
-                        .offset(x: -14, y: -75)
-                        .sheet(isPresented: $muestraAgregarSintomas) {
-                            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-                        }
-                    }
-                },
-                alignment: .bottomTrailing)
         }
     }
 }
