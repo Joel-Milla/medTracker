@@ -118,6 +118,12 @@ struct HomeView: View {
                     ShareView(listaDatos: listaDatos, registers: registers)
                 })
             }
+            Image("logoP")
+                .resizable()
+                .imageScale(.small)
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 50)
+                .offset(x: -105, y: -360)
         }
     }
 }
