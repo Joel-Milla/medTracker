@@ -141,7 +141,7 @@ struct RegisterSymptomView: View {
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     //Spacer()
-                    .navigationTitle("Agregar síntoma")
+                    .navigationTitle("Agregar registro")
                     .navigationBarTitleDisplayMode(.inline)
                 }
             }
@@ -193,8 +193,9 @@ struct RegistroDatos1_Previews: PreviewProvider {
 /*
  NOTAS:
  No funciona bien el quitar el teclado
- Modos oscuros
- Vista de análisis se ve rara
- Hacer share con nombre de síntoma y sortearlo
+ si no hay nada, que salga una pantalla cuando quieres compartir algo ?
+ Fechas: formatearlas y tambien asegurarse de que sea una fecha valida (hueva.com)
+ Modos oscuros ?
+ Vista de análisis se ve rara: el texto sale muy pegado pero si no hay nada no
  widgets
  */

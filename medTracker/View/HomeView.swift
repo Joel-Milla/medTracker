@@ -83,7 +83,6 @@ struct HomeView: View {
                             }
                         }
                     }
-                    
                 }
                 .overlay(
                     Group {
@@ -102,6 +101,27 @@ struct HomeView: View {
                     },
                 alignment: .bottomTrailing)
                 .navigationTitle("Datos de salud")
+                .overlay(
+                    Group{
+                        if listaDatos.state == .complete || listaDatos.state == .isLoading {
+                            Image("logoP")
+                                .resizable()
+                                .imageScale(.small)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 50)
+                                .offset(x: -227, y: -90)
+                        }
+                        else{
+                            Image("logoP")
+                                .resizable()
+                                .imageScale(.small)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 50)
+                                .offset(x: -222, y: -340)
+                        }
+                    },
+                         alignment: .topTrailing)
+                        
                 .toolbar {
                     // Button to traverse to EditSymptomView.
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -144,12 +164,14 @@ struct HomeView: View {
                     })
                 }
             }
-            Image("logoP")
-                .resizable()
-                .imageScale(.small)
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 50)
-                .offset(x: -105, y: -360)
+//            if isHomeViewActive && (listaDatos.state == .complete) {
+//                Image("logoP")
+//                    .resizable()
+//                    .imageScale(.small)
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(height: 50)
+//                    .offset(x: -105, y: -360)
+//            }
         }
     }
     func exportCSV()-> URL? {
