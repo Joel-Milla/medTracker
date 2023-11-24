@@ -16,7 +16,7 @@ struct LogInView: View {
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                     SecureField("Contraseña", text: $authentication.password)
-                        .textContentType(.newPassword)
+                        .textContentType(.password)
                 }
                 .padding()
                 .background(Color.secondary.opacity(0.15))
