@@ -53,12 +53,13 @@ struct AnalysisView: View {
                     refreshID = UUID()  // Force the TabView to update
                 }
             }
-            Image("logoP")
-                .resizable()
-                .imageScale(.small)
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 50)
-                .offset(x: -100, y: -340)
+            GeometryReader { geometry in
+                        Image("logoP")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
+                            .position(x: geometry.size.width * 0.25, y: geometry.size.height * 0.015)
+                    }
         }
     }
 }

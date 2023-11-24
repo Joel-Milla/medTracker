@@ -104,20 +104,22 @@ struct HomeView: View {
                 .overlay(
                     Group{
                         if listaDatos.state == .complete || listaDatos.state == .isLoading {
-                            Image("logoP")
-                                .resizable()
-                                .imageScale(.small)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 50)
-                                .offset(x: -227, y: -90)
+                            GeometryReader { geometry in
+                                        Image("logoP")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
+                                            .position(x: geometry.size.width * 0.24, y: geometry.size.height * -0.1)
+                                    }
                         }
                         else{
-                            Image("logoP")
-                                .resizable()
-                                .imageScale(.small)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 50)
-                                .offset(x: -222, y: -340)
+                            GeometryReader { geometry in
+                                        Image("logoP")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
+                                            .position(x: geometry.size.width * 0.24, y: geometry.size.height * -0.1)
+                                    }
                         }
                     },
                          alignment: .topTrailing)
@@ -172,6 +174,7 @@ struct HomeView: View {
 //                    .frame(height: 50)
 //                    .offset(x: -105, y: -360)
 //            }
+            
         }
         .sheet(isPresented: $muestraAgregarSintomas, content: {
             AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
