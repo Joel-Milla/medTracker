@@ -29,166 +29,158 @@ struct ProfileView: View {
     let createAction: CreateAction
     
     var body: some View {
-        ZStack{
-            NavigationStack {
-                VStack {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100, alignment: .center)
-                        .clipShape(Circle())
-                        .clipped()
-                    Form {
-                        Section {
-                            if isEditing {
-                                HStack {
-                                    Text("Nombre completo:")
-                                    TextField("Joel Alejandro", text: $draftUser.user.nombreCompleto)
-                                }
-                                HStack {
-                                    Text("Telefono:")
-                                    TextField("+81 2611 1857", text: $draftUser.user.telefono)}
-                            } else {
-                                Text("Nombre completo: \(user.user.nombreCompleto)")
-                                Text("Telefono: \(user.user.telefono)")
+        NavigationStack {
+            VStack {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100, alignment: .center)
+                    .clipShape(Circle())
+                    .clipped()
+                Form {
+                    Section {
+                        if isEditing {
+                            HStack {
+                                Text("Nombre completo:")
+                                TextField("Joel Alejandro", text: $draftUser.user.nombreCompleto)
                             }
-                        } header: {
-                            Text("Datos personales")
+                            HStack {
+                                Text("Telefono:")
+                                TextField("+81 2611 1857", text: $draftUser.user.telefono)}
+                        } else {
+                            Text("Nombre completo: \(user.user.nombreCompleto)")
+                            Text("Telefono: \(user.user.telefono)")
                         }
-                        
-                        Section {
-                            if isEditing {
-                                HStack {
-                                    Text("Estatura:")
-                                    TextField("1.80", text: $draftUser.user.estatura)
-                                        .keyboardType(.decimalPad)
-                                }
-                                DatePicker("Fecha de Nacimiento",
-                                           selection: $draftUser.user.fechaNacimiento,
-                                           displayedComponents: .date)
-                                
-                                Picker("Sexo", selection: $selectedSexo) {
-                                    ForEach(sexo, id: \.self) { sexo in
-                                        Text(sexo).tag(sexo)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
-                                .onAppear {
-                                    self.selectedSexo = draftUser.user.sexo
-                                }
-                                .onChange(of: selectedSexo) { newValue in
-                                    draftUser.user.sexo = newValue
-                                }
-                            } else {
-                                Text("Estatura: \(user.user.estatura)")
-                                HStack {
-                                    Text("Fecha de nacimiento:")
-                                    Spacer()
-                                    Text(user.user.formattedDateOfBirth)
-                                }
-                                
-                                HStack {
-                                    Text("Sexo:")
-                                    Spacer()
-                                    Text(draftUser.user.sexo)
-                                }
-                            }
-                        } header: {
-                            Text("Datos fijos")
-                        }
-                        
-                        Section {
-                            if isEditing {
-                                Text("Antecedentes:")
-                                TextEditor(text: $draftUser.user.formattedAntecedentes)
-                            } else {
-                                Text("Antecedentes:")
-                                ScrollView {
-                                    Text(user.user.antecedentes)
-                                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
-                                }
-                                .frame(minHeight: 0, maxHeight: 22 * 10)
-                            }
-                        } header: {
-                            Text("Historial Clinico")
-                        }
-                        Button("Sign Out"){}
-                            .onTapGesture {
-                                authentication.signOut()
-                            }
-                            .foregroundColor(Color.red)
+                    } header: {
+                        Text("Datos personales")
                     }
-                    .navigationTitle("Profile")
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            if isEditing {
-                                Button("Cancel") {
-                                    // Borrar informacion de draft user
-                                    draftUser.user = user.user
+                    
+                    Section {
+                        if isEditing {
+                            HStack {
+                                Text("Estatura:")
+                                TextField("1.80", text: $draftUser.user.estatura)
+                                    .keyboardType(.decimalPad)
+                            }
+                            DatePicker("Fecha de Nacimiento",
+                                       selection: $draftUser.user.fechaNacimiento,
+                                       displayedComponents: .date)
+                            
+                            Picker("Sexo", selection: $selectedSexo) {
+                                ForEach(sexo, id: \.self) { sexo in
+                                    Text(sexo).tag(sexo)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                            .onAppear {
+                                self.selectedSexo = draftUser.user.sexo
+                            }
+                            .onChange(of: selectedSexo) { newValue in
+                                draftUser.user.sexo = newValue
+                            }
+                        } else {
+                            Text("Estatura: \(user.user.estatura)")
+                            HStack {
+                                Text("Fecha de nacimiento:")
+                                Spacer()
+                                Text(user.user.formattedDateOfBirth)
+                            }
+                            
+                            HStack {
+                                Text("Sexo:")
+                                Spacer()
+                                Text(draftUser.user.sexo)
+                            }
+                        }
+                    } header: {
+                        Text("Datos fijos")
+                    }
+                    
+                    Section {
+                        if isEditing {
+                            Text("Antecedentes:")
+                            TextEditor(text: $draftUser.user.formattedAntecedentes)
+                        } else {
+                            Text("Antecedentes:")
+                            ScrollView {
+                                Text(user.user.antecedentes)
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                            }
+                            .frame(minHeight: 0, maxHeight: 22 * 10)
+                        }
+                    } header: {
+                        Text("Historial Clinico")
+                    }
+                    Button("Sign Out"){}
+                        .onTapGesture {
+                            authentication.signOut()
+                        }
+                        .foregroundColor(Color.red)
+                }
+                .navigationTitle("Profile")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        if isEditing {
+                            Button("Cancel") {
+                                // Borrar informacion de draft user
+                                draftUser.user = user.user
+                                isEditing = false
+                            }
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        if isEditing {
+                            Button("Done") {
+                                // Guardar informacion en user y sandbox
+                                let validationResult = draftUser.user.error()
+                                if validationResult.0 {
+                                    error = true
+                                    errorMessage = validationResult.1
+                                }
+                                else {
+                                    user.user = draftUser.user
+                                    createUser(user: user.user)
                                     isEditing = false
                                 }
                             }
-                        }
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            if isEditing {
-                                Button("Done") {
-                                    // Guardar informacion en user y sandbox
-                                    let validationResult = draftUser.user.error()
-                                    if validationResult.0 {
-                                        error = true
-                                        errorMessage = validationResult.1
-                                    }
-                                    else {
-                                        user.user = draftUser.user
-                                        createUser(user: user.user)
-                                        isEditing = false
-                                    }
-                                }
-                            } else {
-                                Button("Editar") {
-                                    // Modo normal
-                                    isEditing = true
-                                }
+                        } else {
+                            Button("Editar") {
+                                // Modo normal
+                                isEditing = true
                             }
                         }
                     }
-                    .alert(isPresented: $error) {
-                        Alert(
-                            title: Text("Error"),
-                            message: Text(errorMessage),
-                            dismissButton: .default(Text("OK"))
-                        )
-                    }
                 }
-                .onTapGesture {
-                    UIApplication.shared.endEditing()
+                .alert(isPresented: $error) {
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(errorMessage),
+                        dismissButton: .default(Text("OK"))
+                    )
                 }
             }
-            // Keyboard modifier
-            .padding(.bottom, keyboardHeight) // Apply the dynamic padding here
-            .onAppear {
-                // Set up keyboard show/hide observers
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { notification in
-                    if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                        keyboardHeight = keyboardFrame.height - 40
-                    }
-                }
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                    keyboardHeight = 35 // No extra padding when keyboard is hidden
-                }
+            .onTapGesture {
+                UIApplication.shared.endEditing()
             }
-            .onDisappear {
-                NotificationCenter.default.removeObserver(self)
-            }
-            .ignoresSafeArea(.keyboard)
-            
-            Image("logoP")
-                .resizable()
-                .imageScale(.small)
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 50)
-                .offset(x: 0, y: -360)
         }
+        // Keyboard modifier
+        .padding(.bottom, keyboardHeight) // Apply the dynamic padding here
+        .onAppear {
+            // Set up keyboard show/hide observers
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { notification in
+                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                    keyboardHeight = keyboardFrame.height - 40
+                }
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                keyboardHeight = 35 // No extra padding when keyboard is hidden
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self)
+        }
+        .ignoresSafeArea(.keyboard)
+        
         
     }
     
