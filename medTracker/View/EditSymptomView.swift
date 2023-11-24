@@ -54,8 +54,8 @@ struct EditSymptomView: View {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
-                        Image(systemName: "arrow.left")
-                        Text("Regresar")
+                        Image(systemName: "xmark")
+                        //Text("Volver")
                     })
                 }
                 // Button to add a new symptom.

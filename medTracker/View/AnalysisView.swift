@@ -74,7 +74,7 @@ struct AnalysisItemView: View {
                 .foregroundColor(Color(hex: symptom.color))
                 .font(.largeTitle)
                 .bold()
-                .padding(.top, 60)
+                .padding(.top, 100)
             
             Text("Descripción:")
                 .font(.system(size: 24))
