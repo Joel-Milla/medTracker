@@ -12,9 +12,12 @@ struct RegisterView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Nombre", text: $authentication.name)
+                TextField("Nombre completo", text: $authentication.name)
                     .textContentType(.name)
                     .textInputAutocapitalization(.words)
+                    .padding()
+                    .background(Color.secondary.opacity(0.15))
+                    .cornerRadius(10)
                 Group {
                     TextField("Email", text: $authentication.email)
                         .textContentType(.emailAddress)
@@ -35,11 +38,20 @@ struct RegisterView: View {
                         ProgressView()
                     }
                 })
+                .font(.headline)
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .padding()
+                .frame(width: 310, height: 50)
+                .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
+                .cornerRadius(10)
+                .shadow(radius: 5)
+                /*
                 .padding()
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.white)
                 .background(Color.accentColor)
-                .cornerRadius(10)
+                .cornerRadius(10)*/
                 .onTapGesture {
                     authentication.submit() //Submits the request to firebase to create a new user.
                     authViewModel.email = authentication.email // set the email of the current user.
