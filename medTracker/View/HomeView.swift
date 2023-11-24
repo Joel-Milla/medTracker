@@ -67,7 +67,7 @@ struct HomeView: View {
                 }
                 .overlay(
                     Group {
-                        if isHomeViewActive && (listaDatos.state != .isEmpty || listaDatos.state == .isLoading || listaDatos.state == .complete) {
+                        if isHomeViewActive && (listaDatos.state == .complete) {
                             Button {
                                 muestraAgregarSintomas = true
                             } label: {
