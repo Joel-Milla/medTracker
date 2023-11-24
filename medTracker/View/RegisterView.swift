@@ -42,7 +42,7 @@ struct RegisterView: View {
                 .fontWeight(.semibold)
                 .foregroundColor(.white)
                 .padding()
-                .frame(width: 310, height: 50)
+                .frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
                 .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(10)
                 .shadow(radius: 5)
