@@ -12,12 +12,14 @@ struct Register : Codable, Hashable {
     var fecha : Date
     var cantidad : Float
     var notas : String
+    var animacion : Bool
     
     init(idSymptom: Int, fecha: Date, cantidad: Float, notas: String) {
         self.idSymptom = idSymptom
         self.fecha = fecha
         self.cantidad = cantidad
         self.notas = notas
+        self.animacion = false
     }
     
     func returnString()->String{

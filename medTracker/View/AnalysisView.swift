@@ -67,30 +67,24 @@ struct AnalysisItemView: View {
     @State var symptom: Symptom
     let registers: RegisterList
     @State private var muestraRegisterSymptomView = false
+    @State var currentTab = "7 días"
     
     var body: some View {
+        let colorSintoma = Color(hex: symptom.color)
         VStack(alignment: .leading) {
             Text(symptom.nombre)
-                .foregroundColor(Color(hex: symptom.color))
+                .foregroundColor(colorSintoma)
                 .font(.largeTitle)
                 .bold()
-                .padding(.top, 100)
+                .padding(.top, 20)
             
-            Text("Descripción:")
+            Text("Descripción: ")
                 .font(.system(size: 24))
-                .padding(.vertical, 10)
-//            Section{
-//                ShareLink(
-//                    "",
-//                    item: ["Hola", "adios"].joined(separator: "\n"),
-//                    preview: SharePreview("Comparte tus datos")
-//                )
-//            }
-
+                .padding(.top, 5)
             
             Text("\(symptom.description)")
                 .padding(.trailing, 20)
-                .foregroundColor(Color(hex: symptom.color))
+                .foregroundColor(colorSintoma)
                 .lineSpacing(4)
                 .font(.system(size: 20))
                 .frame(height: 120, alignment: .top)
@@ -110,35 +104,84 @@ struct AnalysisItemView: View {
             } else {
                 Text("Últimos registros:")
                     .font(.system(size: 24))
-                    .padding(.top, 30)
                 
-                Chart {
-                    ForEach(registers.registers.filter { $0.idSymptom == symptom.id }, id:\.self) { register in
-                        BarMark(x: .value("DIA", register.fecha.formatted(.dateTime.day().month())), y: .value("CANTIDAD", register.cantidad))
-                            .cornerRadius(10)
-                            .annotation {
-                                Text(String(format: "%.0f", register.cantidad))
-                            }
+                VStack (alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("Registros")
+                            .fontWeight(.semibold)
+                            .foregroundColor(colorSintoma)
+                        
+                        Picker("", selection: $currentTab) {
+                            Text("7 días")
+                                .tag("7 días")
+                            Text("Semanal")
+                                .tag("Semanal")
+                            Text("Mensual")
+                                .tag("Mensual")
+                        }
+                        .pickerStyle(.segmented)
+                        .padding(.leading, 60)
+                        
                     }
+                    
+                    /*var sum : Float = 0.0
+                    var prom : Float = 0.0
+                    var max : Float = 0.0
+                    
+                    ForEach(registers.registers.filter { $0.idSymptom == symptom.id }, id:\.self) { item in
+                        sum += item.cantidad
+                        prom = prom + 1
+                        if max < item.cantidad {
+                            max = item.cantidad
+                        }
+                    }
+                    
+                    prom = sum / prom
+                    
+                    Text("Sum: \(sum.stringFormat), Prom: \(max.stringFormat), Max: \(prom.stringFormat)")
+                        .font(.title3.bold())
+                  */
+                    AnimatedChart()
                 }
-                .frame(height: 300)
-                .foregroundStyle(Color(hex: symptom.color))
-                .padding()
-                .shadow(radius: /*@START_MENU_TOKEN@*/6/*@END_MENU_TOKEN@*/)
-                .chartXAxisLabel("DIA", alignment: .topTrailing, spacing: 10)
-                .chartYAxisLabel("CANTIDAD", spacing: 10)
-                .foregroundColor(.black)
-                .chartPlotStyle { plotContent in
-                    plotContent
-                        .background(.gray.opacity(0.1))
-                        .border(Color.black, width: 2)
+                .padding(10)
+                .background {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(.white.shadow(.drop(radius: 2)))
                 }
+                .padding(.trailing, 20)
                 
                 Spacer(minLength: 50)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 20)
+    }
+    
+    @ViewBuilder
+    func AnimatedChart() -> some View {
+        let max = registers.registers.max { item1, item2 in
+            return item2.cantidad > item1.cantidad
+        }?.cantidad ?? 0
+        
+        Chart {
+            ForEach(registers.registers.filter { $0.idSymptom == symptom.id }, id:\.self) { register in
+                BarMark (
+                        x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
+                        y: .value("CANTIDAD", register.animacion ? register.cantidad : 0)
+                    )
+            }
+        }
+        .chartYScale(domain: 0...(max*1.5))
+        .frame(height: 250)
+        .onAppear {
+            for (index,_) in registers.registers.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
+                    withAnimation(.interactiveSpring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                        registers.registers[index].animacion = true
+                    }
+                }
+            }
+        }
     }
 }
 

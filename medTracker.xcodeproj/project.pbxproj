@@ -10,6 +10,7 @@
 		F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* Symptom.swift */; };
 		F838338E2B0C49F5005F2BB5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F838338D2B0C49F5005F2BB5 /* ShareView.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegisterSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */; };
+		FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17DAB42B0D771F006294BD /* FloatToString.swift */; };
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
 		FB320FA72AEB2754005865F5 /* AddSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB320FA62AEB2754005865F5 /* AddSymptomView.swift */; };
@@ -54,6 +55,7 @@
 		F838338D2B0C49F5005F2BB5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSymptomView.swift; sourceTree = "<group>"; };
 		F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMedTracker1.swift; sourceTree = "<group>"; };
+		FB17DAB42B0D771F006294BD /* FloatToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatToString.swift; sourceTree = "<group>"; };
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
 		FB320FA62AEB2754005865F5 /* AddSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymptomView.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				FB1A55512AFD772900F9A74A /* CustomSlider.swift */,
 				FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */,
 				FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */,
+				FB17DAB42B0D771F006294BD /* FloatToString.swift */,
 				FB45BFF02B0825640019C0A1 /* IconPicker */,
 			);
 			path = Elements;
@@ -381,6 +384,7 @@
 				FB6BBA142B0979B6008EFA9A /* AuthViewModel.swift in Sources */,
 				FBC7EF742B08263A00EDD70F /* UserModel.swift in Sources */,
 				FB45BFFA2B082B2B0019C0A1 /* UsageExample.swift in Sources */,
+				FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,7 +442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -492,7 +496,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -510,7 +514,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"medTracker/Preview Content\"";
-				DEVELOPMENT_TEAM = 7MLM8NTU75;
+				DEVELOPMENT_TEAM = Q4L5GLAD5L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

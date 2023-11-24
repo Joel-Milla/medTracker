@@ -173,6 +173,9 @@ struct HomeView: View {
 //                    .offset(x: -105, y: -360)
 //            }
         }
+        .sheet(isPresented: $muestraAgregarSintomas, content: {
+            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
+        })
     }
     func exportCSV()-> URL? {
         let fileName = "Datos.csv"
