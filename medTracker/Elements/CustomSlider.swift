@@ -58,15 +58,15 @@ struct CustomSlider: View {
                                         if (abs(v.translation.width) < 0.1) {
                                             self.lastCoordinateValue = self.value
                                         }
-                                        if (v.translation.width > 0 && self.value <= 306) {
+                                        if (v.translation.width > 0 && self.value <= maxValue) {
                                             self.value = min (maxValue, self.lastCoordinateValue + v.translation.width)
                                             valueFinal = getValue(maxValue: maxValue)
                                         } else{
                                             self.value = max (minValue, self.lastCoordinateValue + v.translation.width)
                                             valueFinal = getValue(maxValue: maxValue)
                                         }
-                                        if(self.value >= 306){
-                                            self.value = 306
+                                        if(self.value >= maxValue){
+                                            self.value = maxValue
                                             valueFinal = 100;
                                         }
                                     }

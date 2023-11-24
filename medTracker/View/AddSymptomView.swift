@@ -39,7 +39,7 @@ struct AddSymptomView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     HStack {
-                        TextField("Nombre síntoma", text: $nombreSintoma)
+                        TextField("Dato de salud", text: $nombreSintoma)
                             .font(.system(size: 28))
                             .foregroundColor(colorSymptom)
                             .submitLabel(.done)
@@ -64,7 +64,7 @@ struct AddSymptomView: View {
                         .font(.system(size: 24))
                         .padding(.top, 22)
                     
-                    TextField("Escriba la descripción del síntoma", text: $descripcion)//, axis : .vertical)
+                    TextField("Describe el dato de salud", text: $descripcion)//, axis : .vertical)
                         .font(.system(size: 18))
                         .textFieldStyle(.roundedBorder)
                         .lineSpacing(4)
@@ -130,12 +130,12 @@ struct AddSymptomView: View {
                     HStack {
                         Spacer()
                         Button {
-                            if nombreSintoma == "" &&
+                            if nombreSintoma == "" ||
                                 descripcion == "" {
                                 mensajeAlerta = "Uno de los campos de textos se ha quedado vacío."
                                 mostrarAlerta = true
                             } else if nombreUnico(nombre: nombreSintoma) {
-                                mensajeAlerta = "Ya existe un síntoma con el mismo nombre."
+                                mensajeAlerta = "Ya existe un dato con el mismo nombre."
                                 mostrarAlerta = true
                             } else {
                                 let newID = symptoms.symptoms.generateUniqueID()
@@ -145,7 +145,7 @@ struct AddSymptomView: View {
                                 dismiss()
                             }
                         } label: {
-                            Label("Añadir síntoma", systemImage: "cross.circle.fill")
+                            Label("Añadir dato de salud", systemImage: "cross.circle.fill")
                         }
                         .alert("Error", isPresented: $mostrarAlerta) {
                             Button("OK") {}
@@ -160,7 +160,7 @@ struct AddSymptomView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(.leading, 20)
-                .navigationBarTitle("Nuevo síntoma")
+                .navigationBarTitle("Nuevo dato de salud")
                 .ignoresSafeArea(.keyboard)
             }
         }
