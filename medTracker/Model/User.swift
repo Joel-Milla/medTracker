@@ -62,6 +62,8 @@ struct User : Codable, Hashable {
                 return (true, "Estatura invalida. Por favor de poner una estatura valid en unidad metros.")
             } else if (self.fechaNacimiento == Date.now || self.fechaNacimiento > Date.now || (getYear(date: Date.now) - getYear(date: self.fechaNacimiento) > 120)) {
                 return (true, "Por favor poner una fecha valida.")
+            } else if (self.sexo == "-") {
+                return (true, "Por favor elegir sexo.")
             }
         } else {
             return (true, "Estatura invalida. Por favor de poner una estatura valida en unidad metros.")
