@@ -133,7 +133,7 @@ struct RegisterSymptomView: View {
                         }label:{
                             Label("Añadir información", systemImage: "cross.circle.fill")
                         }
-                        .alert("Añade información", isPresented: $isPresented, actions: {})
+                        .alert("Ingresa algún dato para continuar", isPresented: $isPresented, actions: {})
                         .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
                         .frame(height: geometry.size.height *  0.12)
                         
@@ -197,5 +197,4 @@ struct RegistroDatos1_Previews: PreviewProvider {
  Vista de análisis se ve rara
  Hacer share con nombre de síntoma y sortearlo
  widgets
- cambiar pantalla de inicio por colores verdes/azules
  */
