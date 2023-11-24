@@ -26,7 +26,7 @@ struct LogInView: View {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
-                        Text("Sign In")
+                        Text("Iniciar Sesión")
                     case .isLoading:
                         ProgressView()
                     }
@@ -34,11 +34,15 @@ struct LogInView: View {
                 .onTapGesture {
                     authentication.signIn()
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
+                .font(.headline)
+                .fontWeight(.semibold)
                 .foregroundColor(.white)
-                .background(Color.accentColor)
+                .padding()
+                .frame(width: 310, height: 50)
+                .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(10)
+                .shadow(radius: 5)
+                
             }
             // The alert and onReceive check when there is a signIn error and show it.
             .onReceive(authentication.$signInErrorMessage) { newValue in
