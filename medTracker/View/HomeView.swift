@@ -7,12 +7,32 @@
 
 import SwiftUI
 
+// View que se llama para el menú de compartir en la app
+struct ActivityView: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    let applicationActivities: [UIActivity]? = nil
+    let onComplete: (Bool) -> Void
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        controller.completionWithItemsHandler = { (_, completed, _, _) in
+            onComplete(completed)
+        }
+        return controller
+    }
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // No es necesario actualizar el UIActivityViewController.
+    }
+}
+
 /**********************
  This view shows all the symptoms being tracked and has the option to add a new symptom or add a data related to a symptom.
  **********************************/
 struct HomeView: View {
     @ObservedObject var listaDatos : SymptomList
     @ObservedObject var registers : RegisterList
+    @State private var isShowingActivityView = false
+    @State private var activityItems: [Any] = []
     @State private var muestraEditarSintomas = false
     @State private var muestraAgregarSintomas = false
     @State private var muestraNewSymptom = false
@@ -86,7 +106,10 @@ struct HomeView: View {
                     // Button to traverse to EditSymptomView.
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            muestraShare = true
+                            if let url = exportCSV() {
+                                activityItems = [url]
+                                isShowingActivityView = true
+                            }
                         } label: {
                             Image(systemName: "square.and.arrow.up")
                         }
@@ -114,9 +137,12 @@ struct HomeView: View {
                      refreshID = UUID()
                      }*/
                 })
-                .sheet(isPresented: $muestraShare, content: {
-                    ShareView(listaDatos: listaDatos, registers: registers)
-                })
+                .sheet(isPresented: $isShowingActivityView) {
+                    ActivityView(activityItems: activityItems, onComplete: { completed in
+                        isShowingActivityView = false
+                        // Aquí puedes manejar el resultado de la acción de compartir.
+                    })
+                }
             }
             Image("logoP")
                 .resizable()
@@ -126,6 +152,42 @@ struct HomeView: View {
                 .offset(x: -105, y: -360)
         }
     }
+    func exportCSV()-> URL? {
+        let fileName = "Datos.csv"
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
+        
+        var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
+        let sortedRegs = registers.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
+        for register in sortedRegs {
+            if(getSymptomActive(register: register)){
+                let newLine = "\(getSymptomName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
+                csvText.append(contentsOf: newLine)
+            }
+        }
+
+        do {
+            try csvText.write(to: path, atomically: true, encoding: String.Encoding.utf8)
+
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                if let rootViewController = windowScene.windows.first?.rootViewController {
+                    let activityVC = UIActivityViewController(activityItems: [path], applicationActivities: nil)
+                    rootViewController.present(activityVC, animated: true, completion: nil)
+                }
+            }
+        } catch {
+            print("Error al escribir el archivo CSV: \(error)")
+        }
+        return path
+    }
+}
+func getSymptomName(register : Register)->String{
+    @ObservedObject var listaDatos = SymptomList()
+    return listaDatos.returnName(id: register.idSymptom)
+}
+
+func getSymptomActive(register : Register)->Bool{
+    @ObservedObject var listaDatos = SymptomList()
+    return listaDatos.returnActive(id: register.idSymptom)
 }
     
     // Struct to show the respective icon for each symptom.
