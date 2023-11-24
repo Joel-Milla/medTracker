@@ -178,14 +178,16 @@ struct HomeView: View {
         })
     }
     func exportCSV()-> URL? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy HH:mm"
         let fileName = "Datos.csv"
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
-        
         var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
         let sortedRegs = registers.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
         for register in sortedRegs {
+            let fechaStr = formatter.string(from:register.fecha)
             if(getSymptomActive(register: register)){
-                let newLine = "\(getSymptomName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
+                let newLine = "\(getSymptomName(register: register)),\(fechaStr),\(register.cantidad),\(register.notas)\n"
                 csvText.append(contentsOf: newLine)
             }
         }
