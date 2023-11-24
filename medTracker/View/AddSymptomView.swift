@@ -18,6 +18,8 @@ struct AddSymptomView: View {
     @State private var icon = "star.fill"
     @State private var isPresented = false
     @State var selectedIndex: Int?
+    @State var mostrarAlerta = false
+    @State var mensajeAlerta = ""
     var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
     @State var notificaciones_seleccion = "Todos los días"
     @ObservedObject var symptoms : SymptomList
@@ -35,126 +37,136 @@ struct AddSymptomView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-            VStack(alignment: .leading) {
-                HStack {
-                    TextField("Nombre síntoma", text: $nombreSintoma)
-                        .font(.system(size: 28))
+                VStack(alignment: .leading) {
+                    HStack {
+                        TextField("Nombre síntoma", text: $nombreSintoma)
+                            .font(.system(size: 28))
+                            .foregroundColor(colorSymptom)
+                            .submitLabel(.done)
+                        
+                        Button {
+                            isPresented.toggle()
+                        } label: {
+                            Image(systemName: icon).font(.title)
+                                .foregroundColor(colorSymptom)
+                        }
+                        .sheet(isPresented: $isPresented, content: {
+                            SymbolsPicker(selection: $icon, title: "Choose your symbol", autoDismiss: true)
+                        }).padding()
+                        
+                        ColorPicker("", selection: $colorSymptom)
+                            .labelsHidden()
+                            .padding(.trailing, 20)
+                    }
+                    .padding(.top, 20)
+                    
+                    Text("Descripción")
+                        .font(.system(size: 24))
+                        .padding(.top, 22)
+                    
+                    TextField("Escriba la descripción del síntoma", text: $descripcion)//, axis : .vertical)
+                        .font(.system(size: 18))
+                        .textFieldStyle(.roundedBorder)
+                        .lineSpacing(4)
+                        .padding(.trailing, 20)
                         .foregroundColor(colorSymptom)
+                        .disableAutocorrection(true)
                         .submitLabel(.done)
                     
-                    Button {
-                        isPresented.toggle()
-                    } label: {
-                        Image(systemName: icon).font(.title)
-                            .foregroundColor(colorSymptom)
-                    }
-                    .sheet(isPresented: $isPresented, content: {
-                        SymbolsPicker(selection: $icon, title: "Choose your symbol", autoDismiss: true)
-                    }).padding()
+                    Text("Tipo")
+                        .font(.system(size: 24))
+                        .padding(.top, 40)
                     
-                    ColorPicker("", selection: $colorSymptom)
-                        .labelsHidden()
-                        .padding(.trailing, 20)
-                }
-                .padding(.top, 20)
-                
-                Text("Descripción")
-                    .font(.system(size: 24))
-                    .padding(.top, 22)
-                
-                TextField("Escriba la descripción del síntoma", text: $descripcion)//, axis : .vertical)
-                    .font(.system(size: 18))
-                    .textFieldStyle(.roundedBorder)
-                    .lineSpacing(4)
-                    .padding(.trailing, 20)
-                    .foregroundColor(colorSymptom)
-                    .disableAutocorrection(true)
-                    .submitLabel(.done)
-                
-                Text("Tipo")
-                    .font(.system(size: 24))
-                    .padding(.top, 40)
-                
-                HStack {
-                    Spacer()
-                    SegmentedPicker(
-                        ["Cuantitativo", "Cualitativo"],
-                        selectedIndex: Binding(
-                            get: { selectedIndex },
-                            set: { selectedIndex = $0 }),
-                        content: { item, isSelected in
-                            Text(item)
-                                .foregroundColor(isSelected ? Color.white : Color.black )
-                                .padding(.horizontal, 40)
-                                .padding(.vertical, 8)
-                            
-                        },
-                        selection: {
-                            Capsule()
-                                .fill(colorSymptom)
-                        })
-                    .onAppear {
-                        selectedIndex = 0
-                    }
-                    .animation(.easeInOut(duration: 0.3))
-                    Spacer()
-                }
-                .padding(.trailing, 20)
-                .frame(height: 50)
-                
-                Toggle("Recibir notificaciones", isOn: $notificaciones)
-                    .tint(colorSymptom)
-                    .padding(.trailing, 20)
-                    .padding(.top, 40)
-                    .font(.system(size: 24))
-                
-                Picker("Quiero recibirlas:", selection: $selectedFrequency) {
-                    ForEach(cada_cuanto, id: \.self) {
-                        Text($0)
-                        //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
-                    }
-                }
-                .pickerStyle(.navigationLink)
-                .disabled(!notificaciones ? true : false)
-                .foregroundColor(notificaciones ? colorSymptom : Color.gray)
-                .padding(.trailing, 20)
-                .font(.system(size: 18))
-                .onChange(of: selectedFrequency) { newFrequency in
-                    if notificaciones {
-                        scheduleNotification(frecuencia: newFrequency)
-                    }
-                }
-                
-                HStack {
-                    Spacer()
-                    Button {
-                        if nombreSintoma != "" &&
-                            descripcion != "" &&
-                            selectedIndex == 0 || selectedIndex == 1 {
-                            let newID = symptoms.symptoms.generateUniqueID()
-                            let cuantitativo = selectedIndex == 0 ? true : false
-                            symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
-                            createSymptom()
-                            dismiss()
+                    HStack {
+                        Spacer()
+                        SegmentedPicker(
+                            ["Cuantitativo", "Cualitativo"],
+                            selectedIndex: Binding(
+                                get: { selectedIndex },
+                                set: { selectedIndex = $0 }),
+                            content: { item, isSelected in
+                                Text(item)
+                                    .foregroundColor(isSelected ? Color.white : Color.black )
+                                    .padding(.horizontal, 40)
+                                    .padding(.vertical, 8)
+                                
+                            },
+                            selection: {
+                                Capsule()
+                                    .fill(colorSymptom)
+                            })
+                        .onAppear {
+                            selectedIndex = 0
                         }
-                    } label: {
-                        Label("Añadir síntoma", systemImage: "cross.circle.fill")
+                        .animation(.easeInOut(duration: 0.3))
+                        Spacer()
                     }
-                    .buttonStyle(Button1MedTracker(backgroundColor: colorSymptom))
-                    .padding(.top, 50)
-                    Spacer()
+                    .padding(.trailing, 20)
+                    .frame(height: 50)
+                    
+                    Toggle("Recibir notificaciones", isOn: $notificaciones)
+                        .tint(colorSymptom)
+                        .padding(.trailing, 20)
+                        .padding(.top, 40)
+                        .font(.system(size: 24))
+                    
+                    Picker("Quiero recibirlas:", selection: $selectedFrequency) {
+                        ForEach(cada_cuanto, id: \.self) {
+                            Text($0)
+                            //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                        }
+                    }
+                    .pickerStyle(.navigationLink)
+                    .disabled(!notificaciones ? true : false)
+                    .foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                    .padding(.trailing, 20)
+                    .font(.system(size: 18))
+                    .onChange(of: selectedFrequency) { newFrequency in
+                        if notificaciones {
+                            scheduleNotification(frecuencia: newFrequency)
+                        }
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Button {
+                            if nombreSintoma == "" &&
+                                descripcion == "" {
+                                mensajeAlerta = "Uno de los campos de textos se ha quedado vacío."
+                                mostrarAlerta = true
+                            } else if nombreUnico(nombre: nombreSintoma) {
+                                mensajeAlerta = "Ya existe un síntoma con el mismo nombre."
+                                mostrarAlerta = true
+                            } else {
+                                let newID = symptoms.symptoms.generateUniqueID()
+                                let cuantitativo = selectedIndex == 0 ? true : false
+                                symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
+                                createSymptom()
+                                dismiss()
+                            }
+                        } label: {
+                            Label("Añadir síntoma", systemImage: "cross.circle.fill")
+                        }
+                        .alert("Error", isPresented: $mostrarAlerta) {
+                            Button("OK") {}
+                        }
+                    message: {
+                        Text(mensajeAlerta)
+                    }
+                        .buttonStyle(Button1MedTracker(backgroundColor: colorSymptom))
+                        .padding(.top, 50)
+                        Spacer()
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .padding(.leading, 20)
+                .navigationBarTitle("Nuevo síntoma")
+                .ignoresSafeArea(.keyboard)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(.leading, 20)
-            .navigationBarTitle("Nuevo síntoma")
-            .ignoresSafeArea(.keyboard)
-        }
         }
         .onAppear {
             // Initialize hexString with the initial color
             colorString = hexString(from: colorSymptom)
-            selectedIndex
         }
         .onChange(of: colorSymptom) { newColor in
             // Update hexString when the color changes
@@ -173,6 +185,15 @@ struct AddSymptomView: View {
                 print("[NewPostForm] Cannot create post: \(error)")
             }
         }
+    }
+    
+    func nombreUnico(nombre: String) -> Bool {
+        for sympt in symptoms.symptoms {
+            if sympt.nombre == nombre {
+                return true
+            }
+        }
+        return false
     }
     
     func scheduleNotification(frecuencia: String) {
@@ -247,11 +268,11 @@ extension Array where Element == Symptom {
     }
 }
 
-extension UIApplication {
+/*extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
-}
+}*/
 
 struct newSymptom_Previews: PreviewProvider {
     static var previews: some View {

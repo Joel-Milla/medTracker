@@ -124,13 +124,23 @@ struct AnalysisItemView: View {
                         
                     }
                     
-                    let totalValue : Float = registers.registers.filter({ $0.idSymptom == symptom.id }).reduce(0.0) { partialResult, item in
-                        item.cantidad + partialResult
+                    /*var sum : Float = 0.0
+                    var prom : Float = 0.0
+                    var max : Float = 0.0
+                    
+                    ForEach(registers.registers.filter { $0.idSymptom == symptom.id }, id:\.self) { item in
+                        sum += item.cantidad
+                        prom = prom + 1
+                        if max < item.cantidad {
+                            max = item.cantidad
+                        }
                     }
                     
-                    Text(totalValue.stringFormat)
-                        .font(.largeTitle.bold())
+                    prom = sum / prom
                     
+                    Text("Sum: \(sum.stringFormat), Prom: \(max.stringFormat), Max: \(prom.stringFormat)")
+                        .font(.title3.bold())
+                  */
                     AnimatedChart()
                 }
                 .padding(10)

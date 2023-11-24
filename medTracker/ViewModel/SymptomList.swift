@@ -25,17 +25,17 @@ class SymptomList : ObservableObject {
      Important initialization methods
      **********************************/
     init() {
-        if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Symptoms.JSON")) {
+        /*if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Symptoms.JSON")) {
             if let datosDecodificados = try? JSONDecoder().decode([Symptom].self, from: datosRecuperados) {
                 symptoms = datosDecodificados
                 return
             }
         }
         //If there is no info in JSON, fetdh
-        fetchSymptoms()
+        fetchSymptoms()*/
         
         // For testing, the next function can be used for dummy data.
-        //symptoms = getDefaultSymptoms()
+        symptoms = getDefaultSymptoms()
     }
     
     enum State {

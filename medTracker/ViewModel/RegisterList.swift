@@ -23,7 +23,7 @@ class RegisterList : ObservableObject {
      Important initialization method
      **********************************/
     init() {
-        if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Registers.JSON")) {
+        /*if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("Registers.JSON")) {
             if let datosDecodificados = try? JSONDecoder().decode([Register].self, from: datosRecuperados) {
                 registers = datosDecodificados
                 return
@@ -31,7 +31,7 @@ class RegisterList : ObservableObject {
         }
         
         //If no JSON, fetch info
-        fetchRegisters()
+        fetchRegisters()*/
         
         // For testing, the next function can be used for dummy data.
         registers = getDefaultRegisters()
