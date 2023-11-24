@@ -112,15 +112,6 @@ struct HomeView: View {
                                             .position(x: geometry.size.width * 0.24, y: geometry.size.height * -0.1)
                                     }
                         }
-                        else{
-                            GeometryReader { geometry in
-                                        Image("logoP")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
-                                            .position(x: geometry.size.width * 0.24, y: geometry.size.height * -0.1)
-                                    }
-                        }
                     },
                          alignment: .topTrailing)
                         
