@@ -18,7 +18,7 @@ struct ProfileView: View {
     
     @State private var isEditing = false
     
-    var sexo = ["Masculino", "Femenino", "Prefiero no decir"]
+    var sexo = ["-", "Masculino", "Femenino", "Prefiero no decir"]
     @State var estatura = ""
     @State private var selectedSexo = "Masculino" // Default value
     

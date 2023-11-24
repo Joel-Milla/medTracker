@@ -66,7 +66,7 @@ struct RegisterSymptomView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(Color.gray, lineWidth: 0.5)
-                                    .background(RoundedRectangle(cornerRadius: 20).fill(.white))
+                                    .background(RoundedRectangle(cornerRadius: 20).fill(Color("mainWhite")))
                                     .frame(width: geometry.size.width * 0.63, height: geometry.size.height * 0.1)
                                 
                                 HStack {
@@ -77,7 +77,6 @@ struct RegisterSymptomView: View {
                                         .font(.title2)
                                         .padding()
                                         .textFieldStyle(OvalTextFieldStyle())
-                                        .foregroundStyle(.primary)
                                         .multilineTextAlignment(.leading)
                                         .keyboardType(.numberPad)
                                         .focused($mostrarTeclado)
@@ -96,13 +95,21 @@ struct RegisterSymptomView: View {
                             }
                             .padding(10)
                             .cornerRadius(30)
-                            .shadow(color: .gray, radius: 2)
+                            .scrollContentBackground(.hidden)
+                            .background(Color("mainWhite"))
+                            .shadow(color: .gray, radius: 0.5)
                             .multilineTextAlignment(.center)
                             .lineLimit(5)
                             .frame(height: geometry.size.height *  0.28)
                             .focused($mostrarTeclado)
-                            .onTapGesture{
-                                mostrarTeclado = false
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    
+                                    Button("OK") {
+                                        mostrarTeclado = false
+                                    }
+                                }
                             }
                         Button{
                             if(self.notes == "Agrega alguna nota..."){
@@ -126,7 +133,7 @@ struct RegisterSymptomView: View {
                         }label:{
                             Label("Añadir información", systemImage: "cross.circle.fill")
                         }
-                        .alert("Añade información", isPresented: $isPresented, actions: {})
+                        .alert("Ingresa algún dato para continuar", isPresented: $isPresented, actions: {})
                         .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
                         .frame(height: geometry.size.height *  0.12)
                         
@@ -134,15 +141,15 @@ struct RegisterSymptomView: View {
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     //Spacer()
-                    .navigationTitle("Agregar síntoma")
+                    .navigationTitle("Agregar registro")
                     .navigationBarTitleDisplayMode(.inline)
                 }
             }
-            .onTapGesture{
-                mostrarTeclado = false
-            }
         }
         .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
     
     private func createRegister() {
@@ -157,12 +164,19 @@ struct RegisterSymptomView: View {
     }
 }
 
+extension View {
+    func hideKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
+    }
+}
+
 
 struct OvalTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .padding(10)
-            .background((Color(.white)))
+            .background((Color("mainWhite")))
             
         /*(LinearGradient(gradient: Gradient(colors: [Color.white, Color("blueGreen").opacity(0.6)]), startPoint: .topLeading, endPoint: .bottomTrailing))*/
             .cornerRadius(10)
@@ -178,9 +192,10 @@ struct RegistroDatos1_Previews: PreviewProvider {
 
 /*
  NOTAS:
- Modos oscuros
- Vista de análisis se ve rara
- Hacer share con nombre de síntoma y sortearlo
+ No funciona bien el quitar el teclado
+ si no hay nada, que salga una pantalla cuando quieres compartir algo ?
+ Fechas: formatearlas y tambien asegurarse de que sea una fecha valida (hueva.com)
+ Modos oscuros ?
+ Vista de análisis se ve rara: el texto sale muy pegado pero si no hay nada no
  widgets
- cambiar pantalla de inicio por colores verdes/azules
  */

@@ -22,9 +22,7 @@ struct LogInView: View {
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
                 
-                Button(action: {
-                    authentication.signIn() //Makes the request to firebase to check if it is correct.
-                }, label: {
+                Button(action: {}, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
@@ -33,6 +31,9 @@ struct LogInView: View {
                         ProgressView()
                     }
                 })
+                .onTapGesture {
+                    authentication.signIn()
+                }
                 .padding()
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.white)
@@ -54,6 +55,8 @@ struct LogInView: View {
                 )
             }
             .navigationTitle("Iniciar Sesión")
+        }.onTapGesture {
+            UIApplication.shared.endEditing()
         }
     }
 }

@@ -85,6 +85,14 @@ class SymptomList : ObservableObject {
         }
         return name
     }
+    func returnActive(id : Int)->Bool{
+        for symptom in self.symptoms{
+            if symptom.id == id{
+                return symptom.activo
+            }
+        }
+        return false
+    }
     
     // Dummy data for testing purposes.
     private func getDefaultSymptoms() -> [Symptom] {

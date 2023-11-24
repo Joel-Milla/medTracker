@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-struct ActivityView: UIViewControllerRepresentable {
-    let activityItems: [Any]
-    let applicationActivities: [UIActivity]? = nil
-    let onComplete: (Bool) -> Void
-
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        controller.completionWithItemsHandler = { (_, completed, _, _) in
-            onComplete(completed)
-        }
-        return controller
-    }
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
-        // No es necesario actualizar el UIActivityViewController.
-    }
-}
+//struct ActivityView: UIViewControllerRepresentable {
+//    let activityItems: [Any]
+//    let applicationActivities: [UIActivity]? = nil
+//    let onComplete: (Bool) -> Void
+//
+//    func makeUIViewController(context: Context) -> UIActivityViewController {
+//        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+//        controller.completionWithItemsHandler = { (_, completed, _, _) in
+//            onComplete(completed)
+//        }
+//        return controller
+//    }
+//    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+//        // No es necesario actualizar el UIActivityViewController.
+//    }
+//}
 
 struct ShareView: View {
     @ObservedObject var listaDatos : SymptomList
@@ -53,9 +53,9 @@ struct ShareView: View {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
         
         var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
-        
-        for register in registers.registers {
-            let newLine = "\(getName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
+        let sortedRegs = registers.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
+        for register in sortedRegs {
+            let newLine = "\(getSymptomName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
             csvText.append(contentsOf: newLine)
         }
 
@@ -84,10 +84,10 @@ func iterate (registers : RegisterList)->[String]{
         }
         return csvInfo
     }
-func getName(register : Register)->String{
-    @ObservedObject var listaDatos = SymptomList()
-    return listaDatos.returnName(id: register.idSymptom)
-}
+//func getName(register : Register)->String{
+//    @ObservedObject var listaDatos = SymptomList()
+//    return listaDatos.returnName(id: register.idSymptom)
+//}
 
 struct share_Previews: PreviewProvider {
     static var previews: some View {
