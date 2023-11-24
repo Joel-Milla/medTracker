@@ -15,7 +15,7 @@ struct AddSymptomView: View {
     @State private var colorSymptom = Color.blue
     @State private var colorString = ""
     @State var notificaciones = false
-    @State private var icon = "star.fill"
+    @State private var icon = "plus.viewfinder"
     @State private var isPresented = false
     @State var selectedIndex: Int?
     @State var mostrarAlerta = false
