@@ -19,7 +19,7 @@ struct CustomSlider: View {
             let cursorSize = gr.size.height * 0.8
             let radius = gr.size.height * 0.5
             let minValue = 0.0
-            let maxValue = gr.size.width * 0.9
+            let maxValue = gr.size.width * 0.87
             
             ZStack {
                 RoundedRectangle (cornerRadius: radius)

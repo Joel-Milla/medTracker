@@ -168,13 +168,13 @@ struct AnalysisItemView: View {
             ForEach(registers.registers.filter { $0.idSymptom == symptom.id }, id:\.self) { register in
                 BarMark (
                         x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
-                        y: .value("CANTIDAD", register.animacion ? register.cantidad : 0)
+                        y: .value("CANTIDAD", register.cantidad)
                     )
             }
         }
         .chartYScale(domain: 0...(max*1.5))
         .frame(height: 250)
-        .onAppear {
+        /*.onAppear {
             for (index,_) in registers.registers.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
                     withAnimation(.interactiveSpring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
@@ -182,7 +182,7 @@ struct AnalysisItemView: View {
                     }
                 }
             }
-        }
+        }*/
     }
 }
 
