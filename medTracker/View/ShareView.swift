@@ -53,8 +53,8 @@ struct ShareView: View {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
         
         var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
-        
-        for register in registers.registers {
+        let sortedRegs = registers.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
+        for register in sortedRegs {
             let newLine = "\(getName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
             csvText.append(contentsOf: newLine)
         }

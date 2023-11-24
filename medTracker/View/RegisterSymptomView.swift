@@ -147,6 +147,9 @@ struct RegisterSymptomView: View {
             }
         }
         .ignoresSafeArea(.keyboard)
+        .onTapGesture {
+            UIApplication.shared.endEditing()
+        }
     }
     
     private func createRegister() {
