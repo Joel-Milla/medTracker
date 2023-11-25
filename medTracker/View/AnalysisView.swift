@@ -147,7 +147,7 @@ struct AnalysisItemView: View {
                 .padding(10)
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(.white.shadow(.drop(radius: 2)))
+                        .fill(Color("mainWhite").shadow(.drop(color: .primary,radius: 1)))
                 }
                 .padding(.trailing, 20)
                 
@@ -174,6 +174,7 @@ struct AnalysisItemView: View {
         }
         .chartYScale(domain: 0...(max*1.5))
         .frame(height: 250)
+        .background(Color("mainWhite"))
         /*.onAppear {
             for (index,_) in registers.registers.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
