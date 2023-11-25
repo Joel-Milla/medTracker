@@ -150,6 +150,7 @@ struct ProfileView: View {
                                 }
                                 else {
                                     user.user = draftUser.user
+                                    //user.saveUserData()
                                     createUser(user: user.user)
                                     isEditing = false
                                 }

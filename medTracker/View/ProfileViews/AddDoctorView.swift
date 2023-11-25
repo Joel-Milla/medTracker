@@ -13,6 +13,9 @@ struct AddDoctorView: View {
     @State var emailFound = false
     @State var progress: StateRequest = .complete
     
+    @State var existError = false
+    @State var errorMessage = ""
+    
     enum StateRequest {
         case loading
         case complete
@@ -30,11 +33,17 @@ struct AddDoctorView: View {
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
-                
+                                
                 Button(action: {
-                    Task {
-                        await addDoctorIfRoleMatches()
+                    if email != "" {
+                        Task {
+                            await addDoctorIfRoleMatches()
+                        }
+                    } else {
+                        existError = true
+                        errorMessage = "Por favor ingresa un email valido"
                     }
+                    
                 }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     if progress == .complete {
@@ -69,22 +78,39 @@ struct AddDoctorView: View {
                     }
                 }
             }
+            Spacer()
+        }
+        .alert(isPresented: $existError) {
+            Alert(
+                title: Text("Error"),
+                message: Text(errorMessage),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
-    
+
     func addDoctorIfRoleMatches() async {
         self.progress = .loading
         do {
             let doctorRole = try await HelperFunctions.fetchUserRole(email: email)
             if doctorRole == "Doctor" {
-                user.user.arregloDoctor.append(email)
-                email = ""
+                DispatchQueue.main.async {
+                    user.user.arregloDoctor.append(email)
+                    user.saveUserData()
+                    email = ""
+                    self.progress = .complete
+                }
+            } else {
                 self.progress = .complete
+                existError = true
+                errorMessage = "No se encontro el email como valido."
             }
         } catch {
             // Handle any errors
             print(error.localizedDescription)
             self.progress = .complete
+            existError = true
+            errorMessage = "No se encontro el email como valido."
         }
     }
 }

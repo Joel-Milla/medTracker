@@ -14,7 +14,7 @@ import FirebaseAuth
 class UserModel: ObservableObject {
     @Published var user = User() {
         didSet {
-            HelperFunctions.write(self.user, inPath: "User.JSON")
+            saveUserData()
         }
     }
     let repository = Repository() // Variable to call the functions inside the repository
@@ -37,6 +37,11 @@ class UserModel: ObservableObject {
     /**********************
      Helper functions
      **********************************/
+    
+    // Save the information of the user
+    func saveUserData() {
+        HelperFunctions.write(self.user, inPath: "User.JSON")
+    }
     
     // The functions returns a closure that is used to write information in firebase
     func makeCreateAction() -> ProfileView.CreateAction {
