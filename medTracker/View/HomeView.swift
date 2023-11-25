@@ -93,7 +93,7 @@ struct HomeView: View {
                                 Label("Agregar nuevo dato", systemImage: "square.and.pencil")
                             }
                             .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
-                            .offset(x: -14, y: -75)
+                            .offset(x: -14, y: -95)
                             .sheet(isPresented: $muestraAgregarSintomas) {
                                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
                             }
@@ -157,19 +157,9 @@ struct HomeView: View {
                     })
                 }
             }
-//            if isHomeViewActive && (listaDatos.state == .complete) {
-//                Image("logoP")
-//                    .resizable()
-//                    .imageScale(.small)
-//                    .aspectRatio(contentMode: .fit)
-//                    .frame(height: 50)
-//                    .offset(x: -105, y: -360)
 //            }
             
         }
-        .sheet(isPresented: $muestraAgregarSintomas, content: {
-            AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
-        })
     }
     func exportCSV()-> URL? {
         let formatter = DateFormatter()
