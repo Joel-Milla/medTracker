@@ -143,6 +143,15 @@ struct RegisterSymptomView: View {
                     //Spacer()
                     .navigationTitle("Agregar registro")
                     .navigationBarTitleDisplayMode(.inline)
+                    /*.toolbar{
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                
+                                } label: {
+                                Image(systemName: "bell.slash")
+                            }
+                        }
+                    }*/
                 }
             }
         }

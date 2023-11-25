@@ -8,8 +8,26 @@
 import SwiftUI
 import SegmentedPicker
 
+struct DateUtils {
+    static func weekdayFromString(_ weekdayString: String) -> Int? {
+        switch weekdayString {
+        case "Domingo": return 1
+        case "Lunes": return 2
+        case "Martes": return 3
+        case "Miércoles": return 4
+        case "Jueves": return 5
+        case "Viernes": return 6
+        case "Sábado": return 7
+        default: return nil
+        }
+    }
+}
+
+
 struct AddSymptomView: View {
     @Environment(\.dismiss) var dismiss
+    @State private var selectedDate = Date()
+    @State private var selectedDayOfWeek = "Domingo"
     @State var nombreSintoma = ""
     @State var descripcion = ""
     @State private var colorSymptom = Color.blue
@@ -26,7 +44,7 @@ struct AddSymptomView: View {
     @State private var selectedFrequency: String = "Todos los días" {
         didSet {
             if notificaciones {
-                scheduleNotification(frecuencia: selectedFrequency)
+                scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
             }
         }
     }
@@ -121,11 +139,55 @@ struct AddSymptomView: View {
                     .foregroundColor(notificaciones ? colorSymptom : Color.gray)
                     .padding(.trailing, 20)
                     .font(.system(size: 18))
-                    .onChange(of: selectedFrequency) { newFrequency in
+                    /*.onChange(of: selectedFrequency) { newFrequency in
                         if notificaciones {
-                            scheduleNotification(frecuencia: newFrequency)
+                            scheduleNotification(frecuencia: newFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
                         }
-                    }
+                    }*/
+                    
+                    if selectedFrequency == "Todos los días" {
+                        HStack{
+                            Spacer()
+                            DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                                .labelsHidden()
+                                .padding(.trailing, 20)
+                                .disabled(!notificaciones ? true : false)
+                            Spacer()
+                        }
+                            } else if selectedFrequency == "Cada semana" {
+                                HStack{
+                                    Spacer()
+                                    Picker("Selecciona el día de la semana", selection: $selectedDayOfWeek) {
+                                        ForEach(["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], id: \.self) {
+                                            Text($0)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                    .padding(.trailing, 20)
+                                    .disabled(!notificaciones ? true : false)
+                                    
+                                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                                        .labelsHidden()
+                                        .padding(.trailing, 20)
+                                        .disabled(!notificaciones ? true : false)
+                                    Spacer()
+                                }
+                            } else if selectedFrequency == "Una vez al mes" {
+                                HStack{
+                                    Spacer()
+                                    DatePicker("Selecciona el día del mes", selection: $selectedDate, in: Date()..., displayedComponents: [.date])
+                                        .labelsHidden()
+                                        .disabled(!notificaciones ? true : false)
+                                        .padding(.trailing, 20)
+                                    
+                                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                                        .labelsHidden()
+                                        .padding(.trailing, 20)
+                                        .disabled(!notificaciones ? true : false)
+                                    Spacer()
+                                }
+                            }
+                    
                     
                     HStack {
                         Spacer()
@@ -141,6 +203,7 @@ struct AddSymptomView: View {
                                 let newID = symptoms.symptoms.generateUniqueID()
                                 let cuantitativo = selectedIndex == 0 ? true : false
                                 symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
+                                scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
                                 createSymptom()
                                 dismiss()
                             }
@@ -196,30 +259,26 @@ struct AddSymptomView: View {
         return false
     }
     
-    func scheduleNotification(frecuencia: String) {
+    func scheduleNotification(frecuencia: String, selectedDate: Date, selectedDayOfWeek: String) {
         let content = UNMutableNotificationContent()
-        content.title = "Recordatorio de MedTracker "
+        content.title = "Recordatorio de MedTracker"
         content.subtitle = "Es hora de registrar \(nombreSintoma)"
         content.sound = UNNotificationSound.default
         
-        var dateComponents = DateComponents()
-        dateComponents.calendar = Calendar.current
-        
+        var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: selectedDate)
+
         switch frecuencia {
-            case "Todos los días":
-                dateComponents.hour = 17
-                dateComponents.minute = 02
-            case "Cada semana":
-                dateComponents.weekday = 4
-                dateComponents.hour = 17
-                dateComponents.minute = 02
-            case "Una vez al mes":
-                dateComponents.day = 22
-                dateComponents.hour = 16
-                dateComponents.minute = 43
-            default:
-                break
+        case "Todos los días":
+            break // Utilizamos los valores del DatePicker directamente
+        case "Cada semana":
+            if let weekday = DateUtils.weekdayFromString(selectedDayOfWeek) {
+                dateComponents.weekday = weekday
             }
+        case "Una vez al mes":
+            dateComponents.day = Calendar.current.component(.day, from: selectedDate)
+        default:
+            break
+        }
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -232,6 +291,7 @@ struct AddSymptomView: View {
             }
         }
     }
+
     
     func hexString(from color: Color) -> String {
             // Convert SwiftUI Color to UIColor
