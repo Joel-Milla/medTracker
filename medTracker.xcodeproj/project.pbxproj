@@ -10,6 +10,7 @@
 		F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* Symptom.swift */; };
 		F838338E2B0C49F5005F2BB5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F838338D2B0C49F5005F2BB5 /* ShareView.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegisterSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */; };
+		F87256782B128AAA00044A05 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87256772B128AAA00044A05 /* Notifications.swift */; };
 		FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17DAB42B0D771F006294BD /* FloatToString.swift */; };
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
@@ -54,6 +55,7 @@
 		F820959F2AF58ACE002F1C28 /* Symptom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symptom.swift; sourceTree = "<group>"; };
 		F838338D2B0C49F5005F2BB5 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSymptomView.swift; sourceTree = "<group>"; };
+		F87256772B128AAA00044A05 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMedTracker1.swift; sourceTree = "<group>"; };
 		FB17DAB42B0D771F006294BD /* FloatToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatToString.swift; sourceTree = "<group>"; };
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */,
 				FBA3D15D2AFF0936000E3E39 /* HexToColor.swift */,
 				FB17DAB42B0D771F006294BD /* FloatToString.swift */,
+				F87256772B128AAA00044A05 /* Notifications.swift */,
 				FB45BFF02B0825640019C0A1 /* IconPicker */,
 			);
 			path = Elements;
@@ -383,6 +386,7 @@
 				F838338E2B0C49F5005F2BB5 /* ShareView.swift in Sources */,
 				FB6BBA142B0979B6008EFA9A /* AuthViewModel.swift in Sources */,
 				FBC7EF742B08263A00EDD70F /* UserModel.swift in Sources */,
+				F87256782B128AAA00044A05 /* Notifications.swift in Sources */,
 				FB45BFFA2B082B2B0019C0A1 /* UsageExample.swift in Sources */,
 				FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */,
 				FB87FECF2ADDEE9800F6273B /* medTrackerApp.swift in Sources */,

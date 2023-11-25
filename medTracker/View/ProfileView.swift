@@ -15,7 +15,7 @@ struct ProfileView: View {
     @EnvironmentObject var authentication: AuthViewModel
     @State private var draftUser: UserModel = UserModel()
     @State private var keyboardHeight: CGFloat = 35
-    
+    @ObservedObject var symptoms : SymptomList
     @State private var isEditing = false
     
     var sexo = ["-", "Masculino", "Femenino", "Prefiero no decir"]
@@ -195,6 +195,8 @@ struct ProfileView: View {
             }
         }
     }
+    
+    //private func
 }
 
 // To dismiss keyboard on type
@@ -206,6 +208,6 @@ extension UIApplication {
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(user: UserModel(), createAction: { _ in })
+        ProfileView(user: UserModel(), symptoms: SymptomList(), createAction: { _ in })
     }
 }

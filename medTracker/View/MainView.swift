@@ -29,7 +29,7 @@ struct MainView: View {
                 .tag(Tab.Analisis)
             HomeView(listaDatos: symptoms, registers: registers)
                 .tag(Tab.Inicio)
-            ProfileView(user: user, createAction: user.makeCreateAction())
+            ProfileView(user: user, symptoms: symptoms, createAction: user.makeCreateAction())
                 .tag(Tab.Perfil)
         }
         .overlay(

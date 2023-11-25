@@ -128,7 +128,7 @@ struct AddSymptomView: View {
                             //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
                         }
                     }
-                    .pickerStyle(.navigationLink)
+                    .pickerStyle(.segmented)
                     .disabled(!notificaciones ? true : false)
                     .foregroundColor(notificaciones ? colorSymptom : Color.gray)
                     .padding(.trailing, 20)
@@ -196,14 +196,14 @@ struct AddSymptomView: View {
                             } else {
                                 let newID = symptoms.symptoms.generateUniqueID()
                                 
-                                let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
+                                let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek, nombreSintoma: nombreSintoma)
 
                                 // Actualiza el modelo con el identificador de la notificación
                                 if let lastIndex = symptoms.symptoms.indices.last {
-                                    symptoms.symptoms[lastIndex].IDNotificacion = notificationIdentifier.0
+                                    symptoms.symptoms[lastIndex].notificacion = notificationIdentifier
                                 }
                                 let cuantitativo = selectedIndex == 0 ? true : false
-                                symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString, notificacion: notificaciones, IDNotificacion: notificationIdentifier.0, fechaNotificacion: notificationIdentifier.1))
+                                symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString, notificacion: notificationIdentifier))
                                 createSymptom()
                                 dismiss()
                             }
@@ -243,7 +243,7 @@ struct AddSymptomView: View {
         // will wait until the createAction(symptom) finishes
         Task {
             do {
-                try await createAction(symptoms.symptoms.last ?? Symptom(id: 0, nombre: "", icon: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "", notificacion: false, IDNotificacion: "", fechaNotificacion: Date.now)) //call the function that adds the symptom to the database
+                try await createAction(symptoms.symptoms.last ?? Symptom(id: 0, nombre: "", icon: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "", notificacion: "")) //call the function that adds the symptom to the database
             } catch {
                 print("[NewPostForm] Cannot create post: \(error)")
             }
@@ -258,41 +258,6 @@ struct AddSymptomView: View {
         }
         return false
     }
-    
-    func scheduleNotification(frecuencia: String, selectedDate: Date, selectedDayOfWeek: String) -> (String, Date)  {
-        let content = UNMutableNotificationContent()
-        content.title = "Recordatorio de MedTracker"
-        content.subtitle = "Es hora de registrar \(nombreSintoma)"
-        content.sound = UNNotificationSound.default
-        
-        var dateComponents = Calendar.current.dateComponents([.hour, .minute], from: selectedDate)
-
-        switch frecuencia {
-        case "Todos los días":
-            break // Utilizamos los valores del DatePicker directamente
-        case "Cada semana":
-            if let weekday = DateUtils.weekdayFromString(selectedDayOfWeek) {
-                dateComponents.weekday = weekday
-            }
-        case "Una vez al mes":
-            dateComponents.day = Calendar.current.component(.day, from: selectedDate)
-        default:
-            break
-        }
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error scheduling notification: \(error.localizedDescription)")
-            } else {
-                print("Notification scheduled successfully!")
-            }
-        }
-        return (request.identifier, dateComponents.date!)
-    }
-
     
     func hexString(from color: Color) -> String {
             // Convert SwiftUI Color to UIColor
