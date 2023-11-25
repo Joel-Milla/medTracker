@@ -19,7 +19,7 @@ struct CustomSlider: View {
             let cursorSize = gr.size.height * 0.8
             let radius = gr.size.height * 0.5
             let minValue = 0.0
-            let maxValue = gr.size.width * 0.9
+            let maxValue = gr.size.width * 0.87
             
             ZStack {
                 RoundedRectangle (cornerRadius: radius)
@@ -58,15 +58,15 @@ struct CustomSlider: View {
                                         if (abs(v.translation.width) < 0.1) {
                                             self.lastCoordinateValue = self.value
                                         }
-                                        if (v.translation.width > 0 && self.value <= 306) {
+                                        if (v.translation.width > 0 && self.value <= maxValue) {
                                             self.value = min (maxValue, self.lastCoordinateValue + v.translation.width)
                                             valueFinal = getValue(maxValue: maxValue)
                                         } else{
                                             self.value = max (minValue, self.lastCoordinateValue + v.translation.width)
                                             valueFinal = getValue(maxValue: maxValue)
                                         }
-                                        if(self.value >= 306){
-                                            self.value = 306
+                                        if(self.value >= maxValue){
+                                            self.value = maxValue
                                             valueFinal = 100;
                                         }
                                     }

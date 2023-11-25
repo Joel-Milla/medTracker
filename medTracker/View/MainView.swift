@@ -39,7 +39,7 @@ struct MainView: View {
                 }
                 .padding(.vertical)
                 .padding(.bottom, getSafeArea().bottom == 0 ? 5 :
-                            (getSafeArea().bottom - 15))
+                            (getSafeArea().bottom))
                 .background(.secondary)
             }
             ,
@@ -95,7 +95,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 enum Tab: String, CaseIterable {
-    case Analisis = "checkmark.seal"
+    case Analisis = "chart.xyaxis.line"
     case Inicio = "house"
     case Perfil = "person"
     

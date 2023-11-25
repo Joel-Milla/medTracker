@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 /**********************
  This class contains all the information about the user.
@@ -17,7 +18,8 @@ class UserModel: ObservableObject {
         }
     }
     let repository = Repository() // Variable to call the functions inside the repository
-
+    private let auth = Auth.auth()
+    
     /**********************
      Important initialization methods
      **********************************/
@@ -50,6 +52,10 @@ class UserModel: ObservableObject {
                 user = try await self.repository.fetchUser()
             } catch {
                 print("[PostsViewModel] Cannot fetch posts: \(error)")
+                // If user is not found in the repository, try to get the name from Firebase
+                if let firebaseUserName = auth.currentUser?.displayName {
+                    self.user.nombreCompleto = firebaseUserName
+                }
             }
         }
     }

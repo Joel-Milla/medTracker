@@ -54,12 +54,13 @@ struct AnalysisView: View {
                     refreshID = UUID()  // Force the TabView to update
                 }
             }
-            Image("logoP")
-                .resizable()
-                .imageScale(.small)
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 50)
-                .offset(x: 0, y: -360)
+            GeometryReader { geometry in
+                        Image("logoP")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
+                            .position(x: geometry.size.width * 0.25, y: geometry.size.height * 0.015)
+                    }
         }
     }
 }
@@ -78,7 +79,7 @@ struct AnalysisItemView: View {
                 .foregroundColor(colorSintoma)
                 .font(.largeTitle)
                 .bold()
-                .padding(.top, 20)
+                .padding(.top, 40)
             
             Text("Descripción: ")
                 .font(.system(size: 24))

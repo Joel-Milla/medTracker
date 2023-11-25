@@ -104,20 +104,13 @@ struct HomeView: View {
                 .overlay(
                     Group{
                         if listaDatos.state == .complete || listaDatos.state == .isLoading {
-                            Image("logoP")
-                                .resizable()
-                                .imageScale(.small)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 50)
-                                .offset(x: -227, y: -90)
-                        }
-                        else{
-                            Image("logoP")
-                                .resizable()
-                                .imageScale(.small)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 50)
-                                .offset(x: -222, y: -340)
+                            GeometryReader { geometry in
+                                        Image("logoP")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
+                                            .position(x: geometry.size.width * 0.24, y: geometry.size.height * -0.1)
+                                    }
                         }
                     },
                          alignment: .topTrailing)
@@ -172,20 +165,23 @@ struct HomeView: View {
 //                    .frame(height: 50)
 //                    .offset(x: -105, y: -360)
 //            }
+            
         }
         .sheet(isPresented: $muestraAgregarSintomas, content: {
             AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
         })
     }
     func exportCSV()-> URL? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy HH:mm"
         let fileName = "Datos.csv"
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
-        
         var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
         let sortedRegs = registers.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
         for register in sortedRegs {
+            let fechaStr = formatter.string(from:register.fecha)
             if(getSymptomActive(register: register)){
-                let newLine = "\(getSymptomName(register: register)),\(register.fecha),\(register.cantidad),\(register.notas)\n"
+                let newLine = "\(getSymptomName(register: register)),\(fechaStr),\(register.cantidad),\(register.notas)\n"
                 csvText.append(contentsOf: newLine)
             }
         }
