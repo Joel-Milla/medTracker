@@ -135,7 +135,7 @@ extension AuthViewModel {
     
     class CreateAccountViewModel: FormViewModel<(name: String, email: String, password: String, role: String)> {
         convenience init(action: @escaping Action) {
-            self.init(initialValue: (name: "", email: "", password: "", role: "Doctor"), action: action)
+            self.init(initialValue: (name: "", email: "", password: "", role: "Paciente"), action: action)
         }
     }
 }

@@ -9,7 +9,7 @@ struct RegisterView: View {
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
     @State private var showAlert = false
     @State private var selectedAccountType = ["Paciente", "Doctor"]
-    @State private var seleccion = "Doctor"
+    @State private var seleccion = "Paciente"
     @State private var emptyField = false
     
     var body: some View {
