@@ -12,7 +12,7 @@ struct MainDoctorView: View {
     @EnvironmentObject var authentication: AuthViewModel
 
     var body: some View {
-        Text("Hello, World!")
+        Text(Auth.auth().currentUser?.email ?? "no email")
         Button {
             authentication.signOut()
         } label: {

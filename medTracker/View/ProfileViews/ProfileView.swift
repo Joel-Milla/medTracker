@@ -174,7 +174,7 @@ struct ProfileView: View {
                 UIApplication.shared.endEditing()
             }
             .sheet(isPresented: $showAddDoctorView, content: {
-                AddDoctorView()
+                AddDoctorView(user: user)
             })
         }
         // Keyboard modifier

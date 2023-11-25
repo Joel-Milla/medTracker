@@ -119,23 +119,39 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		FB0EC3992B128F0C00E7309B /* DoctorViews */ = {
+			isa = PBXGroup;
+			children = (
+				FB0EC3932B12721A00E7309B /* MainDoctorView.swift */,
+			);
+			path = DoctorViews;
+			sourceTree = "<group>";
+		};
+		FB0EC39A2B128F2400E7309B /* ProfileViews */ = {
+			isa = PBXGroup;
+			children = (
+				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
+				FB0EC3972B12759C00E7309B /* AddDoctorView.swift */,
+			);
+			path = ProfileViews;
+			sourceTree = "<group>";
+		};
 		FB1A55552AFD793C00F9A74A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FB0EC3992B128F0C00E7309B /* DoctorViews */,
 				FB7EBC5E2B0BDEF200FBAE8D /* Supporting Views */,
 				FBD940B02AFD74D100C3BD11 /* WelcomeView.swift */,
 				FBD940B22AFD754A00C3BD11 /* RegisterView.swift */,
 				FBD940B42AFD759D00C3BD11 /* LogInView.swift */,
 				FB87FED02ADDEE9800F6273B /* MainView.swift */,
-				FB0EC3932B12721A00E7309B /* MainDoctorView.swift */,
 				FBD940B62AFD763000C3BD11 /* HomeView.swift */,
 				FBD940AE2AFD73E800C3BD11 /* EditSymptomView.swift */,
 				FB320FA62AEB2754005865F5 /* AddSymptomView.swift */,
 				F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */,
 				F838338D2B0C49F5005F2BB5 /* ShareView.swift */,
 				FBE3812B2ADF3C2E004737C9 /* AnalysisView.swift */,
-				FB0EC3972B12759C00E7309B /* AddDoctorView.swift */,
-				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
+				FB0EC39A2B128F2400E7309B /* ProfileViews */,
 			);
 			path = View;
 			sourceTree = "<group>";

@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct AddDoctorView: View {
+    @ObservedObject var user: UserModel
     @State var email = ""
+
     var body: some View {
         Form {
             Group {
@@ -35,12 +37,19 @@ struct AddDoctorView: View {
             .cornerRadius(10)
             .shadow(radius: 5)
             
+            if user.user.arregloDoctor.isEmpty {
+                EmptyListView(
+                    title: "No hay doctores registrados",
+                    message: "Porfavor de agregar doctores para compartir los datos.",
+                    nameButton: "Agregar Sintoma"
+                )
+            }
         }
     }
 }
 
 struct AddDoctorView_Previews: PreviewProvider {
     static var previews: some View {
-        AddDoctorView()
+        AddDoctorView(user: UserModel())
     }
 }
