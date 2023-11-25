@@ -39,7 +39,7 @@ struct AnalysisView: View {
                     // Show a tab for each symptom that is active.
                     TabView {
                         ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
-                            AnalysisItemView(symptom: symptom, registerList: registers, registers: registers.registers.filter({ $0.idSymptom == symptom.id }))
+                            AnalysisItemView(symptom: symptom, registerList: registers, allRegisters: registers.registers.filter({ $0.idSymptom == symptom.id }))
                         }
                     }
                     .id(refreshID)  // Force the TabView to update
@@ -68,9 +68,10 @@ struct AnalysisView: View {
 struct AnalysisItemView: View {
     @State var symptom: Symptom
     let registerList: RegisterList
-    @State var registers: [Register]
+    @State var allRegisters: [Register]
     @State private var muestraRegisterSymptomView = false
-    @State var currentTab = "7 días"
+    @State var currentTab = "Semana"
+    @State var registers : [Register] = []
     
     var body: some View {
         let colorSintoma = Color(hex: symptom.color)
@@ -93,7 +94,7 @@ struct AnalysisItemView: View {
                 .frame(height: 120, alignment: .top)
             
             // The next if/else statement check for each symptoms if there is a data, if not then the if will run and notify the user that need to add a value to the symptom.
-            if registers.isEmpty {
+            if allRegisters.isEmpty {
                 EmptyListView(
                     title: "No hay registros de este sintoma",
                     message: "Porfavor de agregar un estado a este sintoma para mostrar avances.",
@@ -115,25 +116,19 @@ struct AnalysisItemView: View {
                             .foregroundColor(colorSintoma)
                         
                         Picker("", selection: $currentTab) {
-                            Text("7 días")
-                                .tag("7 días")
-                            Text("Semanal")
-                                .tag("Semanal")
-                            Text("Mensual")
-                                .tag("Mensual")
+                            Text("Semana")
+                                .tag("Semana")
+                            Text("Mes")
+                                .tag("Mes")
+                            Text("Todos")
+                                .tag("Todos")
                         }
                         .pickerStyle(.segmented)
                         .padding(.leading, 60)
                         
                     }
                     
-                    let spm = operaciones()
-                    Text("Sum: \(spm[0].stringFormat)  Prom: \(spm[1].stringFormat)  Max: \(spm[2].stringFormat)")
-                        .font(.system(size: 18).bold())
-                        //.foregroundColor(Color(hex: symptom.color))
-                    
-                    
-                    AnimatedChart()
+                    AnimatedChart(filteredRegisters: registers)
                 }
                 .padding(10)
                 .background {
@@ -147,31 +142,33 @@ struct AnalysisItemView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 20)
-        .chartOverlay(content: { proxy in
-            GeometryReader { innerProxy in
-                Rectangle()
-                    .fill(.clear).contentShape(Rectangle())
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                let location = value.location
-                                
-                                if let day: Date = proxy.value(atX: location.x) {
-                                    print(day)
-                                }
-                            } .onEnded { value in
-                                
-                            }
-                    )
-            }
-        })
+        .onAppear() {
+            registers = allRegisters
+            let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+            registers = allRegisters.filter { $0.fecha > oneWeekAgo }
+        }
         .onChange(of: currentTab) { newValue in
-            //animateGraph(fromChange: true)
+            registers = allRegisters
+            if newValue == "Semana" {
+                let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+                registers = allRegisters.filter { $0.fecha > oneWeekAgo }
+            } else if newValue == "Mes" {
+                let oneMonthAgo = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+                registers = allRegisters.filter { $0.fecha > oneMonthAgo }
+            }
         }
     }
     
     @ViewBuilder
-    func AnimatedChart() -> some View {
+    func AnimatedChart(filteredRegisters: [Register]) -> some View {
+        
+        let registers = filteredRegisters.sorted { $0.fecha < $1.fecha }
+        
+        let spm = operaciones(registers: registers)
+        Text("Sum: \(spm[0].stringFormat)  Prom: \(spm[1].stringFormat)  Max: \(spm[2].stringFormat)")
+            .font(.system(size: 18).bold())
+            //.foregroundColor(Color(hex: symptom.color))
+        
         let max = registers.max { item1, item2 in
             return item2.cantidad > item1.cantidad
         }?.cantidad ?? 0
@@ -210,7 +207,7 @@ struct AnalysisItemView: View {
         }
     }*/
     
-    func operaciones() -> [Float] {
+    func operaciones(registers: [Register]) -> [Float] {
         var operacionesList : [Float] = [0,0,0]
         
         for item in registers {
