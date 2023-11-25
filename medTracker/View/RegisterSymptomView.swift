@@ -15,7 +15,6 @@ struct RegisterSymptomView: View {
     @Binding var symptom : Symptom
     @ObservedObject var registers : RegisterList
     @Binding var sliderValue : Double
-    //@StateObject var symptom = Symptom()
     @State var metricsString = ""
     @State private var date = Date.now
     //@State var sliderOrTF : Bool = false
@@ -23,11 +22,15 @@ struct RegisterSymptomView: View {
     var dummySymptom = "Migraña"
     @State var metric: Double = 0
     @State var isPresented = false
-    //@StateObject var symptom = Symptom()
-    //let mainWhite = Color
-    
     typealias CreateAction = (Register) async throws -> Void
     let createAction: CreateAction
+    let dateRange: ClosedRange<Date> = {
+            let calendar = Calendar.current
+            let start = calendar.date(byAdding: .year, value: -2, to: Date())!
+            let end = Date()
+            return start...end
+        }()
+    
     
     var body: some View {
         GeometryReader { geometry in
@@ -40,11 +43,10 @@ struct RegisterSymptomView: View {
                             .bold()
                             .padding(.horizontal, -179)
                             .frame(height: geometry.size.height *  0.06)
-                        DatePicker("Fecha registro", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                        DatePicker("Fecha registro", selection: $date, in: dateRange,  displayedComponents: [.date, .hourAndMinute])
                             .datePickerStyle(.automatic)
                             .padding(.vertical,30)
-                            //.preferredDatePickerStyle = .inline
-                            .foregroundColor(Color(hex: symptom.color)) // sale identico??
+                            .foregroundColor(Color(hex: symptom.color))
                             .tint(Color(hex: symptom.color))
                             .bold()
                         //Text("La fecha es \(date.formatted(date: .numeric, time: .shortened))")
@@ -156,9 +158,6 @@ struct RegisterSymptomView: View {
             }
         }
         .ignoresSafeArea(.keyboard)
-        .onTapGesture {
-            UIApplication.shared.endEditing()
-        }
     }
     
     private func createRegister() {
