@@ -9,7 +9,7 @@ struct RegisterView: View {
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
     @State private var showAlert = false
     @State private var selectedAccountType = ["Paciente", "Doctor"]
-    @State private var seleccion = "Paciente"
+    @State private var seleccion = "Doctor"
     @State private var emptyField = false
     
     var body: some View {
@@ -64,8 +64,10 @@ struct RegisterView: View {
                     if authentication.name.isEmpty || authentication.email.isEmpty || authentication.password.isEmpty  {
                         authViewModel.registrationErrorMessage = "Fill all the values"
                     } else {
+                        authentication.role = seleccion
                         authentication.submit() //Submits the request to firebase to create a new user.
                         authViewModel.email = authentication.email // set the email of the current user.
+                        authViewModel.userRole = seleccion
                     }
                 }
             }
