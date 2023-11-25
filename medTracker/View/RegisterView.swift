@@ -8,7 +8,9 @@ struct RegisterView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
     @State private var showAlert = false
-    @State var user: User = User()
+    @State private var selectedAccountType = ["Paciente", "Doctor"]
+    @State private var seleccion = "Paciente"
+    @State private var emptyField = false
     
     var body: some View {
         NavigationStack {
@@ -30,6 +32,16 @@ struct RegisterView: View {
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
+                
+                // Account Type Picker
+                Picker("Account Type", selection: $seleccion) {
+                    ForEach(selectedAccountType, id: \.self) { type in
+                        Text(type).tag(type)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
                 Button(action: {}, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
@@ -49,8 +61,12 @@ struct RegisterView: View {
                 .cornerRadius(10)
                 .shadow(radius: 5)
                 .onTapGesture {
-                    authentication.submit() //Submits the request to firebase to create a new user.
-                    authViewModel.email = authentication.email // set the email of the current user.
+                    if authentication.name.isEmpty || authentication.email.isEmpty || authentication.password.isEmpty  {
+                        authViewModel.registrationErrorMessage = "Fill all the values"
+                    } else {
+                        authentication.submit() //Submits the request to firebase to create a new user.
+                        authViewModel.email = authentication.email // set the email of the current user.
+                    }
                 }
             }
             .onSubmit(authentication.submit)
@@ -62,13 +78,13 @@ struct RegisterView: View {
             }
             .alert(isPresented: $showAlert) {
                 Alert(
-                    title: Text("Registration Error"),
-                    message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
-                    dismissButton: .default(Text("OK"), action: {
-                        // Reset the registrationErrorMessage to nil when dismissing the alert
-                        authViewModel.registrationErrorMessage = nil
-                    })
-                )
+                        title: Text("Registration Error"),
+                        message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
+                        dismissButton: .default(Text("OK"), action: {
+                            // Reset the registrationErrorMessage to nil when dismissing the alert
+                            authViewModel.registrationErrorMessage = nil
+                        })
+                    )
             }
             .navigationTitle("Registrarse")
             
