@@ -16,9 +16,9 @@ struct Symptom : Codable, Hashable {
     var unidades  : String
     var activo : Bool
     var color : String
-    var notificacion : String
+    var notificacion : String?
     
-    init(id: Int, nombre: String, icon: String, description: String, cuantitativo: Bool, unidades: String, activo: Bool, color: String) {
+    init(id: Int, nombre: String, icon: String, description: String, cuantitativo: Bool, unidades: String, activo: Bool, color: String, notificacion : String) {
         self.id = id
         self.nombre = nombre
         self.icon = icon
@@ -27,7 +27,7 @@ struct Symptom : Codable, Hashable {
         self.unidades = unidades
         self.activo = activo
         self.color = color
-        self.notificacion = ""
+        self.notificacion = notificacion
     }
     func nameString()->String{
         return self.nombre

@@ -21,12 +21,16 @@ struct RegisterSymptomView: View {
     @State var notes = "Agrega alguna nota..."
     var dummySymptom = "Migraña"
     @State var metric: Double = 0
+    @State private var notificacionesActivas = false
+    @State var nuevaNotificacion = false
+    
     @State var isPresented = false
+    
     typealias CreateAction = (Register) async throws -> Void
     let createAction: CreateAction
     let dateRange: ClosedRange<Date> = {
             let calendar = Calendar.current
-            let start = calendar.date(byAdding: .year, value: -2, to: Date())!
+            let start = calendar.date(byAdding: .year, value: -1, to: Date())!
             let end = Date()
             return start...end
         }()
@@ -145,20 +149,41 @@ struct RegisterSymptomView: View {
                     //Spacer()
                     .navigationTitle("Agregar registro")
                     .navigationBarTitleDisplayMode(.inline)
-                    /*.toolbar{
+                    
+                    .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
+                                // Cambiar el estado de las notificaciones y actualizar la IU
+                                notificacionesActivas.toggle()
                                 
-                                } label: {
-                                Image(systemName: "bell.slash")
+                                if notificacionesActivas == false {
+                                    cancelNotification(withID: symptom.notificacion ?? "")
+                                    symptom.notificacion = ""
+                                } else {
+                                    nuevaNotificacion = true
+                                }
+
+                            } label: {
+                                Image(systemName: notificacionesActivas ? "bell.fill" : "bell.slash")
                             }
+                            
                         }
-                    }*/
+                    }
+
+
                 }
+            }
+            .onAppear {
+                notificacionesActivas = symptom.notificacion != ""
+            }
+            .sheet(isPresented: $nuevaNotificacion) {
+                NuevaSintoma(symptom: symptom)
+                    .presentationDetents([.fraction(0.35)])
             }
         }
         .ignoresSafeArea(.keyboard)
     }
+        
     
     private func createRegister() {
         // will wait until the createAction(symptom) finishes
@@ -170,6 +195,88 @@ struct RegisterSymptomView: View {
             }
         }
     }
+}
+
+struct NuevaSintoma: View {
+    var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
+    @State var notificaciones_seleccion = "Todos los días"
+    @State private var selectedFrequency: String = "Todos los días"
+    @State var symptom : Symptom
+    @State private var selectedDayOfWeek = "Domingo"
+    @State private var selectedDate = Date()
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        NavigationStack {
+            Text("Añadir notificación")
+                .font(.title3.bold())
+                .padding(.vertical, 10)
+                
+            
+            Picker("Quiero recibirlas:", selection: $selectedFrequency) {
+                ForEach(cada_cuanto, id: \.self) {
+                    Text($0)
+                    //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                }
+            }
+            .pickerStyle(.segmented)
+            .foregroundColor(Color(hex: symptom.color))
+            .font(.system(size: 18))
+            .padding(.bottom, 20)
+            
+            if selectedFrequency == "Todos los días" {
+                HStack{
+                    Spacer()
+                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                        .labelsHidden()
+                        .padding(.trailing, 20)
+                    Spacer()
+                }
+            } else if selectedFrequency == "Cada semana" {
+                HStack{
+                    Spacer()
+                    Picker("Selecciona el día de la semana", selection: $selectedDayOfWeek) {
+                        ForEach(["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .labelsHidden()
+                    .padding(.trailing, 20)
+                    
+                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                        .labelsHidden()
+                        .padding(.trailing, 20)
+                    Spacer()
+                }
+            } else if selectedFrequency == "Una vez al mes" {
+                HStack{
+                    Spacer()
+                    DatePicker("Selecciona el día del mes", selection: $selectedDate, in: Date()..., displayedComponents: [.date])
+                        .labelsHidden()
+                        .padding(.trailing, 20)
+                    
+                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                        .labelsHidden()
+                        .padding(.trailing, 20)
+                    Spacer()
+                }
+            }
+            
+            Button {
+                let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek, nombreSintoma: symptom.nombre)
+                symptom.notificacion = notificationIdentifier
+                dismiss()
+            } label: {
+                Label("Añadir notificación", systemImage: "cross.circle.fill")
+            }
+            .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
+            .padding()
+
+        }
+        .padding(.horizontal, 20)
+    }
+    
+        
 }
 
 extension View {
@@ -194,7 +301,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList(), sliderValue: .constant(0.0), createAction: { _ in })
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF", notificacion: "")), registers: RegisterList(), sliderValue: .constant(0.0), createAction: { _ in })
     }
 }
 

@@ -133,7 +133,7 @@ struct AnalysisItemView: View {
                 .padding(10)
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(.white.shadow(.drop(radius: 2)))
+                        .fill(Color("mainWhite").shadow(.drop(color: .primary,radius: 1)))
                 }
                 .padding(.trailing, 20)
                 
@@ -159,6 +159,8 @@ struct AnalysisItemView: View {
             }
         }
     }
+
+
     
     @ViewBuilder
     func AnimatedChart(filteredRegisters: [Register]) -> some View {
@@ -168,7 +170,7 @@ struct AnalysisItemView: View {
         let spm = operaciones(registers: registers)
         Text("Sum: \(spm[0].stringFormat)  Prom: \(spm[1].stringFormat)  Max: \(spm[2].stringFormat)")
             .font(.system(size: 18).bold())
-            //.foregroundColor(Color(hex: symptom.color))
+        //.foregroundColor(Color(hex: symptom.color))
         
         let max = registers.max { item1, item2 in
             return item2.cantidad > item1.cantidad
@@ -177,32 +179,30 @@ struct AnalysisItemView: View {
         Chart {
             ForEach(registers, id:\.self) { register in
                 LineMark (
-                        x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
-                        y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
-                    )
+                    x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
+                    y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
+                )
                 .foregroundStyle(Color(hex: symptom.color))
                 .interpolationMethod(.catmullRom)
                 
                 AreaMark (
-                        x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
-                        y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
-                    )
+                    x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
+                    y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
+                )
                 .foregroundStyle(Color(hex: symptom.color).opacity(0.1))
                 .interpolationMethod(.catmullRom)
             }
         }
         .chartYScale(domain: 0...(max*1.5))
         .frame(height: 250)
-        //.onAppear() {
-          //  animateGraph()
-        //}
+        .background(Color("mainWhite"))
     }
-    
-    /*func animateGraph(fromChange: Bool = false) {
-        for (index,_) in registers.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * (fromChange ? 0.03 : 0.05)) {
-                withAnimation(fromChange ? .easeInOut(duration: 0.8) : .interactiveSpring(response: 0.8, dampingFraction: 0.8, blendDuration: 0.8)) {
-                    registers[index].animacion = true
+        /*.onAppear {
+            for (index,_) in registers.registers.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
+                    withAnimation(.interactiveSpring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                        registers.registers[index].animacion = true
+                    }
                 }
             }
         }
