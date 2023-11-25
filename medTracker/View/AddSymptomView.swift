@@ -41,13 +41,7 @@ struct AddSymptomView: View {
     var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
     @State var notificaciones_seleccion = "Todos los días"
     @ObservedObject var symptoms : SymptomList
-    @State private var selectedFrequency: String = "Todos los días" {
-        didSet {
-            if notificaciones {
-                scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
-            }
-        }
-    }
+    @State private var selectedFrequency: String = "Todos los días" 
     
     typealias CreateAction = (Symptom) async throws -> Void
     let createAction: CreateAction
@@ -201,9 +195,15 @@ struct AddSymptomView: View {
                                 mostrarAlerta = true
                             } else {
                                 let newID = symptoms.symptoms.generateUniqueID()
+                                
+                                let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
+
+                                // Actualiza el modelo con el identificador de la notificación
+                                if let lastIndex = symptoms.symptoms.indices.last {
+                                    symptoms.symptoms[lastIndex].IDNotificacion = notificationIdentifier.0
+                                }
                                 let cuantitativo = selectedIndex == 0 ? true : false
-                                symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
-                                scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
+                                symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString, notificacion: notificaciones, IDNotificacion: notificationIdentifier.0, fechaNotificacion: notificationIdentifier.1))
                                 createSymptom()
                                 dismiss()
                             }
@@ -243,7 +243,7 @@ struct AddSymptomView: View {
         // will wait until the createAction(symptom) finishes
         Task {
             do {
-                try await createAction(symptoms.symptoms.last ?? Symptom(id: 0, nombre: "", icon: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "")) //call the function that adds the symptom to the database
+                try await createAction(symptoms.symptoms.last ?? Symptom(id: 0, nombre: "", icon: "", description: "", cuantitativo: true, unidades: "", activo: true, color: "", notificacion: false, IDNotificacion: "", fechaNotificacion: Date.now)) //call the function that adds the symptom to the database
             } catch {
                 print("[NewPostForm] Cannot create post: \(error)")
             }
@@ -259,7 +259,7 @@ struct AddSymptomView: View {
         return false
     }
     
-    func scheduleNotification(frecuencia: String, selectedDate: Date, selectedDayOfWeek: String) {
+    func scheduleNotification(frecuencia: String, selectedDate: Date, selectedDayOfWeek: String) -> (String, Date)  {
         let content = UNMutableNotificationContent()
         content.title = "Recordatorio de MedTracker"
         content.subtitle = "Es hora de registrar \(nombreSintoma)"
@@ -290,6 +290,7 @@ struct AddSymptomView: View {
                 print("Notification scheduled successfully!")
             }
         }
+        return (request.identifier, dateComponents.date!)
     }
 
     

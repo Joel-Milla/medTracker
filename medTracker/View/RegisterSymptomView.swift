@@ -22,9 +22,9 @@ struct RegisterSymptomView: View {
     @State var notes = "Agrega alguna nota..."
     var dummySymptom = "Migraña"
     @State var metric: Double = 0
+    @State private var notificacionesActivas = false
+    
     @State var isPresented = false
-    //@StateObject var symptom = Symptom()
-    //let mainWhite = Color
     
     typealias CreateAction = (Register) async throws -> Void
     let createAction: CreateAction
@@ -143,23 +143,41 @@ struct RegisterSymptomView: View {
                     //Spacer()
                     .navigationTitle("Agregar registro")
                     .navigationBarTitleDisplayMode(.inline)
-                    /*.toolbar{
+                    
+                    .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            Button {
-                                
+                            if notificacionesActivas {
+                                Button {
+                                    // Cambiar el estado de las notificaciones y actualizar la IU
+                                    notificacionesActivas.toggle()
+
+                                    // Aquí debes agregar la lógica para desactivar las notificaciones
+                                    // Puedes usar el identificador de la notificación guardado en el modelo Symptom para cancelar la notificación correspondiente
+                                    if let notificationIdentifier = symptom.IDNotificacion {
+                                        // Aquí deberías tener la lógica para cancelar la notificación con el identifier
+                                        // ...
+                                    }
+
                                 } label: {
-                                Image(systemName: "bell.slash")
+                                    Image(systemName: notificacionesActivas ? "bell.fill" : "bell.slash")
+                                }
                             }
                         }
-                    }*/
+                    }
+
+
                 }
+            }
+            .onAppear {
+                notificacionesActivas = symptom.notificacion != nil
             }
         }
         .ignoresSafeArea(.keyboard)
         .onTapGesture {
             UIApplication.shared.endEditing()
         }
-    }
+        }
+        
     
     private func createRegister() {
         // will wait until the createAction(symptom) finishes
@@ -195,7 +213,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF")), registers: RegisterList(), sliderValue: .constant(0.0), createAction: { _ in })
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF", notificacion: false, IDNotificacion: "", fechaNotificacion: Date.now)), registers: RegisterList(), sliderValue: .constant(0.0), createAction: { _ in })
     }
 }
 
