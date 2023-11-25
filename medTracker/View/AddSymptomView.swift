@@ -139,17 +139,16 @@ struct AddSymptomView: View {
                     .foregroundColor(notificaciones ? colorSymptom : Color.gray)
                     .padding(.trailing, 20)
                     .font(.system(size: 18))
-                    .onChange(of: selectedFrequency) { newFrequency in
+                    /*.onChange(of: selectedFrequency) { newFrequency in
                         if notificaciones {
                             scheduleNotification(frecuencia: newFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
                         }
-                    }
+                    }*/
                     
                     if selectedFrequency == "Todos los días" {
                         HStack{
                             Spacer()
                             DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
-                            //.datePickerStyle(WheelDatePickerStyle())
                                 .labelsHidden()
                                 .padding(.trailing, 20)
                                 .disabled(!notificaciones ? true : false)
@@ -163,13 +162,11 @@ struct AddSymptomView: View {
                                             Text($0)
                                         }
                                     }
-                                    //.pickerStyle(.wheel)
                                     .labelsHidden()
                                     .padding(.trailing, 20)
                                     .disabled(!notificaciones ? true : false)
                                     
                                     DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
-                                    //.datePickerStyle(WheelDatePickerStyle())
                                         .labelsHidden()
                                         .padding(.trailing, 20)
                                         .disabled(!notificaciones ? true : false)
@@ -179,19 +176,18 @@ struct AddSymptomView: View {
                                 HStack{
                                     Spacer()
                                     DatePicker("Selecciona el día del mes", selection: $selectedDate, in: Date()..., displayedComponents: [.date])
-                                    //.datePickerStyle(WheelDatePickerStyle())
                                         .labelsHidden()
                                         .disabled(!notificaciones ? true : false)
                                         .padding(.trailing, 20)
                                     
                                     DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
-                                    //.datePickerStyle(WheelDatePickerStyle())
                                         .labelsHidden()
                                         .padding(.trailing, 20)
                                         .disabled(!notificaciones ? true : false)
                                     Spacer()
                                 }
                             }
+                    
                     
                     HStack {
                         Spacer()
@@ -207,6 +203,7 @@ struct AddSymptomView: View {
                                 let newID = symptoms.symptoms.generateUniqueID()
                                 let cuantitativo = selectedIndex == 0 ? true : false
                                 symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString))
+                                scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
                                 createSymptom()
                                 dismiss()
                             }
