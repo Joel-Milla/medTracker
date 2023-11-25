@@ -144,6 +144,7 @@ struct AnalysisItemView: View {
         .padding(.leading, 20)
         .onAppear() {
             registers = allRegisters
+            currentTab = "Semana"
             let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
             registers = allRegisters.filter { $0.fecha > oneWeekAgo }
         }
