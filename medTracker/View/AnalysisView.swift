@@ -159,6 +159,8 @@ struct AnalysisItemView: View {
             }
         }
     }
+
+
     
     @ViewBuilder
     func AnimatedChart(filteredRegisters: [Register]) -> some View {
@@ -168,7 +170,7 @@ struct AnalysisItemView: View {
         let spm = operaciones(registers: registers)
         Text("Sum: \(spm[0].stringFormat)  Prom: \(spm[1].stringFormat)  Max: \(spm[2].stringFormat)")
             .font(.system(size: 18).bold())
-            //.foregroundColor(Color(hex: symptom.color))
+        //.foregroundColor(Color(hex: symptom.color))
         
         let max = registers.max { item1, item2 in
             return item2.cantidad > item1.cantidad
@@ -177,16 +179,16 @@ struct AnalysisItemView: View {
         Chart {
             ForEach(registers, id:\.self) { register in
                 LineMark (
-                        x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
-                        y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
-                    )
+                    x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
+                    y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
+                )
                 .foregroundStyle(Color(hex: symptom.color))
                 .interpolationMethod(.catmullRom)
                 
                 AreaMark (
-                        x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
-                        y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
-                    )
+                    x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
+                    y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
+                )
                 .foregroundStyle(Color(hex: symptom.color).opacity(0.1))
                 .interpolationMethod(.catmullRom)
             }
@@ -194,6 +196,7 @@ struct AnalysisItemView: View {
         .chartYScale(domain: 0...(max*1.5))
         .frame(height: 250)
         .background(Color("mainWhite"))
+    }
         /*.onAppear {
             for (index,_) in registers.registers.enumerated() {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
