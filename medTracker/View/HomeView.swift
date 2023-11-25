@@ -93,7 +93,7 @@ struct HomeView: View {
                                 Label("Agregar nuevo dato", systemImage: "square.and.pencil")
                             }
                             .buttonStyle(Button1MedTracker(backgroundColor: Color("blueGreen")))
-                            .offset(x: -14, y: -75)
+                            .offset(x: -14, y: -95)
                             .sheet(isPresented: $muestraAgregarSintomas) {
                                 AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
                             }
