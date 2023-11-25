@@ -14,6 +14,7 @@ struct User : Codable, Hashable {
     var sexo: String
     var fechaNacimiento: Date
     var estatura : String
+    //var arregloDoctor: [String]
     
     var formattedDateOfBirth: String {
         get {

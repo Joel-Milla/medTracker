@@ -17,7 +17,7 @@ import FirebaseFirestoreSwift
 class AuthService: ObservableObject {
     @Published var isAuthenticated = false
     
-    private let auth = Auth.auth()
+    let auth = Auth.auth()
     private var listener: AuthStateDidChangeListenerHandle?
     
     /**********************
@@ -46,7 +46,7 @@ class AuthService: ObservableObject {
                 "role": role,
                 "id": result.user.uid
             ])
-        
+            
             HelperFunctions.write(email, inPath: "email.JSON")
         } catch {
             throw error
@@ -62,14 +62,6 @@ class AuthService: ObservableObject {
     // Function to sign out.
     func signOut() throws {
         try auth.signOut()
-    }
-    
-    // Fetch users role from firestore
-    func fetchUserRole(email: String) async throws -> String {
-        let db = Firestore.firestore()
-        let document = try await db.collection("Roles").document(email).getDocument()
-        let role = document.data()?["role"] as? String ?? "Unknown"
-        return role
     }
 }
 

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 /**********************
  This class contains all the data that  helps to authenticate the user. From sign in to creating a new account.
@@ -44,6 +46,7 @@ class AuthViewModel: ObservableObject {
     init() {
         // To know the current state of the user.
         authService.$isAuthenticated.assign(to: &$isAuthenticated)
+        fetchUserRole()
     }
     
     enum State {
@@ -61,7 +64,7 @@ class AuthViewModel: ObservableObject {
             state = .isLoading
             do {
                 try await authService.signIn(email: email, password: password)
-                let role = try await authService.fetchUserRole(email: email)
+                let role = try await HelperFunctions.fetchUserRole(email: email)
                 userRole = role
             } catch {
                 signInErrorMessage = error.localizedDescription
@@ -93,6 +96,19 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
+    
+    // Fetch users role from firestore
+    func fetchUserRole() {
+        guard let email = authService.auth.currentUser?.email else { return }
+        Task {
+            do {
+                userRole = try await HelperFunctions.fetchUserRole(email: email)
+            } catch {
+                // Handle error
+            }
+        }
+    }
+    
     
     // returns a closure of a form to sign in
     func makeSignInViewModel() -> SignInViewModel {

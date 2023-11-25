@@ -28,6 +28,8 @@ struct ProfileView: View {
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
     
+    @State var showAddDoctorView = false
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -111,11 +113,20 @@ struct ProfileView: View {
                     } header: {
                         Text("Historial Clinico")
                     }
-                    Button("Sign Out"){}
-                        .onTapGesture {
-                            authentication.signOut()
-                        }
-                        .foregroundColor(Color.red)
+                    
+                    Section("Sesion") {
+                        Button("Send Data to Doctor"){}
+                            .onTapGesture {
+                                showAddDoctorView = true
+                            }
+                            .foregroundColor(Color.blue)
+                        
+                        Button("Sign Out"){}
+                            .onTapGesture {
+                                authentication.signOut()
+                            }
+                            .foregroundColor(Color.red)
+                    }
                 }
                 .navigationTitle("Profile")
                 .toolbar {
@@ -162,6 +173,9 @@ struct ProfileView: View {
             .onTapGesture {
                 UIApplication.shared.endEditing()
             }
+            .sheet(isPresented: $showAddDoctorView, content: {
+                AddDoctorView()
+            })
         }
         // Keyboard modifier
         .padding(.bottom, keyboardHeight) // Apply the dynamic padding here

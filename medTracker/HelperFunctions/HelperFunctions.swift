@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 /**********************
  This class will contain all the functions that are needed multiple times among all the project.
@@ -26,5 +28,13 @@ class HelperFunctions {
                 try? codificado.write(to: filePath(file)) //writes the value passed into the file passed.
             }
         }
+    }
+    
+    // Fetch users role from firestore
+    static func fetchUserRole(email: String) async throws -> String {
+        let db = Firestore.firestore()
+        let document = try await db.collection("Roles").document(email).getDocument()
+        let role = document.data()?["role"] as? String ?? "Unknown"
+        return role
     }
 }

@@ -23,9 +23,11 @@ struct medTrackerApp: App {
                 if authentication.userRole == "Paciente" {
                     MainView()
                         .environmentObject(authentication)
-                } else {
+                } else if authentication.userRole == "Doctor" {
                     MainDoctorView()
                         .environmentObject(authentication)
+                } else {
+                    ProgressView()
                 }
             } else {
                 WelcomeView()
