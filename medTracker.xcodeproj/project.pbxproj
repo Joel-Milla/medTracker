@@ -15,6 +15,8 @@
 		FB0EC39D2B12D3DC00E7309B /* DismissingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC39C2B12D3DC00E7309B /* DismissingButton.swift */; };
 		FB0EC39F2B12FEC600E7309B /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC39E2B12FEC600E7309B /* Patient.swift */; };
 		FB0EC3A12B12FF9400E7309B /* PatientList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3A02B12FF9400E7309B /* PatientList.swift */; };
+		FB0EC3A32B13049700E7309B /* rowPatient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3A22B13049700E7309B /* rowPatient.swift */; };
+		FB0EC3A72B130DEB00E7309B /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3A62B130DEB00E7309B /* DoctorProfileView.swift */; };
 		FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17DAB42B0D771F006294BD /* FloatToString.swift */; };
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
@@ -65,6 +67,8 @@
 		FB0EC39C2B12D3DC00E7309B /* DismissingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissingButton.swift; sourceTree = "<group>"; };
 		FB0EC39E2B12FEC600E7309B /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		FB0EC3A02B12FF9400E7309B /* PatientList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientList.swift; sourceTree = "<group>"; };
+		FB0EC3A22B13049700E7309B /* rowPatient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rowPatient.swift; sourceTree = "<group>"; };
+		FB0EC3A62B130DEB00E7309B /* DoctorProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
 		FB17DAB42B0D771F006294BD /* FloatToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatToString.swift; sourceTree = "<group>"; };
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				FB0EC3932B12721A00E7309B /* MainDoctorView.swift */,
+				FB0EC3A62B130DEB00E7309B /* DoctorProfileView.swift */,
 			);
 			path = DoctorViews;
 			sourceTree = "<group>";
@@ -154,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				FB0EC39B2B12D3C800E7309B /* Utilities */,
-				FB0EC3992B128F0C00E7309B /* DoctorViews */,
 				FB7EBC5E2B0BDEF200FBAE8D /* Supporting Views */,
 				FBD940B02AFD74D100C3BD11 /* WelcomeView.swift */,
 				FBD940B22AFD754A00C3BD11 /* RegisterView.swift */,
@@ -166,6 +170,7 @@
 				F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */,
 				F838338D2B0C49F5005F2BB5 /* ShareView.swift */,
 				FBE3812B2ADF3C2E004737C9 /* AnalysisView.swift */,
+				FB0EC3992B128F0C00E7309B /* DoctorViews */,
 				FB0EC39A2B128F2400E7309B /* ProfileViews */,
 			);
 			path = View;
@@ -213,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				FB7EBC5F2B0BDF0B00FBAE8D /* EmptyListView.swift */,
+				FB0EC3A22B13049700E7309B /* rowPatient.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -409,9 +415,11 @@
 				FB45BFF42B08266B0019C0A1 /* SymbolIcon.swift in Sources */,
 				F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */,
 				FB7EBC602B0BDF0B00FBAE8D /* EmptyListView.swift in Sources */,
+				FB0EC3A72B130DEB00E7309B /* DoctorProfileView.swift in Sources */,
 				FB9959A62B0C109500B0A888 /* HelperFunctions.swift in Sources */,
 				FBB5AD362AFC2829003918CA /* Register.swift in Sources */,
 				FBD940B72AFD763000C3BD11 /* HomeView.swift in Sources */,
+				FB0EC3A32B13049700E7309B /* rowPatient.swift in Sources */,
 				FBE41E742AF6D464007B48E5 /* User.swift in Sources */,
 				FB45BFF62B08270E0019C0A1 /* SymbolLoader.swift in Sources */,
 				FBA3D15E2AFF0936000E3E39 /* HexToColor.swift in Sources */,

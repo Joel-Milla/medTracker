@@ -8,16 +8,54 @@
 import SwiftUI
 import FirebaseAuth
 
+/*
+ Button {
+ authentication.signOut()
+ } label: {
+ Text("Sign Out")
+ .foregroundColor(Color.red)
+ }
+ */
 struct MainDoctorView: View {
     @EnvironmentObject var authentication: AuthViewModel
-
+    @StateObject var user = UserModel()
+    @StateObject var listaPacientes = PatientList()
+    
     var body: some View {
-        Text(Auth.auth().currentUser?.email ?? "no email")
-        Button {
-            authentication.signOut()
-        } label: {
-            Text("Sign Out")
-                .foregroundColor(Color.red)
+        NavigationStack {
+            VStack {
+                switch listaPacientes.state {
+                case .isLoading:
+                    ProgressView() //Loading animation
+                case .isEmpty:
+                    //Calls a view to show that the list is empty
+                    EmptyListView(
+                        title: "No hay pacientes registrados",
+                        message: "Porfavor de pedirle a los usuarios de compartir su informacion.",
+                        nameButton: "Agregar Sintoma"
+                    )
+                case .complete:
+                    List {
+                        ForEach(listaPacientes.patients , id: \.self) { patient in
+                            rowPatient(patient: patient)
+                        }
+                    }
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink {
+                        /*Button("Sign Out"){
+                            authentication.signOut()
+                        }
+                        .foregroundColor(Color.red)*/
+                        DoctorProfileView(user: user, createAction: user.makeCreateAction())
+                    } label: {
+                        Image(systemName: "person.crop.circle")
+                    }
+                    
+                }
+            }
         }
     }
 }

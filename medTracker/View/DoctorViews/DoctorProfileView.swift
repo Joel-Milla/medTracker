@@ -1,33 +1,31 @@
 //
-//  profile.swift
+//  DoctorProfileView.swift
 //  medTracker
 //
-//  Created by Alumno on 17/10/23.
+//  Created by Alumno on 25/11/23.
 //
+
 
 import SwiftUI
 
 /**********************
- This view shows the profile data of the user and allows the user to edit it.
+ This view shows the profile data of the doctor and allows the user to edit it.
  **********************************/
-struct ProfileView: View {
+struct DoctorProfileView: View {
     @ObservedObject var user: UserModel
     @EnvironmentObject var authentication: AuthViewModel
     @State private var draftUser: UserModel = UserModel()
-    @State private var keyboardHeight: CGFloat = 48
     @State private var isEditing = false
     
     var sexo = ["-", "Masculino", "Femenino", "Prefiero no decir"]
     @State var estatura = ""
     @State private var selectedSexo = "Masculino" // Default value
     
-    @State private var error:Bool = false
+    @State private var error: Bool = false
     @State private var errorMessage: String = ""
     
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
-    
-    @State var showAddDoctorView = false
     
     var body: some View {
         NavigationStack {
@@ -114,21 +112,10 @@ struct ProfileView: View {
                     }
                     
                     Section("Sesion") {
-                        Button("Send Data to Doctor"){
-                            showAddDoctorView = true
-                        }
-                        .foregroundColor(Color.blue)
-                        /*NavigationLink {
-                            AddDoctorView(user: user)
-                        } label: {
-                            Text("Send Data to Doctor")
-                                .foregroundColor(Color.blue)
-                        }*/
-                        
                         Button("Sign Out"){
                             authentication.signOut()
                         }
-                            .foregroundColor(Color.red)
+                        .foregroundColor(Color.red)
                     }
                 }
                 .keyboardToolbar()
@@ -175,31 +162,8 @@ struct ProfileView: View {
                     )
                 }
             }
-            .sheet(isPresented: $showAddDoctorView, content: {
-                AddDoctorView(user: user, writePatient: user.writePatient(), createAction: user.makeCreateAction())
-            })
+            .navigationBarBackButtonHidden(isEditing)
         }
-        // Keyboard modifier
-        .padding(.bottom, keyboardHeight) // Apply the dynamic padding here
-        .onAppear {
-            // Set up keyboard show/hide observers
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { notification in
-                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                    if authentication.userRole != "Doctor" {
-                        keyboardHeight = keyboardFrame.height - 40
-                    }
-                }
-            }
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                if authentication.userRole != "Doctor" {
-                    keyboardHeight = 48 // No extra padding when keyboard is hidden
-                }
-            }
-        }
-        .onDisappear {
-            NotificationCenter.default.removeObserver(self)
-        }
-        .ignoresSafeArea(.keyboard)
         
         
     }
@@ -217,8 +181,9 @@ struct ProfileView: View {
     }
 }
 
-struct profile_Previews: PreviewProvider {
+struct DoctorProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView(user: UserModel(), createAction: { _ in })
     }
 }
+

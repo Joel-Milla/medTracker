@@ -9,10 +9,10 @@ import Foundation
 
 struct Patient : Codable, Hashable {
     var email : String
-    var nombre : String
+    var name : String
     
     init(email: String, nombre: String) {
         self.email = email
-        self.nombre = nombre
+        self.name = nombre
     }
 }
