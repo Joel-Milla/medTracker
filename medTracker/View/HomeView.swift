@@ -56,9 +56,9 @@ struct HomeView: View {
                         //Calls a view to show that the symptom list is empty
                         //The action serves as a button to send the user to a page to create a symptom.
                         EmptyListView(
-                            title: "No hay sintomas registrados",
-                            message: "Porfavor de agregar sintomas para poder empezar a registrar.",
-                            nameButton: "Agregar Sintoma",
+                            title: "No hay datos registrados",
+                            message: "Favor de agregar datos para poder empezar a registrar.",
+                            nameButton: "Agregar Dato",
                             action: { muestraNewSymptom = true }
                         )
                         // The sheets sends the user to the view to create a new symptom.

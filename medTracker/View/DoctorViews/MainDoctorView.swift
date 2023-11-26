@@ -31,7 +31,7 @@ struct MainDoctorView: View {
                     //Calls a view to show that the list is empty
                     EmptyListView(
                         title: "No hay pacientes registrados",
-                        message: "Porfavor de pedirle a los usuarios de compartir su informacion.",
+                        message: "Favor de pedirle a los usuarios que compartan su información.",
                         nameButton: "Agregar Sintoma"
                     )
                 case .complete:

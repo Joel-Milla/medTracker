@@ -221,6 +221,7 @@ struct AddSymptomView: View {
                         Spacer()
                     }
                 }
+                .keyboardToolbar()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .padding(.leading, 20)
                 .navigationBarTitle("Nuevo dato de salud")
