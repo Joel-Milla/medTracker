@@ -163,9 +163,6 @@ struct RegisterSymptomView: View {
                                     symptom.notificacion = ""
                                 } else {
                                     nuevaNotificacion = true
-                                    if symptom.notificacion == "" {
-                                        notificacionesActivas = false
-                                    }
                                 }
 
                             } label: {
@@ -182,7 +179,7 @@ struct RegisterSymptomView: View {
                 notificacionesActivas = symptom.notificacion != ""
             }
             .sheet(isPresented: $nuevaNotificacion) {
-                NuevaSintoma(symptom: $symptom, createAction2: symptomList.makeCreateAction())
+                NuevaSintoma(symptom: $symptom, notificacionesActivas: $notificacionesActivas,createAction2: symptomList.makeCreateAction())
                     .presentationDetents([.fraction(0.35)])
             }
         }
@@ -207,6 +204,7 @@ struct NuevaSintoma: View {
     @State var notificaciones_seleccion = "Todos los días"
     @State private var selectedFrequency: String = "Todos los días"
     @Binding var symptom : Symptom
+    @Binding var notificacionesActivas : Bool
     @State private var selectedDayOfWeek = "Domingo"
     @State private var selectedDate = Date()
     typealias CreateAction2 = (Symptom) async throws -> Void
@@ -273,6 +271,7 @@ struct NuevaSintoma: View {
                 let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek, nombreSintoma: symptom.nombre)
                 symptom.notificacion = notificationIdentifier
                 modifySymptom(symptomModification: symptom)
+                notificacionesActivas = true
                 dismiss()
             } label: {
                 Label("Añadir notificación", systemImage: "cross.circle.fill")
@@ -280,6 +279,9 @@ struct NuevaSintoma: View {
             .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
             .padding()
             
+        }
+        .onAppear {
+            notificacionesActivas = false
         }
         .padding(.horizontal, 20)
     }
