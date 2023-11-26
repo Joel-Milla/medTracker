@@ -8,6 +8,7 @@ struct RegisterView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
     @State private var showAlert = false
+    @State var user: User = User()
     
     var body: some View {
         NavigationStack {
@@ -56,6 +57,8 @@ struct RegisterView: View {
                 .onTapGesture {
                     authentication.submit() //Submits the request to firebase to create a new user.
                     authViewModel.email = authentication.email // set the email of the current user.
+                    user.nombreCompleto = authentication.name // handle the name of the current user.
+                    HelperFunctions.write(user, inPath: "User.JSON")
                 }
             }
             .onSubmit(authentication.submit)
