@@ -143,15 +143,6 @@
 			path = DoctorViews;
 			sourceTree = "<group>";
 		};
-		FB0EC39A2B128F2400E7309B /* ProfileViews */ = {
-			isa = PBXGroup;
-			children = (
-				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
-				FB0EC3972B12759C00E7309B /* AddDoctorView.swift */,
-			);
-			path = ProfileViews;
-			sourceTree = "<group>";
-		};
 		FB0EC39B2B12D3C800E7309B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,8 +166,9 @@
 				F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */,
 				F838338D2B0C49F5005F2BB5 /* ShareView.swift */,
 				FBE3812B2ADF3C2E004737C9 /* AnalysisView.swift */,
+				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
+				FB0EC3972B12759C00E7309B /* AddDoctorView.swift */,
 				FB0EC3992B128F0C00E7309B /* DoctorViews */,
-				FB0EC39A2B128F2400E7309B /* ProfileViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
