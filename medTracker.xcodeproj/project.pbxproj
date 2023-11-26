@@ -10,6 +10,7 @@
 		F82095A02AF58ACE002F1C28 /* Symptom.swift in Sources */ = {isa = PBXBuildFile; fileRef = F820959F2AF58ACE002F1C28 /* Symptom.swift */; };
 		F838338E2B0C49F5005F2BB5 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F838338D2B0C49F5005F2BB5 /* ShareView.swift */; };
 		F839EFF12AE0C4AE00CB5327 /* RegisterSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */; };
+		F87256782B128AAA00044A05 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87256772B128AAA00044A05 /* Notifications.swift */; };
 		FB0EC3942B12721A00E7309B /* MainDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3932B12721A00E7309B /* MainDoctorView.swift */; };
 		FB0EC3982B12759C00E7309B /* AddDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3972B12759C00E7309B /* AddDoctorView.swift */; };
 		FB0EC39D2B12D3DC00E7309B /* DismissingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC39C2B12D3DC00E7309B /* DismissingButton.swift */; };
@@ -19,7 +20,6 @@
 		FB0EC3A72B130DEB00E7309B /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3A62B130DEB00E7309B /* DoctorProfileView.swift */; };
 		FB0EC3A92B13144B00E7309B /* PatientsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3A82B13144A00E7309B /* PatientsData.swift */; };
 		FB0EC3AB2B13181300E7309B /* AnalysisDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3AA2B13181300E7309B /* AnalysisDoctorView.swift */; };
-		F87256782B128AAA00044A05 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87256772B128AAA00044A05 /* Notifications.swift */; };
 		FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17DAB42B0D771F006294BD /* FloatToString.swift */; };
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
@@ -168,8 +168,7 @@
 				F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */,
 				F838338D2B0C49F5005F2BB5 /* ShareView.swift */,
 				FBE3812B2ADF3C2E004737C9 /* AnalysisView.swift */,
-				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
-				FB0EC3972B12759C00E7309B /* AddDoctorView.swift */,
+				FB4C82282B13C13E004AF7B6 /* ProfileView */,
 				FB0EC3992B128F0C00E7309B /* DoctorViews */,
 			);
 			path = View;
@@ -196,6 +195,15 @@
 				FB45BFF92B082B2B0019C0A1 /* UsageExample.swift */,
 			);
 			path = IconPicker;
+			sourceTree = "<group>";
+		};
+		FB4C82282B13C13E004AF7B6 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				FBE381292ADF3BC9004737C9 /* ProfileView.swift */,
+				FB0EC3972B12759C00E7309B /* AddDoctorView.swift */,
+			);
+			name = ProfileView;
 			sourceTree = "<group>";
 		};
 		FB6BBA0D2B0977BB008EFA9A /* Frameworks */ = {

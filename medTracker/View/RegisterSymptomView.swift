@@ -211,7 +211,7 @@ struct NuevaSintoma: View {
             Text("Añadir notificación")
                 .font(.title3.bold())
                 .padding(.vertical, 10)
-                
+            
             
             Picker("Quiero recibirlas:", selection: $selectedFrequency) {
                 ForEach(cada_cuanto, id: \.self) {
@@ -271,9 +271,11 @@ struct NuevaSintoma: View {
             }
             .buttonStyle(Button1MedTracker(backgroundColor: Color(hex: symptom.color)))
             .padding()
-
+            
         }
         .padding(.horizontal, 20)
+    }
+}
 // To dismiss keyboard on type
 extension UIApplication {
     func endEditing(){

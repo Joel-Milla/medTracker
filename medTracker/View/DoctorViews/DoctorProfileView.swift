@@ -188,7 +188,7 @@ struct DoctorProfileView: View {
 
 struct DoctorProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(user: UserModel(), createAction: { _ in })
+        DoctorProfileView(user: UserModel(), createAction: { _ in })
     }
 }
 
