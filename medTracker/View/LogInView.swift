@@ -21,6 +21,10 @@ struct LogInView: View {
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("mainBlue"), lineWidth: 1)
+                )
                 
                 Button(action: {
                     authentication.signIn()

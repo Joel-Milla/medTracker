@@ -22,17 +22,27 @@ struct RegisterView: View {
                     .padding()
                     .background(Color.secondary.opacity(0.15))
                     .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("mainBlue"), lineWidth: 1)
+                    )
+                
                 Group {
                     TextField("Email", text: $authentication.email)
                         .textContentType(.emailAddress)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                    
                     SecureField("Contraseña", text: $authentication.password)
                         .textContentType(.password)
                 }
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("mainBlue"), lineWidth: 1)
+                )
                 
                 // Account Type Picker
                 Picker("Account Type", selection: $seleccion) {
@@ -83,13 +93,13 @@ struct RegisterView: View {
             }
             .alert(isPresented: $showAlert) {
                 Alert(
-                        title: Text("Registration Error"),
-                        message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
-                        dismissButton: .default(Text("OK"), action: {
-                            // Reset the registrationErrorMessage to nil when dismissing the alert
-                            authViewModel.registrationErrorMessage = nil
-                        })
-                    )
+                    title: Text("Registration Error"),
+                    message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
+                    dismissButton: .default(Text("OK"), action: {
+                        // Reset the registrationErrorMessage to nil when dismissing the alert
+                        authViewModel.registrationErrorMessage = nil
+                    })
+                )
             }
             .navigationTitle("Registrarse")
             

@@ -26,61 +26,63 @@ struct AddDoctorView: View {
         NavigationStack {
             VStack {
                 Form {
-                    Group {
+                    Section(header: Text("Agregar Doctor")) {
                         TextField("Email de doctor", text: $email)
                             .textContentType(.emailAddress)
-                            .disableAutocorrection(true)
-                            .textInputAutocapitalization(.never)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.secondary.opacity(0.15))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color("mainBlue"), lineWidth: 1)
+                            )
+                        
+                        Button(action: {
+                            if email != "" {
+                                Task {
+                                    await addDoctorIfRoleMatches()
+                                }
+                            } else {
+                                existError = true
+                                errorMessage = "Por favor ingresa un email valido."
+                            }
+                        }, label: {
+                            if progress == .complete {
+                                Text("Compartir información")
+                            } else {
+                                ProgressView()
+                            }
+                        })
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
                     }
-                    .padding()
-                    .background(Color.secondary.opacity(0.15))
-                    .cornerRadius(10)
                     
-                    Button(action: {
-                        if email != "" {
-                            Task {
-                                await addDoctorIfRoleMatches()
+                    Section(header: Text("Doctores Registrados")) {
+                        if user.user.arregloDoctor.isEmpty {
+                            HStack {
+                                Spacer()
+                                EmptyListView(
+                                    title: "No hay doctores registrados",
+                                    message: "Por favor agrega doctores para compartir los datos.",
+                                    nameButton: "Nothing"
+                                )
+                                Spacer()
                             }
                         } else {
-                            existError = true
-                            errorMessage = "Por favor ingresa un email valido."
-                        }
-                        
-                    }, label: {
-                        // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
-                        if progress == .complete {
-                            Text("Compartir informacion")
-                        } else {
-                            ProgressView()
-                        }
-                    })
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .padding()
-                    //.frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
-                    .frame(maxWidth: .infinity)
-                    .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                }
-                
-                if user.user.arregloDoctor.isEmpty {
-                    EmptyListView(
-                        title: "No hay doctores registrados",
-                        message: "Porfavor de agregar doctores para compartir los datos.",
-                        nameButton: "Agregar Sintoma"
-                    )
-                } else {
-                    List {
-                        ForEach(user.user.arregloDoctor, id: \.self) { email in
-                            Text(email)
-                                .font(.title2)
-                                .padding(10)
+                            ForEach(user.user.arregloDoctor, id: \.self) { email in
+                                Text(email)
+                                    .font(.body)
+                                    .padding(8)
+                            }
                         }
                     }
                 }
-                Spacer()
+                //Spacer()
             }
             .alert(isPresented: $existError) {
                 Alert(
@@ -90,7 +92,7 @@ struct AddDoctorView: View {
                 )
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
                         dismiss()
                     }
@@ -101,8 +103,9 @@ struct AddDoctorView: View {
     
     func addDoctorIfRoleMatches() async {
         self.progress = .loading
+        let lowercaseEmail = email.lowercased() // Convert email to lowercase
         do {
-            let doctorRole = try await HelperFunctions.fetchUserRole(email: email)
+            let doctorRole = try await HelperFunctions.fetchUserRole(email: lowercaseEmail)
             if doctorRole == "Doctor" {
                 DispatchQueue.main.async {
                     user.user.arregloDoctor.append(email)
