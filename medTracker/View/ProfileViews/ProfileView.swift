@@ -115,11 +115,17 @@ struct ProfileView: View {
                     }
                     
                     Section("Sesion") {
-                        Button("Send Data to Doctor"){}
+                        /*Button("Send Data to Doctor"){}
                             .onTapGesture {
                                 showAddDoctorView = true
                             }
-                            .foregroundColor(Color.blue)
+                            .foregroundColor(Color.blue)*/
+                        NavigationLink {
+                            AddDoctorView(user: user)
+                        } label: {
+                            Text("Send Data to Doctor")
+                                .foregroundColor(Color.blue)
+                        }
                         
                         Button("Sign Out"){}
                             .onTapGesture {
@@ -128,6 +134,7 @@ struct ProfileView: View {
                             .foregroundColor(Color.red)
                     }
                 }
+                .keyboardToolbar()
                 .navigationTitle("Profile")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -171,9 +178,6 @@ struct ProfileView: View {
                     )
                 }
             }
-            .onTapGesture {
-                UIApplication.shared.endEditing()
-            }
             .sheet(isPresented: $showAddDoctorView, content: {
                 AddDoctorView(user: user)
             })
@@ -209,13 +213,6 @@ struct ProfileView: View {
                 print("[NewPostForm] Cannot create post: \(error)")
             }
         }
-    }
-}
-
-// To dismiss keyboard on type
-extension UIApplication {
-    func endEditing(){
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 

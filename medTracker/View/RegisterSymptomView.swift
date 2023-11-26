@@ -164,6 +164,13 @@ struct RegisterSymptomView: View {
     }
 }
 
+// To dismiss keyboard on type
+extension UIApplication {
+    func endEditing(){
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 extension View {
     func hideKeyboard() {
         let resign = #selector(UIResponder.resignFirstResponder)

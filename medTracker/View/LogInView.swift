@@ -45,6 +45,7 @@ struct LogInView: View {
                 .shadow(radius: 5)
                 
             }
+            .keyboardToolbar()
             // The alert and onReceive check when there is a signIn error and show it.
             .onReceive(authentication.$signInErrorMessage) { newValue in
                 showErrorAlert = newValue != nil
@@ -60,8 +61,6 @@ struct LogInView: View {
                 )
             }
             .navigationTitle("Iniciar Sesión")
-        }.onTapGesture {
-            UIApplication.shared.endEditing()
         }
     }
 }

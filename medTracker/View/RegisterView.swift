@@ -71,6 +71,7 @@ struct RegisterView: View {
                     }
                 }
             }
+            .keyboardToolbar()
             .onSubmit(authentication.submit)
             // The alert and onReceive check when there is a registrationError and show it.
             .onReceive(authViewModel.$registrationErrorMessage) { errorMessage in
@@ -90,9 +91,6 @@ struct RegisterView: View {
             }
             .navigationTitle("Registrarse")
             
-        }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
         }
     }
 }
