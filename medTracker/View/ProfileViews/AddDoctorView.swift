@@ -91,6 +91,8 @@ struct AddDoctorView: View {
                 }
                 //Spacer()
             }
+            .keyboardToolbar()
+            .navigationTitle("Compartir datos a Doctor")
             .alert(isPresented: $existError) {
                 Alert(
                     title: Text("Error"),
@@ -114,18 +116,26 @@ struct AddDoctorView: View {
             email = email.lowercased()
             let doctorRole = try await HelperFunctions.fetchUserRole(email: email)
             if doctorRole == "Doctor" {
-                DispatchQueue.main.async {
-                    // modifying data locally
-                    user.user.arregloDoctor.append(email)
-                    user.saveUserData()
-                    
-                    // modify data in database
-                    createUser(user: user.user)
-                    writeDoctor(email: email, user: user.user)
-                    
-                    // reset variables
-                    email = ""
+                if user.user.arregloDoctor.contains(where: {
+                    $0 == email
+                }) {
+                    existError = true
+                    errorMessage = "El email ya esta agregado."
                     self.progress = .complete
+                } else {
+                    DispatchQueue.main.async {
+                        // modifying data locally
+                        user.user.arregloDoctor.append(email)
+                        user.saveUserData()
+                        
+                        // modify data in database
+                        createUser(user: user.user)
+                        writeDoctor(email: email, user: user.user)
+                        
+                        // reset variables
+                        email = ""
+                        self.progress = .complete
+                    }
                 }
             } else {
                 self.progress = .complete
