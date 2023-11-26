@@ -27,6 +27,12 @@ struct ProfileView: View {
     
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
+    let dateRange: ClosedRange<Date> = {
+            let calendar = Calendar.current
+            let start = calendar.date(byAdding: .year, value: -120, to: Date())!
+            let end = Date()
+            return start...end
+        }()
     
     @State var showAddDoctorView = false
     
@@ -66,7 +72,7 @@ struct ProfileView: View {
                                     .keyboardType(.decimalPad)
                             }
                             DatePicker("Fecha de Nacimiento",
-                                       selection: $draftUser.user.fechaNacimiento,
+                                       selection: $draftUser.user.fechaNacimiento, in: dateRange,
                                        displayedComponents: .date)
                             
                             Picker("Sexo", selection: $selectedSexo) {

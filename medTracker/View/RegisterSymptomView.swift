@@ -30,7 +30,7 @@ struct RegisterSymptomView: View {
     let createAction: CreateAction
     let dateRange: ClosedRange<Date> = {
             let calendar = Calendar.current
-            let start = calendar.date(byAdding: .year, value: -1, to: Date())!
+            let start = calendar.date(byAdding: .month, value: -6, to: Date())!
             let end = Date()
             return start...end
         }()
