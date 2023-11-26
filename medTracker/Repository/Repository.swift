@@ -119,6 +119,30 @@ struct Repository {
             try! document.data(as: Patient.self)
         }
     }
+    
+    // Function to fetch all the symptoms in firebase of a patient.
+    func fetchSymptomsPatient(_ email: String) async throws -> [Symptom] {
+        let collection = Firestore.firestore().collection("symptoms_\(email)")
+        let snapshot = try await collection
+            .order(by: "id", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Symptom
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Symptom.self)
+        }
+    }
+    
+    // Functin to obtain the registers that exist on database of the patient.
+    func fetchRegistersPatient(_ email: String) async throws -> [Register] {
+        let collection = Firestore.firestore().collection("registers_\(email)")
+        let snapshot = try await collection
+            .order(by: "idSymptom", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Register
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Register.self)
+        }
+    }
 }
 
 // This method is to not show an error for some of the methods above.
