@@ -12,7 +12,7 @@ import Foundation
  **********************************/
 class PatientList : ObservableObject {
     @Published var patients = [Patient]()
-    @Published var state: State = .isLoading //State of the symptoms array
+    @Published var state: State = .isLoading //State of the patients array
     let repository = Repository() // Variable to call the functions inside the repository
     
     /**********************
@@ -21,9 +21,6 @@ class PatientList : ObservableObject {
     init() {
         //Fetch patients, so it loads every time
         fetchPatients()
-        
-        // For testing, the next function can be used for dummy data.
-        //symptoms = getDefaultSymptoms()
     }
     
     enum State {
@@ -36,7 +33,7 @@ class PatientList : ObservableObject {
      Helper functions
      **********************************/
 
-    // Fetch symptoms from the database and save them on the symptoms list.
+    // Fetch patients from the database and save them on the patients list.
     func fetchPatients() {
         state = .isLoading
         Task {

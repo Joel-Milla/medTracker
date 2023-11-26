@@ -113,7 +113,7 @@ struct Repository {
     
     // Function to fetch all the patients of a doctor.
     func fetchPatients() async throws -> [Patient] {
-        let snapshot = try await symptomReference
+        let snapshot = try await doctorReference
             .order(by: "name", descending: false)
             .getDocuments()
         // Convert the returning documents into the class Patient
