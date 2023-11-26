@@ -115,16 +115,16 @@ struct ProfileView: View {
                     }
                     
                     Section("Sesion") {
-                        /*Button("Send Data to Doctor"){
+                        Button("Send Data to Doctor"){
                          showAddDoctorView = true
-                     }
-                            .foregroundColor(Color.blue)*/
-                        NavigationLink {
+                        }
+                            .foregroundColor(Color.blue)
+                        /*NavigationLink {
                             AddDoctorView(user: user)
                         } label: {
                             Text("Send Data to Doctor")
                                 .foregroundColor(Color.blue)
-                        }
+                        }*/
                         
                         Button("Sign Out"){
                             authentication.signOut()

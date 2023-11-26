@@ -11,6 +11,7 @@ struct RegisterView: View {
     @State private var selectedAccountType = ["Paciente", "Doctor"]
     @State private var seleccion = "Paciente"
     @State private var emptyField = false
+    @State var user = User()
     
     var body: some View {
         NavigationStack {
@@ -50,6 +51,8 @@ struct RegisterView: View {
                         authentication.submit() //Submits the request to firebase to create a new user.
                         authViewModel.email = authentication.email // set the email of the current user.
                         authViewModel.userRole = seleccion
+                        user.nombreCompleto = authentication.name
+                        HelperFunctions.write(user, inPath: "User.JSON")
                     }
                 }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
