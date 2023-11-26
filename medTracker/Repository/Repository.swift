@@ -108,6 +108,17 @@ struct Repository {
             "email": email
         ])
     }
+    
+    // Function to fetch all the patients of a doctor.
+    func fetchPatients() async throws -> [Patient] {
+        let snapshot = try await symptomReference
+            .order(by: "name", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Patient
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Patient.self)
+        }
+    }
 }
 
 // This method is to not show an error for some of the methods above.
