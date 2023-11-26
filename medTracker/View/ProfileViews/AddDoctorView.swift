@@ -17,6 +17,13 @@ struct AddDoctorView: View {
     @State var existError = false
     @State var errorMessage = ""
     
+    // Variables to write on database
+    typealias WritePatient = (String, User) async throws -> Void
+    let writePatient: WritePatient
+    
+    typealias CreateAction = (User) async throws -> Void
+    let createAction: CreateAction
+    
     enum StateRequest {
         case loading
         case complete
@@ -103,13 +110,20 @@ struct AddDoctorView: View {
     
     func addDoctorIfRoleMatches() async {
         self.progress = .loading
-        let lowercaseEmail = email.lowercased() // Convert email to lowercase
         do {
-            let doctorRole = try await HelperFunctions.fetchUserRole(email: lowercaseEmail)
+            email = email.lowercased()
+            let doctorRole = try await HelperFunctions.fetchUserRole(email: email)
             if doctorRole == "Doctor" {
                 DispatchQueue.main.async {
+                    // modifying data locally
                     user.user.arregloDoctor.append(email)
                     user.saveUserData()
+                    
+                    // modify data in database
+                    createUser(user: user.user)
+                    writeDoctor(email: email, user: user.user)
+                    
+                    // reset variables
                     email = ""
                     self.progress = .complete
                 }
@@ -126,10 +140,34 @@ struct AddDoctorView: View {
             errorMessage = "No se encontro el email como valido."
         }
     }
+    
+    private func createUser(user: User) {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await
+                createAction(user) //call the function that adds the user to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
+            }
+        }
+    }
+    
+    private func writeDoctor(email: String, user: User) {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await
+                writePatient(email, user) //call the function that adds the user to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
+            }
+        }
+    }
 }
 
 struct AddDoctorView_Previews: PreviewProvider {
     static var previews: some View {
-        AddDoctorView(user: UserModel())
+        AddDoctorView(user: UserModel(), writePatient: { _, _ in }, createAction: { _ in })
     }
 }

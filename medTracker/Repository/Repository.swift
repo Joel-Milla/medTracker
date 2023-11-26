@@ -98,6 +98,16 @@ struct Repository {
             throw NSError(domain: "DataDecodingError", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to decode user data: \(error.localizedDescription)"])
         }
     }
+    
+    // Function to write own name as a document in doctors collection
+    func writePatient(_ docEmail: String, _ user: User) async throws {
+        let doctorReference = Firestore.firestore().collection(docEmail)
+        let document = doctorReference.document(email)
+        try await document.setData([
+            "name": user.nombreCompleto,
+            "email": email
+        ])
+    }
 }
 
 // This method is to not show an error for some of the methods above.

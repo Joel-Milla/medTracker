@@ -177,7 +177,7 @@ struct ProfileView: View {
                 }
             }
             .sheet(isPresented: $showAddDoctorView, content: {
-                AddDoctorView(user: user)
+                AddDoctorView(user: user, writePatient: user.writePatient(), createAction: user.makeCreateAction())
             })
         }
         // Keyboard modifier

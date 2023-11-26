@@ -50,6 +50,13 @@ class UserModel: ObservableObject {
         }
     }
     
+    // The functions returns a closure that is used to write information in firebase
+    func writePatient() -> AddDoctorView.WritePatient {
+        return { [weak self] email, user in
+            try await self?.repository.writePatient(email, user)
+        }
+    }
+    
     // Fetch user information from the database and save them on the users list.
     func fetchUser() {
         Task {
