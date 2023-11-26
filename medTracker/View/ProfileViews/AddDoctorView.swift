@@ -96,7 +96,7 @@ struct AddDoctorView: View {
                 //Spacer()
             }
             .keyboardToolbar()
-            .navigationTitle("Compartir datos a Doctor")
+            .navigationTitle("Compartir datos")
             .alert(isPresented: $existError) {
                 Alert(
                     title: Text("Error"),
