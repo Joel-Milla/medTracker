@@ -12,6 +12,7 @@ struct AddDoctorView: View {
     @State var email: String = ""
     @State var emailFound = false
     @State var progress: StateRequest = .complete
+    @Environment(\.dismiss) var dismiss
     
     @State var existError = false
     @State var errorMessage = ""
@@ -22,73 +23,82 @@ struct AddDoctorView: View {
     }
     
     var body: some View {
-        VStack {
-            Form {
-                Group {
-                    TextField("Email de doctor", text: $email)
-                        .textContentType(.emailAddress)
-                        .disableAutocorrection(true)
-                        .textInputAutocapitalization(.never)
-                }
-                .padding()
-                .background(Color.secondary.opacity(0.15))
-                .cornerRadius(10)
-                                
-                Button(action: {
-                    if email != "" {
-                        Task {
-                            await addDoctorIfRoleMatches()
-                        }
-                    } else {
-                        existError = true
-                        errorMessage = "Por favor ingresa un email valido"
+        NavigationStack {
+            VStack {
+                Form {
+                    Group {
+                        TextField("Email de doctor", text: $email)
+                            .textContentType(.emailAddress)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
                     }
+                    .padding()
+                    .background(Color.secondary.opacity(0.15))
+                    .cornerRadius(10)
                     
-                }, label: {
-                    // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
-                    if progress == .complete {
-                        Text("Compartir informacion")
-                    } else {
-                        ProgressView()
+                    Button(action: {
+                        if email != "" {
+                            Task {
+                                await addDoctorIfRoleMatches()
+                            }
+                        } else {
+                            existError = true
+                            errorMessage = "Por favor ingresa un email valido."
+                        }
+                        
+                    }, label: {
+                        // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
+                        if progress == .complete {
+                            Text("Compartir informacion")
+                        } else {
+                            ProgressView()
+                        }
+                    })
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.white)
+                    .padding()
+                    //.frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
+                    .frame(maxWidth: .infinity)
+                    .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
+                }
+                
+                if user.user.arregloDoctor.isEmpty {
+                    EmptyListView(
+                        title: "No hay doctores registrados",
+                        message: "Porfavor de agregar doctores para compartir los datos.",
+                        nameButton: "Agregar Sintoma"
+                    )
+                } else {
+                    List {
+                        ForEach(user.user.arregloDoctor, id: \.self) { email in
+                            Text(email)
+                                .font(.title2)
+                                .padding(10)
+                        }
                     }
-                })
-                .font(.headline)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .padding()
-                //.frame(width: UIScreen.main.bounds.width * 0.8, height: 50)
-                .frame(maxWidth: .infinity)
-                .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(10)
-                .shadow(radius: 5)
+                }
+                Spacer()
             }
-            
-            if user.user.arregloDoctor.isEmpty {
-                EmptyListView(
-                    title: "No hay doctores registrados",
-                    message: "Porfavor de agregar doctores para compartir los datos.",
-                    nameButton: "Agregar Sintoma"
+            .alert(isPresented: $existError) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(errorMessage),
+                    dismissButton: .default(Text("OK"))
                 )
-            } else {
-                List {
-                    ForEach(user.user.arregloDoctor, id: \.self) { email in
-                        Text(email)
-                            .font(.title2)
-                            .padding(10)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") {
+                        dismiss()
                     }
                 }
             }
-            Spacer()
-        }
-        .alert(isPresented: $existError) {
-            Alert(
-                title: Text("Error"),
-                message: Text(errorMessage),
-                dismissButton: .default(Text("OK"))
-            )
         }
     }
-
+    
     func addDoctorIfRoleMatches() async {
         self.progress = .loading
         do {
