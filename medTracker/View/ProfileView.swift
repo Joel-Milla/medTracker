@@ -27,6 +27,10 @@ struct ProfileView: View {
     
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
+    
+    typealias CreateAction2 = (Symptom) async throws -> Void
+    let createAction2: CreateAction2
+    
     let dateRange: ClosedRange<Date> = {
             let calendar = Calendar.current
             let start = calendar.date(byAdding: .year, value: -120, to: Date())!
@@ -137,7 +141,15 @@ struct ProfileView: View {
                          .foregroundColor(Color.blue)
                          }*/
                         
-                        Button(action: { authentication.signOut() }) {
+                        Button {
+                            for (index,_) in symptoms.symptoms.enumerated() {
+                                symptoms.symptoms[index].notificacion = ""
+                                modifySymptom(symptomModification: symptoms.symptoms[index])
+                                cancelAllNotification()
+                            }
+                            
+                            authentication.signOut()
+                        } label: {
                             Text("Sign Out")
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
@@ -220,6 +232,17 @@ struct ProfileView: View {
         
     }
     
+    private func modifySymptom(symptomModification: Symptom) {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await createAction2(symptomModification) //call the function that adds the symptom to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
+            }
+        }
+    }
+    
     private func createUser(user: User) {
         // will wait until the createAction(symptom) finishes
         Task {
@@ -237,6 +260,6 @@ struct ProfileView: View {
 
 struct profile_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(user: UserModel(), symptoms: SymptomList(), createAction: { _ in })
+        ProfileView(user: UserModel(), symptoms: SymptomList(), createAction: { _ in }, createAction2: { _ in })
     }
 }
