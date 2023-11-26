@@ -33,21 +33,24 @@ struct DoctorProfileView: View {
                 Image(systemName: "person.crop.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100, alignment: .center)
+                    .frame(width: 100, height: 100)
                     .clipShape(Circle())
-                    .clipped()
+                    .shadow(radius: 5)
+                    .overlay(Circle().stroke(Color("mainBlue"), lineWidth: 2))
                 Form {
                     Section {
                         if isEditing {
                             HStack {
                                 Text("Nombre completo:")
                                 TextField("Joel Alejandro", text: $draftUser.user.nombreCompleto)
+                                    .border(Color("mainBlue"), width: 1)
                             }
                             HStack {
                                 Text("Telefono:")
                                 TextField("+81 2611 1857", text: $draftUser.user.telefono)}
                         } else {
                             Text("Nombre completo: \(user.user.nombreCompleto)")
+                                .border(Color.clear, width: 1)
                             Text("Telefono: \(user.user.telefono)")
                         }
                     } header: {
@@ -111,11 +114,13 @@ struct DoctorProfileView: View {
                         Text("Historial Clinico")
                     }
                     
-                    Section("Sesion") {
-                        Button("Sign Out"){
-                            authentication.signOut()
-                        }
-                        .foregroundColor(Color.red)
+                    Button(action: { authentication.signOut() }) {
+                        Text("Sign Out")
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.red)
+                            .cornerRadius(8)
                     }
                 }
                 .keyboardToolbar()

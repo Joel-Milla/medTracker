@@ -35,9 +35,10 @@ struct ProfileView: View {
                 Image(systemName: "person.crop.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 100, alignment: .center)
+                    .frame(width: 100, height: 100)
                     .clipShape(Circle())
-                    .clipped()
+                    .shadow(radius: 5)
+                    .overlay(Circle().stroke(Color("mainBlue"), lineWidth: 2))
                 Form {
                     Section {
                         if isEditing {
@@ -114,21 +115,29 @@ struct ProfileView: View {
                     }
                     
                     Section("Sesion") {
-                        Button("Send Data to Doctor"){
-                            showAddDoctorView = true
-                        }
-                        .foregroundColor(Color.blue)
-                        /*NavigationLink {
-                            AddDoctorView(user: user)
-                        } label: {
+                        Button(action: { showAddDoctorView = true }) {
                             Text("Send Data to Doctor")
-                                .foregroundColor(Color.blue)
-                        }*/
-                        
-                        Button("Sign Out"){
-                            authentication.signOut()
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color("mainBlue"))
+                                .cornerRadius(8)
                         }
-                            .foregroundColor(Color.red)
+                        /*NavigationLink {
+                         AddDoctorView(user: user)
+                         } label: {
+                         Text("Send Data to Doctor")
+                         .foregroundColor(Color.blue)
+                         }*/
+                        
+                        Button(action: { authentication.signOut() }) {
+                            Text("Sign Out")
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.red)
+                                .cornerRadius(8)
+                        }
                     }
                 }
                 .keyboardToolbar()
