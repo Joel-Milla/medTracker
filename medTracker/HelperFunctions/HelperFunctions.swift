@@ -33,6 +33,12 @@ class HelperFunctions {
     // Fetch users role from firestore
     static func fetchUserRole(email: String) async throws -> String {
         let db = Firestore.firestore()
+        
+        guard !email.isEmpty else {
+            throw NSError(domain: "InvalidEmailError", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Email is empty"])
+        }
+        
+        
         let document = try await db.collection("Roles").document(email).getDocument()
         let role = document.data()?["role"] as? String ?? "Unknown"
         return role
