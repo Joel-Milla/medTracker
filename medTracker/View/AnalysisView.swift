@@ -55,12 +55,12 @@ struct AnalysisView: View {
                 }
             }
             GeometryReader { geometry in
-                        Image("logoP")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
-                            .position(x: geometry.size.width * 0.25, y: geometry.size.height * 0.015)
-                    }
+                Image("logoP")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
+                    .position(x: geometry.size.width * 0.25, y: geometry.size.height * 0.015)
+            }
         }
     }
 }
@@ -136,6 +136,10 @@ struct AnalysisItemView: View {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .fill(Color("mainWhite").shadow(.drop(color: .primary,radius: 1)))
                 }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(colorSintoma, lineWidth: 2) // Adjust color and line width as needed
+                )
                 .padding(.trailing, 20)
                 
                 Spacer(minLength: 50)
@@ -160,8 +164,8 @@ struct AnalysisItemView: View {
             }
         }
     }
-
-
+    
+    
     
     @ViewBuilder
     func AnimatedChart(filteredRegisters: [Register]) -> some View {
@@ -198,16 +202,16 @@ struct AnalysisItemView: View {
         .frame(height: 250)
         .background(Color("mainWhite"))
     }
-        /*.onAppear {
-            for (index,_) in registers.registers.enumerated() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
-                    withAnimation(.interactiveSpring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-                        registers.registers[index].animacion = true
-                    }
-                }
-            }
-        }
-    }*/
+    /*.onAppear {
+     for (index,_) in registers.registers.enumerated() {
+     DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.4) {
+     withAnimation(.interactiveSpring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+     registers.registers[index].animacion = true
+     }
+     }
+     }
+     }
+     }*/
     
     func operaciones(registers: [Register]) -> [Float] {
         var operacionesList : [Float] = [0,0,0]
