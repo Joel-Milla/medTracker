@@ -12,7 +12,7 @@
 		F839EFF12AE0C4AE00CB5327 /* RegisterSymptomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F839EFF02AE0C4AE00CB5327 /* RegisterSymptomView.swift */; };
 		FB0EC3942B12721A00E7309B /* MainDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3932B12721A00E7309B /* MainDoctorView.swift */; };
 		FB0EC3982B12759C00E7309B /* AddDoctorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC3972B12759C00E7309B /* AddDoctorView.swift */; };
-		FB0EC39D2B12D3DC00E7309B /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC39C2B12D3DC00E7309B /* DoneButton.swift */; };
+		FB0EC39D2B12D3DC00E7309B /* DismissingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB0EC39C2B12D3DC00E7309B /* DismissingButton.swift */; };
 		FB17DAB52B0D771F006294BD /* FloatToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB17DAB42B0D771F006294BD /* FloatToString.swift */; };
 		FB1A55522AFD772900F9A74A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55512AFD772900F9A74A /* CustomSlider.swift */; };
 		FB1A55542AFD773F00F9A74A /* Button1MedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */; };
@@ -60,7 +60,7 @@
 		F8D6CC832AFEE2A700736DFB /* TextFieldMedTracker1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldMedTracker1.swift; sourceTree = "<group>"; };
 		FB0EC3932B12721A00E7309B /* MainDoctorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDoctorView.swift; sourceTree = "<group>"; };
 		FB0EC3972B12759C00E7309B /* AddDoctorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDoctorView.swift; sourceTree = "<group>"; };
-		FB0EC39C2B12D3DC00E7309B /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
+		FB0EC39C2B12D3DC00E7309B /* DismissingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissingButton.swift; sourceTree = "<group>"; };
 		FB17DAB42B0D771F006294BD /* FloatToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatToString.swift; sourceTree = "<group>"; };
 		FB1A55512AFD772900F9A74A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB1A55532AFD773F00F9A74A /* Button1MedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button1MedTracker.swift; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		FB0EC39B2B12D3C800E7309B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				FB0EC39C2B12D3DC00E7309B /* DoneButton.swift */,
+				FB0EC39C2B12D3DC00E7309B /* DismissingButton.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -415,7 +415,7 @@
 				FB6BBA122B09791A008EFA9A /* AuthService.swift in Sources */,
 				FB45BFF22B0825AF0019C0A1 /* SearchBar.swift in Sources */,
 				FBD940AF2AFD73E800C3BD11 /* EditSymptomView.swift in Sources */,
-				FB0EC39D2B12D3DC00E7309B /* DoneButton.swift in Sources */,
+				FB0EC39D2B12D3DC00E7309B /* DismissingButton.swift in Sources */,
 				F838338E2B0C49F5005F2BB5 /* ShareView.swift in Sources */,
 				FB6BBA142B0979B6008EFA9A /* AuthViewModel.swift in Sources */,
 				FBC7EF742B08263A00EDD70F /* UserModel.swift in Sources */,

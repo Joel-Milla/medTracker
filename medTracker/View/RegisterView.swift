@@ -42,7 +42,16 @@ struct RegisterView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    if authentication.name.isEmpty || authentication.email.isEmpty || authentication.password.isEmpty  {
+                        authViewModel.registrationErrorMessage = "Fill all the values"
+                    } else {
+                        authentication.role = seleccion
+                        authentication.submit() //Submits the request to firebase to create a new user.
+                        authViewModel.email = authentication.email // set the email of the current user.
+                        authViewModel.userRole = seleccion
+                    }
+                }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
@@ -60,16 +69,6 @@ struct RegisterView: View {
                 .background(LinearGradient(gradient: Gradient(colors: [Color("mainBlue"), Color("blueGreen")]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(10)
                 .shadow(radius: 5)
-                .onTapGesture {
-                    if authentication.name.isEmpty || authentication.email.isEmpty || authentication.password.isEmpty  {
-                        authViewModel.registrationErrorMessage = "Fill all the values"
-                    } else {
-                        authentication.role = seleccion
-                        authentication.submit() //Submits the request to firebase to create a new user.
-                        authViewModel.email = authentication.email // set the email of the current user.
-                        authViewModel.userRole = seleccion
-                    }
-                }
             }
             .keyboardToolbar()
             .onSubmit(authentication.submit)

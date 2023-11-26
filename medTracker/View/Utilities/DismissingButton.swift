@@ -14,7 +14,7 @@ struct KeyboardToolbar: ViewModifier {
             .toolbar {
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer() // This pushes the Done button to the right
-                    Button("Done") {
+                    Button("OK") {
                         hideKeyboard()
                     }
                 }

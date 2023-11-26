@@ -115,10 +115,9 @@ struct ProfileView: View {
                     }
                     
                     Section("Sesion") {
-                        /*Button("Send Data to Doctor"){}
-                            .onTapGesture {
-                                showAddDoctorView = true
-                            }
+                        /*Button("Send Data to Doctor"){
+                         showAddDoctorView = true
+                     }
                             .foregroundColor(Color.blue)*/
                         NavigationLink {
                             AddDoctorView(user: user)
@@ -127,10 +126,9 @@ struct ProfileView: View {
                                 .foregroundColor(Color.blue)
                         }
                         
-                        Button("Sign Out"){}
-                            .onTapGesture {
-                                authentication.signOut()
-                            }
+                        Button("Sign Out"){
+                            authentication.signOut()
+                        }
                             .foregroundColor(Color.red)
                     }
                 }
