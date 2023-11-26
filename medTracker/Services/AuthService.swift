@@ -38,7 +38,7 @@ class AuthService: ObservableObject {
         do {
             let result = try await auth.createUser(withEmail: email, password: password)
             try await result.user.updateProfile(\.displayName, to: name)
-            
+            HelperFunctions.write(email, inPath: "email.JSON")
             // Save the role in Firestore
             let db = Firestore.firestore()
             //try await db.collection("users").document(result.user.uid).setData([
@@ -46,8 +46,6 @@ class AuthService: ObservableObject {
                 "role": role,
                 "id": result.user.uid
             ])
-            
-            HelperFunctions.write(email, inPath: "email.JSON")
         } catch {
             throw error
         }

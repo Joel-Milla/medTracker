@@ -63,6 +63,7 @@ struct RegisterView: View {
                         authViewModel.userRole = seleccion
                         user.nombreCompleto = authentication.name
                         HelperFunctions.write(user, inPath: "User.JSON")
+                        HelperFunctions.write(seleccion, inPath: "role.JSON")
                     }
                 }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
