@@ -14,7 +14,7 @@ struct ProfileView: View {
     @ObservedObject var user: UserModel
     @EnvironmentObject var authentication: AuthViewModel
     @State private var draftUser: UserModel = UserModel()
-    @State private var keyboardHeight: CGFloat = 35
+    @State private var keyboardHeight: CGFloat = 48
     
     @State private var isEditing = false
     
@@ -190,7 +190,7 @@ struct ProfileView: View {
                 }
             }
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
-                keyboardHeight = 35 // No extra padding when keyboard is hidden
+                keyboardHeight = 48 // No extra padding when keyboard is hidden
             }
         }
         .onDisappear {
