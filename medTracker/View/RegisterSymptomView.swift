@@ -163,6 +163,9 @@ struct RegisterSymptomView: View {
                                     symptom.notificacion = ""
                                 } else {
                                     nuevaNotificacion = true
+                                    if symptom.notificacion == "" {
+                                        notificacionesActivas = false
+                                    }
                                 }
 
                             } label: {
