@@ -100,6 +100,19 @@ class AuthViewModel: ObservableObject {
     // Fetch users role from firestore
     func fetchUserRole() {
         var emailJSON = ""
+        if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("email.JSON")) {
+            if let datosDecodificados = try? JSONDecoder().decode(String.self, from: datosRecuperados) {
+                print("Entro al json")
+                emailJSON = datosDecodificados
+                Task {
+                    do {
+                        userRole = try await HelperFunctions.fetchUserRole(email: emailJSON)
+                    } catch {
+                        print("No se encontro el user role")
+                    }
+                }
+            }
+        }
         if let email = authService.auth.currentUser?.email {
             print("Entro al if para hacer llamada api")
             Task {
@@ -111,19 +124,6 @@ class AuthViewModel: ObservableObject {
             }
         } else {
             print("Entro al if antes del json para escribir el role")
-            if let datosRecuperados = try? Data.init(contentsOf: HelperFunctions.filePath("role.JSON")) {
-                if let datosDecodificados = try? JSONDecoder().decode(String.self, from: datosRecuperados) {
-                    print("Entro al json")
-                    emailJSON = datosDecodificados
-                    Task {
-                        do {
-                            userRole = try await HelperFunctions.fetchUserRole(email: emailJSON)
-                        } catch {
-                            print("No se encontro el user role")
-                        }
-                    }
-                }
-            }
         }
     }
     

@@ -89,12 +89,12 @@ struct RegisterView: View {
                 .foregroundColor(.white)
                 .background(Color.accentColor)
                 .cornerRadius(10)*/
-                .onTapGesture {
-                    authentication.submit() //Submits the request to firebase to create a new user.
-                    authViewModel.email = authentication.email // set the email of the current user.
-                    user.nombreCompleto = authentication.name // handle the name of the current user.
-                    HelperFunctions.write(user, inPath: "User.JSON")
-                }
+//                .onTapGesture {
+//                    authentication.submit() //Submits the request to firebase to create a new user.
+//                    authViewModel.email = authentication.email // set the email of the current user.
+//                    user.nombreCompleto = authentication.name // handle the name of the current user.
+//                    HelperFunctions.write(user, inPath: "User.JSON")
+//                }
             }
             .keyboardToolbar()
             .onSubmit(authentication.submit)
