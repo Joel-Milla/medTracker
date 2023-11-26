@@ -71,7 +71,7 @@ struct HomeView: View {
                                 if listaDatos.symptoms[index].activo {
                                     let symptom = listaDatos.symptoms[index]
                                     NavigationLink{
-                                        RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, sliderValue : .constant(0.155) ,createAction: registers.makeCreateAction())
+                                        RegisterSymptomView(symptom: $listaDatos.symptoms[index], registers: registers, symptomList: listaDatos, sliderValue : .constant(0.155) ,createAction: registers.makeCreateAction())
                                     }
                                     label: {
                                         Celda(unDato : symptom)

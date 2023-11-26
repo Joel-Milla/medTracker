@@ -14,6 +14,7 @@ struct RegisterSymptomView: View {
     @FocusState private var mostrarTeclado : Bool
     @Binding var symptom : Symptom
     @ObservedObject var registers : RegisterList
+    @ObservedObject var symptomList : SymptomList
     @Binding var sliderValue : Double
     @State var metricsString = ""
     @State private var date = Date.now
@@ -28,6 +29,7 @@ struct RegisterSymptomView: View {
     
     typealias CreateAction = (Register) async throws -> Void
     let createAction: CreateAction
+    
     let dateRange: ClosedRange<Date> = {
             let calendar = Calendar.current
             let start = calendar.date(byAdding: .month, value: -6, to: Date())!
@@ -177,7 +179,7 @@ struct RegisterSymptomView: View {
                 notificacionesActivas = symptom.notificacion != ""
             }
             .sheet(isPresented: $nuevaNotificacion) {
-                NuevaSintoma(symptom: symptom)
+                NuevaSintoma(symptom: $symptom, createAction2: symptomList.makeCreateAction())
                     .presentationDetents([.fraction(0.35)])
             }
         }
@@ -201,9 +203,11 @@ struct NuevaSintoma: View {
     var cada_cuanto = ["Todos los días", "Cada semana", "Una vez al mes"]
     @State var notificaciones_seleccion = "Todos los días"
     @State private var selectedFrequency: String = "Todos los días"
-    @State var symptom : Symptom
+    @Binding var symptom : Symptom
     @State private var selectedDayOfWeek = "Domingo"
     @State private var selectedDate = Date()
+    typealias CreateAction2 = (Symptom) async throws -> Void
+    let createAction2: CreateAction2
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -265,6 +269,7 @@ struct NuevaSintoma: View {
             Button {
                 let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek, nombreSintoma: symptom.nombre)
                 symptom.notificacion = notificationIdentifier
+                modifySymptom(symptomModification: symptom)
                 dismiss()
             } label: {
                 Label("Añadir notificación", systemImage: "cross.circle.fill")
@@ -274,6 +279,17 @@ struct NuevaSintoma: View {
             
         }
         .padding(.horizontal, 20)
+    }
+    
+    private func modifySymptom(symptomModification: Symptom) {
+        // will wait until the createAction(symptom) finishes
+        Task {
+            do {
+                try await createAction2(symptomModification) //call the function that adds the symptom to the database
+            } catch {
+                print("[NewPostForm] Cannot create post: \(error)")
+            }
+        }
     }
 }
 // To dismiss keyboard on type
@@ -307,7 +323,7 @@ struct OvalTextFieldStyle: TextFieldStyle {
 
 struct RegistroDatos1_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF", notificacion: "")), registers: RegisterList(), sliderValue: .constant(0.0), createAction: { _ in })
+        RegisterSymptomView(symptom: .constant(Symptom(id: 0, nombre: "Prueba", icon: "star.fill", description: "", cuantitativo: true, unidades: "", activo: true, color: "#007AF", notificacion: "")), registers: RegisterList(), symptomList: SymptomList(), sliderValue: .constant(0.0), createAction: { _ in })
     }
 }
 

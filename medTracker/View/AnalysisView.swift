@@ -39,7 +39,7 @@ struct AnalysisView: View {
                     // Show a tab for each symptom that is active.
                     TabView {
                         ForEach(listSymp.symptoms.filter { $0.activo == true }, id: \.id) { symptom in
-                            AnalysisItemView(symptom: symptom, registerList: registers, allRegisters: registers.registers.filter({ $0.idSymptom == symptom.id }))
+                            AnalysisItemView(symptom: symptom, registerList: registers, listSymp: listSymp, allRegisters: registers.registers.filter({ $0.idSymptom == symptom.id }))
                         }
                     }
                     .id(refreshID)  // Force the TabView to update
@@ -68,6 +68,7 @@ struct AnalysisView: View {
 struct AnalysisItemView: View {
     @State var symptom: Symptom
     let registerList: RegisterList
+    let listSymp : SymptomList
     @State var allRegisters: [Register]
     @State private var muestraRegisterSymptomView = false
     @State var currentTab = "Semana"
@@ -102,7 +103,7 @@ struct AnalysisItemView: View {
                     action: { muestraRegisterSymptomView = true }
                 )
                 .sheet(isPresented: $muestraRegisterSymptomView) {
-                    RegisterSymptomView(symptom: $symptom, registers: registerList, sliderValue: .constant(0.162),createAction: registerList.makeCreateAction())
+                    RegisterSymptomView(symptom: $symptom, registers: registerList, symptomList: listSymp, sliderValue: .constant(0.162),createAction: registerList.makeCreateAction())
                 }
                 //The else statement runs if there is already data associated with the symptom.
             } else {

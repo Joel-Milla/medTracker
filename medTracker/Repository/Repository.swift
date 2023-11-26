@@ -19,6 +19,7 @@ struct Repository {
     private var doctorReference: CollectionReference
     private var registerReference: CollectionReference
     private var userReference = Firestore.firestore().collection("Users")
+    
     private var email: String
     
     /**********************
@@ -88,6 +89,10 @@ struct Repository {
     
     // Functin to obtain the user info that exist on database.
     func fetchUser() async throws -> User {
+        guard !email.isEmpty else {
+            throw NSError(domain: "InvalidEmailError", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Email is empty"])
+        }
+        
         let documentReference = userReference.document(email)
         let documentSnapshot = try await documentReference.getDocument()
         
