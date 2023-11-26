@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 /**********************
  This class contains all the data that  helps to authenticate the user. From sign in to creating a new account.
@@ -23,6 +25,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     @Published var password = ""
+    @Published var userRole: String = ""
     
     /**********************
      Variables related to firebase
@@ -43,6 +46,7 @@ class AuthViewModel: ObservableObject {
     init() {
         // To know the current state of the user.
         authService.$isAuthenticated.assign(to: &$isAuthenticated)
+        fetchUserRole()
     }
     
     enum State {
@@ -60,6 +64,8 @@ class AuthViewModel: ObservableObject {
             state = .isLoading
             do {
                 try await authService.signIn(email: email, password: password)
+                let role = try await HelperFunctions.fetchUserRole(email: email)
+                userRole = role
             } catch {
                 signInErrorMessage = error.localizedDescription
             }
@@ -76,18 +82,33 @@ class AuthViewModel: ObservableObject {
                 // The next lines of code delete all the information of the current user
                 email = ""
                 password = ""
+                userRole = ""
                 signInErrorMessage = nil
                 registrationErrorMessage = nil
                 let eliminar = ["email.JSON", "Registers.JSON", "Symptoms.JSON", "User.JSON"]
                 for path in eliminar {
                     HelperFunctions.write("", inPath: path)
                 }
+                isAuthenticated = false
                 
             } catch {
                 signInErrorMessage = error.localizedDescription
             }
         }
     }
+    
+    // Fetch users role from firestore
+    func fetchUserRole() {
+        guard let email = authService.auth.currentUser?.email else { return }
+        Task {
+            do {
+                userRole = try await HelperFunctions.fetchUserRole(email: email)
+            } catch {
+                // Handle error
+            }
+        }
+    }
+    
     
     // returns a closure of a form to sign in
     func makeSignInViewModel() -> SignInViewModel {
@@ -96,7 +117,7 @@ class AuthViewModel: ObservableObject {
     
     // returns a closure of a form to create an account
     func makeCreateAccountViewModel() -> CreateAccountViewModel {
-        let viewModel = CreateAccountViewModel(initialValue: (name: "", email: "", password: ""), action: authService.createAccount)
+        let viewModel = CreateAccountViewModel(initialValue: (name: "", email: "", password: "", role: "Paciente"), action: authService.createAccount)
         viewModel.$error
             .compactMap { $0 }
             .map { $0.localizedDescription }
@@ -112,9 +133,9 @@ extension AuthViewModel {
         }
     }
     
-    class CreateAccountViewModel: FormViewModel<(name: String, email: String, password: String)> {
+    class CreateAccountViewModel: FormViewModel<(name: String, email: String, password: String, role: String)> {
         convenience init(action: @escaping Action) {
-            self.init(initialValue: (name: "", email: "", password: ""), action: action)
+            self.init(initialValue: (name: "", email: "", password: "", role: "Paciente"), action: action)
         }
     }
 }

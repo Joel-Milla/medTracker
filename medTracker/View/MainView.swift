@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    /*
-     MOVER MENU UN POCO HACIA ARRIBA
-     */
-    
     @StateObject var symptoms = SymptomList()
     @StateObject var registers = RegisterList()
     @State private var muestraEditarSintomas = false

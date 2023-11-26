@@ -21,8 +21,14 @@ struct LogInView: View {
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("mainBlue"), lineWidth: 1)
+                )
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    authentication.signIn()
+                }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
@@ -31,9 +37,6 @@ struct LogInView: View {
                         ProgressView()
                     }
                 })
-                .onTapGesture {
-                    authentication.signIn()
-                }
                 .font(.headline)
                 .fontWeight(.semibold)
                 .foregroundColor(.white)
@@ -45,6 +48,7 @@ struct LogInView: View {
                 .shadow(radius: 5)
                 
             }
+            .keyboardToolbar()
             // The alert and onReceive check when there is a signIn error and show it.
             .onReceive(authentication.$signInErrorMessage) { newValue in
                 showErrorAlert = newValue != nil
@@ -60,8 +64,6 @@ struct LogInView: View {
                 )
             }
             .navigationTitle("Iniciar Sesión")
-        }.onTapGesture {
-            UIApplication.shared.endEditing()
         }
     }
 }

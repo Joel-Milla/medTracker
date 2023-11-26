@@ -8,7 +8,10 @@ struct RegisterView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject var authentication: AuthViewModel.CreateAccountViewModel
     @State private var showAlert = false
-    @State var user: User = User()
+    @State private var selectedAccountType = ["Paciente", "Doctor"]
+    @State private var seleccion = "Paciente"
+    @State private var emptyField = false
+    @State var user = User()
     
     var body: some View {
         NavigationStack {
@@ -19,18 +22,49 @@ struct RegisterView: View {
                     .padding()
                     .background(Color.secondary.opacity(0.15))
                     .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("mainBlue"), lineWidth: 1)
+                    )
+                
                 Group {
                     TextField("Email", text: $authentication.email)
                         .textContentType(.emailAddress)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                    
                     SecureField("Contraseña", text: $authentication.password)
                         .textContentType(.password)
                 }
                 .padding()
                 .background(Color.secondary.opacity(0.15))
                 .cornerRadius(10)
-                Button(action: {}, label: {
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("mainBlue"), lineWidth: 1)
+                )
+                
+                // Account Type Picker
+                Picker("Account Type", selection: $seleccion) {
+                    ForEach(selectedAccountType, id: \.self) { type in
+                        Text(type).tag(type)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                Button(action: {
+                    if authentication.name.isEmpty || authentication.email.isEmpty || authentication.password.isEmpty  {
+                        authViewModel.registrationErrorMessage = "Fill all the values"
+                    } else {
+                        authentication.role = seleccion
+                        authentication.submit() //Submits the request to firebase to create a new user.
+                        authViewModel.email = authentication.email // set the email of the current user.
+                        authViewModel.userRole = seleccion
+                        user.nombreCompleto = authentication.name
+                        HelperFunctions.write(user, inPath: "User.JSON")
+                    }
+                }, label: {
                     // The switch check the status of the request and shows a loading animation if it is waiting a response from firebase.
                     switch authentication.state {
                     case .idle:
@@ -61,6 +95,7 @@ struct RegisterView: View {
                     HelperFunctions.write(user, inPath: "User.JSON")
                 }
             }
+            .keyboardToolbar()
             .onSubmit(authentication.submit)
             // The alert and onReceive check when there is a registrationError and show it.
             .onReceive(authViewModel.$registrationErrorMessage) { errorMessage in
@@ -80,9 +115,6 @@ struct RegisterView: View {
             }
             .navigationTitle("Registrarse")
             
-        }
-        .onTapGesture {
-            UIApplication.shared.endEditing()
         }
     }
 }

@@ -7,7 +7,8 @@
 
 import Foundation
 import FirebaseAuth
-
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 /**********************
  This class contains helper functions to authenticate the user (the log in view and register a new user)
@@ -16,7 +17,7 @@ import FirebaseAuth
 class AuthService: ObservableObject {
     @Published var isAuthenticated = false
     
-    private let auth = Auth.auth()
+    let auth = Auth.auth()
     private var listener: AuthStateDidChangeListenerHandle?
     
     /**********************
@@ -33,11 +34,19 @@ class AuthService: ObservableObject {
      **********************************/
     
     // Function to create an account based on a name, email, and password.
-    func createAccount(name: String, email: String, password: String) async throws {
+    func createAccount(name: String, email: String, password: String, role: String) async throws {
         do {
             let result = try await auth.createUser(withEmail: email, password: password)
             try await result.user.updateProfile(\.displayName, to: name)
-            //AuthService.writeEmail(email)
+            
+            // Save the role in Firestore
+            let db = Firestore.firestore()
+            //try await db.collection("users").document(result.user.uid).setData([
+            try await db.collection("Roles").document(email).setData([
+                "role": role,
+                "id": result.user.uid
+            ])
+            
             HelperFunctions.write(email, inPath: "email.JSON")
         } catch {
             throw error
@@ -54,7 +63,6 @@ class AuthService: ObservableObject {
     func signOut() throws {
         try auth.signOut()
     }
-    
 }
 
 // Function to update the profile

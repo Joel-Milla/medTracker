@@ -20,16 +20,23 @@ struct medTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             if authentication.isAuthenticated {
-                MainView()
-                    .environmentObject(authentication)
+                if authentication.userRole == "Paciente" {
+                    MainView()
+                        .environmentObject(authentication)
+                } else if authentication.userRole == "Doctor" {
+                    MainDoctorView()
+                        .environmentObject(authentication)
+                } else {
+                    ProgressView()
+                }
             } else {
                 WelcomeView()
                     .environmentObject(authentication)
                     .onAppear(perform: {
                         if !hasRequestedNotificationPermission {
-                                               requestNotificationPermission()
-                                               hasRequestedNotificationPermission = true
-                                           }
+                               requestNotificationPermission()
+                               hasRequestedNotificationPermission = true
+                        }    
                     })
             }
         }

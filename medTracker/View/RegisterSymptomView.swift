@@ -274,6 +274,10 @@ struct NuevaSintoma: View {
 
         }
         .padding(.horizontal, 20)
+// To dismiss keyboard on type
+extension UIApplication {
+    func endEditing(){
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
         

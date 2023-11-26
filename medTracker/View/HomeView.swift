@@ -66,7 +66,7 @@ struct HomeView: View {
                             AddSymptomView(symptoms: listaDatos, createAction: listaDatos.makeCreateAction())
                         }
                     case .complete:
-                        List{
+                        List {
                             ForEach(listaDatos.symptoms.indices, id: \.self) { index in
                                 if listaDatos.symptoms[index].activo {
                                     let symptom = listaDatos.symptoms[index]

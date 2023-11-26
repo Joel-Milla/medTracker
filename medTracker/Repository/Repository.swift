@@ -16,6 +16,7 @@ import FirebaseFirestoreSwift
 struct Repository {
     // Variables to make the connection to firebase.
     private var symptomReference: CollectionReference
+    private var doctorReference: CollectionReference
     private var registerReference: CollectionReference
     private var userReference = Firestore.firestore().collection("Users")
     private var email: String
@@ -27,6 +28,7 @@ struct Repository {
         email = Repository.getEmail()
         // Assuming you want to append the email to the collection name
         symptomReference = Firestore.firestore().collection("symptoms_\(email)")
+        doctorReference = Firestore.firestore().collection("doctor_\(email)")
         registerReference = Firestore.firestore().collection("registers_\(email)")
     }
     
@@ -97,6 +99,56 @@ struct Repository {
             // Handle the error if decoding fails
             throw NSError(domain: "DataDecodingError", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Failed to decode user data: \(error.localizedDescription)"])
         }
+    }
+    
+    // Function to write own name as a document in doctors collection
+    func writePatient(_ docEmail: String, _ user: User) async throws {
+        let doctorReference = Firestore.firestore().collection("doctor_\(docEmail)")
+        let document = doctorReference.document(email)
+        try await document.setData([
+            "name": user.nombreCompleto,
+            "email": email
+        ])
+    }
+    
+    // Function to fetch all the patients of a doctor.
+    func fetchPatients() async throws -> [Patient] {
+        let snapshot = try await doctorReference.getDocuments()
+        // Convert the returning documents into the class Patient
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Patient.self)
+        }
+    }
+    
+    // Function to fetch all the symptoms in firebase of a patient.
+    func fetchSymptomsPatient(_ email: String) async throws -> [Symptom] {
+        let collection = Firestore.firestore().collection("symptoms_\(email)")
+        let snapshot = try await collection
+            .order(by: "id", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Symptom
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Symptom.self)
+        }
+    }
+    
+    // Functin to obtain the registers that exist on database of the patient.
+    func fetchRegistersPatient(_ email: String) async throws -> [Register] {
+        let collection = Firestore.firestore().collection("registers_\(email)")
+        let snapshot = try await collection
+            .order(by: "idSymptom", descending: false)
+            .getDocuments()
+        // Convert the returning documents into the class Register
+        return snapshot.documents.compactMap { document in
+            try! document.data(as: Register.self)
+        }
+    }
+    
+    // Delete an email from the doctor
+    func delete(_ emailDoc: String) async throws {
+        let collection = Firestore.firestore().collection("doctor_\(emailDoc)")
+        let document = collection.document(email)
+        try await document.delete()
     }
 }
 

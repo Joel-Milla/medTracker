@@ -14,6 +14,7 @@ struct User : Codable, Hashable {
     var sexo: String
     var fechaNacimiento: Date
     var estatura : String
+    var arregloDoctor: [String]
     
     var formattedDateOfBirth: String {
         get {
@@ -43,15 +44,17 @@ struct User : Codable, Hashable {
         self.sexo = ""
         self.fechaNacimiento = Date()
         self.estatura = ""
+        self.arregloDoctor = []
     }
     
-    init(telefono: String, nombre: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: String) {
+    init(telefono: String, nombre: String, antecedentes: String, sexo: String, fechaNacimiento: Date, estatura: String, arregloDoctor: [String]) {
         self.telefono = telefono
         self.nombreCompleto = nombre
         self.antecedentes = antecedentes
         self.sexo = sexo
         self.fechaNacimiento = fechaNacimiento
         self.estatura = estatura
+        self.arregloDoctor = arregloDoctor
     }
     
     func error() -> (Bool, String) {
