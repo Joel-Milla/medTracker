@@ -143,6 +143,13 @@ struct Repository {
             try! document.data(as: Register.self)
         }
     }
+    
+    // Delete an email from the doctor
+    func delete(_ emailDoc: String) async throws {
+        let collection = Firestore.firestore().collection("doctor_\(emailDoc)")
+        let document = collection.document(email)
+        try await document.delete()
+    }
 }
 
 // This method is to not show an error for some of the methods above.

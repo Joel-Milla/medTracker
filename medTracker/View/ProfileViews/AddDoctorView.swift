@@ -24,6 +24,9 @@ struct AddDoctorView: View {
     typealias CreateAction = (User) async throws -> Void
     let createAction: CreateAction
     
+    typealias DeleteAction = (String) async throws -> Void
+    let deletePatient: DeleteAction
+    
     enum StateRequest {
         case loading
         case complete
@@ -69,7 +72,7 @@ struct AddDoctorView: View {
                         .foregroundColor(.white)
                     }
                     
-                    Section(header: Text("Doctores Registrados")) {
+                    Section(header: Text("Doctores Registrados"), footer: customFooterView) {
                         if user.user.arregloDoctor.isEmpty {
                             HStack {
                                 Spacer()
@@ -86,6 +89,7 @@ struct AddDoctorView: View {
                                     .font(.body)
                                     .padding(8)
                             }
+                            .onDelete(perform: deletePatient)
                         }
                     }
                 }
@@ -108,6 +112,31 @@ struct AddDoctorView: View {
                 }
             }
         }
+    }
+    
+    private var customFooterView: some View {
+        HStack {
+            if !user.user.arregloDoctor.isEmpty {
+                Text("Desliza la fila para eliminar")
+            }
+        }
+    }
+    
+    private func deletePatient(at offsets: IndexSet) {
+        // Delete info from database
+        for index in offsets {
+            let emailToDelete = user.user.arregloDoctor[index]
+            Task {
+                try await deletePatient(emailToDelete)
+            }
+        }
+        
+        // Implement deletion logic for locally stored information.
+        user.user.arregloDoctor.remove(atOffsets: offsets)
+        user.saveUserData()
+        
+        // modify data in database
+        createUser(user: user.user)
     }
     
     func addDoctorIfRoleMatches() async {
@@ -178,6 +207,6 @@ struct AddDoctorView: View {
 
 struct AddDoctorView_Previews: PreviewProvider {
     static var previews: some View {
-        AddDoctorView(user: UserModel(), writePatient: { _, _ in }, createAction: { _ in })
+        AddDoctorView(user: UserModel(), writePatient: { _, _ in }, createAction: { _ in }, deletePatient: { _ in })
     }
 }

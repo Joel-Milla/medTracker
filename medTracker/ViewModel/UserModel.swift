@@ -57,6 +57,13 @@ class UserModel: ObservableObject {
         }
     }
     
+    // Delete a doctor from the list
+    func makeDeleteAction() -> AddDoctorView.DeleteAction {
+        return { [weak self] emailDoc in
+            try await self?.repository.delete(emailDoc)
+        }
+    }
+    
     // Fetch user information from the database and save them on the users list.
     func fetchUser() {
         Task {
