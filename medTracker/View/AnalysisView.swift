@@ -24,9 +24,9 @@ struct AnalysisView: View {
             if listSymp.symptoms.isEmpty {
                 //The action serves as a trigger to show a sheet of the view to add new symptoms.
                 EmptyListView(
-                    title: "No hay sintomas registrados",
-                    message: "Porfavor de agregar sintomas para poder empezar a registrar.",
-                    nameButton: "Agregar Sintoma",
+                    title: "No hay datos registrados",
+                    message: "Favor de agregar datos para poder empezar a registrar.",
+                    nameButton: "Agregar Dato",
                     action: { muestraNewSymptom = true }
                 )
                 .sheet(isPresented: $muestraNewSymptom) {

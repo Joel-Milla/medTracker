@@ -53,16 +53,13 @@ struct ProfileView: View {
                 Form {
                     Section {
                         if isEditing {
+                            Text("Nombre completo: \(user.user.nombreCompleto)")
                             HStack {
-                                Text("Nombre completo:")
-                                TextField("Joel Alejandro", text: $draftUser.user.nombreCompleto)
-                            }
-                            HStack {
-                                Text("Telefono:")
+                                Text("Teléfono:")
                                 TextField("+81 2611 1857", text: $draftUser.user.telefono)}
                         } else {
                             Text("Nombre completo: \(user.user.nombreCompleto)")
-                            Text("Telefono: \(user.user.telefono)")
+                            Text("Teléfono: \(user.user.telefono)")
                         }
                     } header: {
                         Text("Datos personales")
@@ -111,10 +108,10 @@ struct ProfileView: View {
                     
                     Section {
                         if isEditing {
-                            Text("Antecedentes:")
+                            Text("Antecedentes médicos:")
                             TextEditor(text: $draftUser.user.formattedAntecedentes)
                         } else {
-                            Text("Antecedentes:")
+                            Text("Antecedentes médicos:")
                             ScrollView {
                                 Text(user.user.antecedentes)
                                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
@@ -122,12 +119,12 @@ struct ProfileView: View {
                             .frame(minHeight: 0, maxHeight: 22 * 10)
                         }
                     } header: {
-                        Text("Historial Clinico")
+                        Text("Historial Clínico")
                     }
                     
-                    Section("Sesion") {
+                    Section("") {
                         Button(action: { showAddDoctorView = true }) {
-                            Text("Send Data to Doctor")
+                            Text("Enviar datos a mi doctor")
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -150,7 +147,7 @@ struct ProfileView: View {
                             
                             authentication.signOut()
                         } label: {
-                            Text("Sign Out")
+                            Text("Cerrar Sesión")
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding()

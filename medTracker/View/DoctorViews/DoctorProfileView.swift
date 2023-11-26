@@ -46,12 +46,12 @@ struct DoctorProfileView: View {
                                     .border(Color("mainBlue"), width: 1)
                             }
                             HStack {
-                                Text("Telefono:")
+                                Text("Teléfono:")
                                 TextField("+81 2611 1857", text: $draftUser.user.telefono)}
                         } else {
                             Text("Nombre completo: \(user.user.nombreCompleto)")
                                 .border(Color.clear, width: 1)
-                            Text("Telefono: \(user.user.telefono)")
+                            Text("Teléfono: \(user.user.telefono)")
                         }
                     } header: {
                         Text("Datos personales")
@@ -98,21 +98,6 @@ struct DoctorProfileView: View {
                         Text("Datos fijos")
                     }
                     
-                    Section {
-                        if isEditing {
-                            Text("Antecedentes:")
-                            TextEditor(text: $draftUser.user.formattedAntecedentes)
-                        } else {
-                            Text("Antecedentes:")
-                            ScrollView {
-                                Text(user.user.antecedentes)
-                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
-                            }
-                            .frame(minHeight: 0, maxHeight: 22 * 10)
-                        }
-                    } header: {
-                        Text("Historial Clinico")
-                    }
                     
                     Button(action: { authentication.signOut() }) {
                         Text("Sign Out")

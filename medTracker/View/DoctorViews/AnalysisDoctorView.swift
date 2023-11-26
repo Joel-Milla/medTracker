@@ -49,13 +49,6 @@ struct AnalysisDoctorView: View {
                     }
                     .background(Color("mainWhite"))
                 }
-                GeometryReader { geometry in
-                    Image("logoP")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2)
-                        .position(x: geometry.size.width * 0.25, y: geometry.size.height * 0.015)
-                }
             case .isLoading:
                 ProgressView()
             }
@@ -125,7 +118,7 @@ struct AnalysisPatientView: View {
                 .padding(10)
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(.white.shadow(.drop(radius: 2)))
+                        .fill(Color("mainWhite").shadow(.drop(color: .primary,radius: 1)))
                 }
                 .padding(.trailing, 20)
                 
@@ -185,6 +178,7 @@ struct AnalysisPatientView: View {
         }
         .chartYScale(domain: 0...(max*1.5))
         .frame(height: 250)
+        .background(Color("mainWhite"))
     }
     
     func operaciones(registers: [Register]) -> [Float] {
