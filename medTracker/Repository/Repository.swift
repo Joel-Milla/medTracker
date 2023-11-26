@@ -16,6 +16,7 @@ import FirebaseFirestoreSwift
 struct Repository {
     // Variables to make the connection to firebase.
     private var symptomReference: CollectionReference
+    private var doctorReference: CollectionReference
     private var registerReference: CollectionReference
     private var userReference = Firestore.firestore().collection("Users")
     private var email: String
@@ -27,6 +28,7 @@ struct Repository {
         email = Repository.getEmail()
         // Assuming you want to append the email to the collection name
         symptomReference = Firestore.firestore().collection("symptoms_\(email)")
+        doctorReference = Firestore.firestore().collection("doctor_\(email)")
         registerReference = Firestore.firestore().collection("registers_\(email)")
     }
     
@@ -101,7 +103,7 @@ struct Repository {
     
     // Function to write own name as a document in doctors collection
     func writePatient(_ docEmail: String, _ user: User) async throws {
-        let doctorReference = Firestore.firestore().collection(docEmail)
+        let doctorReference = Firestore.firestore().collection("doctor_\(docEmail)")
         let document = doctorReference.document(email)
         try await document.setData([
             "name": user.nombreCompleto,
