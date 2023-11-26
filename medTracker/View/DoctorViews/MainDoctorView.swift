@@ -37,7 +37,12 @@ struct MainDoctorView: View {
                 case .complete:
                     List {
                         ForEach(listaPacientes.patients , id: \.self) { patient in
-                            rowPatient(patient: patient)
+                            NavigationLink {
+                                AnalysisDoctorView(patient: patient)
+                            } label: {
+                                rowPatient(patient: patient)
+                            }
+
                         }
                     }
                 }

@@ -11,8 +11,8 @@ struct Patient : Codable, Hashable {
     var email : String
     var name : String
     
-    init(email: String, nombre: String) {
+    init(email: String, name: String) {
         self.email = email
-        self.name = nombre
+        self.name = name
     }
 }

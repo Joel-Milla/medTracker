@@ -47,7 +47,7 @@ struct rowPatient: View {
 
 struct rowPatient_Previews: PreviewProvider {
     static var previews: some View {
-        rowPatient(patient: Patient(email: "Joel", nombre: "yo"))
+        rowPatient(patient: Patient(email: "Joel", name: "yo"))
     }
 }
 

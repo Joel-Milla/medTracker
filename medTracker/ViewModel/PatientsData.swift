@@ -31,7 +31,6 @@ class PatientsData : ObservableObject {
     enum State {
         case complete
         case isLoading
-        case isEmpty
     }
     
     /**********************
@@ -43,12 +42,12 @@ class PatientsData : ObservableObject {
         Task {
             do {
                 symptoms = try await self.repository.fetchSymptomsPatient(email)
-                state = symptoms.isEmpty ? .isEmpty : .complete
                 registers = try await self.repository.fetchRegistersPatient(email)
             } catch {
                 print("Cannot fetch data: \(error)")
             }
         }
+        state = .complete
     }
 }
 
