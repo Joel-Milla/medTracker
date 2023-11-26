@@ -12,6 +12,9 @@ struct RegisterView: View {
     @State private var seleccion = "Paciente"
     @State private var emptyField = false
     @State var user = User()
+    @State var passwordConfirm = ""
+    
+    @State var errorMessage = ""
     
     var body: some View {
         NavigationStack {
@@ -35,6 +38,8 @@ struct RegisterView: View {
                     
                     SecureField("Contraseña", text: $authentication.password)
                         .textContentType(.password)
+                    SecureField("Confirmar Contraseña", text: $passwordConfirm)
+                        .textContentType(.password)
                 }
                 .padding()
                 .background(Color.secondary.opacity(0.15))
@@ -56,7 +61,11 @@ struct RegisterView: View {
                 Button(action: {
                     if authentication.name.isEmpty || authentication.email.isEmpty || authentication.password.isEmpty  {
                         authViewModel.registrationErrorMessage = "Fill all the values"
-                    } else {
+                    } else if passwordConfirm != authentication.password {
+                        showAlert = true
+                        errorMessage = "Las contraseñas no coinciden"
+                    }
+                    else {
                         authentication.role = seleccion
                         authentication.submit() //Submits the request to firebase to create a new user.
                         authViewModel.email = authentication.email // set the email of the current user.
@@ -89,28 +98,24 @@ struct RegisterView: View {
                 .foregroundColor(.white)
                 .background(Color.accentColor)
                 .cornerRadius(10)*/
-//                .onTapGesture {
-//                    authentication.submit() //Submits the request to firebase to create a new user.
-//                    authViewModel.email = authentication.email // set the email of the current user.
-//                    user.nombreCompleto = authentication.name // handle the name of the current user.
-//                    HelperFunctions.write(user, inPath: "User.JSON")
-//                }
             }
             .keyboardToolbar()
             .onSubmit(authentication.submit)
             // The alert and onReceive check when there is a registrationError and show it.
-            .onReceive(authViewModel.$registrationErrorMessage) { errorMessage in
-                if errorMessage != nil {
+            .onReceive(authViewModel.$registrationErrorMessage) { registrationMessage in
+                if registrationMessage != nil {
                     showAlert = true
+                    errorMessage = authViewModel.registrationErrorMessage ?? "Unknown error"
                 }
             }
             .alert(isPresented: $showAlert) {
                 Alert(
-                    title: Text("Registration Error"),
-                    message: Text(authViewModel.registrationErrorMessage ?? "Unknown error"),
+                    title: Text("Error de Registro"),
+                    message: Text(errorMessage),
                     dismissButton: .default(Text("OK"), action: {
                         // Reset the registrationErrorMessage to nil when dismissing the alert
                         authViewModel.registrationErrorMessage = nil
+                        errorMessage = ""
                     })
                 )
             }

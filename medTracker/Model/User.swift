@@ -60,16 +60,16 @@ struct User : Codable, Hashable {
     func error() -> (Bool, String) {
         if let height = Double(self.estatura) {
             if (self.telefono == "" || self.nombreCompleto == "" || self.estatura == "" || self.sexo == "") {
-                return (true, "Datos faltantes. Por favor llenar todos los campos obligatorios.")
+                return (true, "Datos faltantes. Por favor llena todos los campos obligatorios.")
             } else if (height < 0.20 || height > 2.5) {
-                return (true, "Estatura invalida. Por favor de poner una estatura valid en unidad metros.")
+                return (true, "Estatura inválida. Favor de ingresar una estatura válida en metros.")
             } else if (self.fechaNacimiento == Date.now || self.fechaNacimiento > Date.now || (getYear(date: Date.now) - getYear(date: self.fechaNacimiento) > 120)) {
-                return (true, "Por favor poner una fecha valida.")
+                return (true, "Por favor ingresa una fecha válida.")
             } else if (self.sexo == "-") {
-                return (true, "Por favor elegir sexo.")
+                return (true, "Favor de elegir sexo.")
             }
         } else {
-            return (true, "Estatura invalida. Por favor de poner una estatura valida en unidad metros.")
+            return (true, "Estatura inválida. Favor de ingresar una estatura válida en metros.")
         }
         return (false, "")
     }
