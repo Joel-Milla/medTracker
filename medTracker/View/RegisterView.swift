@@ -105,7 +105,7 @@ struct RegisterView: View {
             .onReceive(authViewModel.$registrationErrorMessage) { registrationMessage in
                 if registrationMessage != nil {
                     showAlert = true
-                    errorMessage = authViewModel.registrationErrorMessage ?? "Unknown error"
+                    errorMessage = registrationMessage!
                 }
             }
             .alert(isPresented: $showAlert) {

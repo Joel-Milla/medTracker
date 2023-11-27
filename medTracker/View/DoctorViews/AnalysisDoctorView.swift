@@ -247,7 +247,7 @@ struct AnalysisPatientView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             )
             .frame(height: 250)
-            .background(Color.white)
+            .background(Color("mainWhite"))
         }
     
     private func customYAxisScale(yAxisLabels: [ImageYAxisLabel]) -> some View {
