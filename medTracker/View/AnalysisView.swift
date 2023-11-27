@@ -129,12 +129,17 @@ struct AnalysisItemView: View {
                         
                     }
                     
-                    AnimatedChart(filteredRegisters: registers)
+                    if symptom.cuantitativo {
+                        ChartCuantitativa(filteredRegisters: registers)
+                    } else {
+                        ChartCualitativa(filteredRegisters: registers)
+                    }
                 }
                 .padding(10)
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .fill(Color("mainWhite").shadow(.drop(color: .primary,radius: 1)))
+                        //.stroke(colorSintoma)
                 }
                 .padding(.trailing, 20)
                 
@@ -143,6 +148,10 @@ struct AnalysisItemView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 20)
+        /*.overlay {
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(colorSintoma)
+        }*/
         .onAppear() {
             registers = allRegisters
             currentTab = "Semana"
@@ -164,7 +173,7 @@ struct AnalysisItemView: View {
 
     
     @ViewBuilder
-    func AnimatedChart(filteredRegisters: [Register]) -> some View {
+    func ChartCuantitativa(filteredRegisters: [Register]) -> some View {
         
         let registers = filteredRegisters.sorted { $0.fecha < $1.fecha }
         
@@ -173,9 +182,8 @@ struct AnalysisItemView: View {
             .font(.system(size: 18).bold())
         //.foregroundColor(Color(hex: symptom.color))
         
-        let max = registers.max { item1, item2 in
-            return item2.cantidad > item1.cantidad
-        }?.cantidad ?? 0
+        let min = spm[2]*0.8
+        let max = spm[1]*1.2
         
         Chart {
             ForEach(registers, id:\.self) { register in
@@ -187,16 +195,19 @@ struct AnalysisItemView: View {
                 .interpolationMethod(.catmullRom)
                 
                 AreaMark (
-                    x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
-                    y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
+                    x: .value("Día", register.fecha, unit: .day),
+                    yStart: .value("minY", min),
+                    yEnd: .value("maxY", register.cantidad)
+                    //y: .range(min...register.cantidad)//register.animacion ? register.cantidad : 0)
                 )
                 .foregroundStyle(Color(hex: symptom.color).opacity(0.1))
                 .interpolationMethod(.catmullRom)
             }
         }
-        .chartYScale(domain: 0...(max*1.5))
+        .chartYScale(domain: min <= max ? min...max : 0...100)
         .frame(height: 250)
         .background(Color("mainWhite"))
+        
     }
         /*.onAppear {
             for (index,_) in registers.registers.enumerated() {
@@ -208,6 +219,59 @@ struct AnalysisItemView: View {
             }
         }
     }*/
+    
+    @ViewBuilder
+    func ChartCualitativa(filteredRegisters: [Register]) -> some View {
+        let yAxisLabels: [ImageYAxisLabel] = [
+                ImageYAxisLabel(id: 10, image: "sadder_face"),
+                ImageYAxisLabel(id: 30, image: "sad_face"),
+                ImageYAxisLabel(id: 50, image: "normal_face"),
+                ImageYAxisLabel(id: 70, image: "va_test"),
+                ImageYAxisLabel(id: 90, image: "happier_face")
+            ]
+        
+            Chart {
+                ForEach(registers, id:\.self) { register in
+                    LineMark (
+                        x: .value("Día", register.fecha, unit: .day),
+                        y: .value("CANTIDAD", register.cantidad)
+                    )
+                    .foregroundStyle(Color(hex: symptom.color))
+                    .interpolationMethod(.catmullRom)
+
+                    AreaMark (
+                        x: .value("Día", register.fecha, unit: .day),
+                        yStart: .value("minY", 0),
+                        yEnd: .value("maxY", register.cantidad)
+                    )
+                    .foregroundStyle(Color(hex: symptom.color).opacity(0.1))
+                    .interpolationMethod(.catmullRom)
+                }
+            }
+            .chartYScale(domain: 0...100)
+            .chartYAxis {
+                AxisMarks(values: .automatic(desiredCount: 6))
+            }
+            .overlay(
+                customYAxisScale(yAxisLabels: yAxisLabels)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            )
+            .frame(height: 250)
+            .background(Color.white)
+        }
+    
+    private func customYAxisScale(yAxisLabels: [ImageYAxisLabel]) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(yAxisLabels) { label in
+                Image(label.image)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .padding(.bottom, 6)
+            }
+        }
+        .foregroundColor(.clear)
+        .padding(.top, 5)
+    }
     
     func operaciones(registers: [Register]) -> [Float] {
         var operacionesList : [Float] = [0,0,Float.greatestFiniteMagnitude]
@@ -225,6 +289,11 @@ struct AnalysisItemView: View {
         
         return operacionesList
     }
+}
+
+struct ImageYAxisLabel: Identifiable {
+    var id: Int
+    var image: String
 }
 
 struct analysis_Previews: PreviewProvider {
