@@ -126,8 +126,8 @@ struct AnalysisItemView: View {
                         }
                         .pickerStyle(.segmented)
                         .padding(.leading, 60)
-                        
                     }
+                    .padding(.bottom, symptom.cuantitativo ? 0 : 35)
                     
                     if symptom.cuantitativo {
                         ChartCuantitativa(filteredRegisters: registers)
@@ -139,7 +139,10 @@ struct AnalysisItemView: View {
                 .background {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                         .fill(Color("mainWhite").shadow(.drop(color: .primary,radius: 1)))
-                        //.stroke(colorSintoma)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(Color(hex: symptom.color), lineWidth: 1) // Adjust color and lineWidth as needed
+                        )
                 }
                 .padding(.trailing, 20)
                 
@@ -289,11 +292,6 @@ struct AnalysisItemView: View {
         
         return operacionesList
     }
-}
-
-struct ImageYAxisLabel: Identifiable {
-    var id: Int
-    var image: String
 }
 
 struct analysis_Previews: PreviewProvider {
