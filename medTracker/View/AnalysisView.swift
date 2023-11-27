@@ -195,7 +195,7 @@ struct AnalysisItemView: View {
                     y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
                 )
                 .foregroundStyle(Color(hex: symptom.color))
-                .interpolationMethod(.linear)
+                .interpolationMethod(.catmullRom)
                 
                 AreaMark (
                     x: .value("Día", register.fecha, unit: .day),
@@ -204,7 +204,7 @@ struct AnalysisItemView: View {
                     //y: .range(min...register.cantidad)//register.animacion ? register.cantidad : 0)
                 )
                 .foregroundStyle(Color(hex: symptom.color).opacity(0.1))
-                .interpolationMethod(.linear)
+                .interpolationMethod(.catmullRom)
             }
         }
         .chartYScale(domain: min <= max ? min...max : 0...100)
