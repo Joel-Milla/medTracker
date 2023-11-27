@@ -34,7 +34,7 @@ class RegisterList : ObservableObject {
         fetchRegisters()
         
         // For testing, the next function can be used for dummy data.
-        // registers = getDefaultRegisters()
+        //registers = getDefaultRegisters()
     }
     
     /**********************
