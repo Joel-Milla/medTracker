@@ -195,7 +195,7 @@ struct AnalysisItemView: View {
                     y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
                 )
                 .foregroundStyle(Color(hex: symptom.color))
-                .interpolationMethod(.catmullRom)
+                .interpolationMethod(.linear)
                 
                 AreaMark (
                     x: .value("Día", register.fecha, unit: .day),
@@ -204,7 +204,7 @@ struct AnalysisItemView: View {
                     //y: .range(min...register.cantidad)//register.animacion ? register.cantidad : 0)
                 )
                 .foregroundStyle(Color(hex: symptom.color).opacity(0.1))
-                .interpolationMethod(.catmullRom)
+                .interpolationMethod(.linear)
             }
         }
         .chartYScale(domain: min <= max ? min...max : 0...100)
@@ -225,6 +225,8 @@ struct AnalysisItemView: View {
     
     @ViewBuilder
     func ChartCualitativa(filteredRegisters: [Register]) -> some View {
+        let registers = filteredRegisters.sorted { $0.fecha < $1.fecha }
+        
         let yAxisLabels: [ImageYAxisLabel] = [
                 ImageYAxisLabel(id: 10, image: "sadder_face"),
                 ImageYAxisLabel(id: 30, image: "sad_face"),

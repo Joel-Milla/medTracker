@@ -210,6 +210,8 @@ struct AnalysisPatientView: View {
     
     @ViewBuilder
     func ChartCualitativa(filteredRegisters: [Register]) -> some View {
+        let registers = filteredRegisters.sorted { $0.fecha < $1.fecha }
+        
         let yAxisLabels: [ImageYAxisLabel] = [
                 ImageYAxisLabel(id: 10, image: "sadder_face"),
                 ImageYAxisLabel(id: 30, image: "sad_face"),
