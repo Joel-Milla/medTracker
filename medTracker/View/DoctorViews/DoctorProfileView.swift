@@ -42,15 +42,13 @@ struct DoctorProfileView: View {
                         if isEditing {
                             HStack {
                                 Text("Nombre completo:")
-                                TextField("Joel Alejandro", text: $draftUser.user.nombreCompleto)
-                                    .border(Color("mainBlue"), width: 1)
+                                Text("Nombre completo: \(user.user.nombreCompleto)")
                             }
                             HStack {
                                 Text("Teléfono:")
                                 TextField("+81 2611 1857", text: $draftUser.user.telefono)}
                         } else {
                             Text("Nombre completo: \(user.user.nombreCompleto)")
-                                .border(Color.clear, width: 1)
                             Text("Teléfono: \(user.user.telefono)")
                         }
                     } header: {
