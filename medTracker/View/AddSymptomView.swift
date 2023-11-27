@@ -195,12 +195,14 @@ struct AddSymptomView: View {
                                 mostrarAlerta = true
                             } else {
                                 let newID = symptoms.symptoms.generateUniqueID()
-                                
-                                let notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek, nombreSintoma: nombreSintoma)
-
-                                // Actualiza el modelo con el identificador de la notificación
-                                if let lastIndex = symptoms.symptoms.indices.last {
-                                    symptoms.symptoms[lastIndex].notificacion = notificationIdentifier
+                                var notificationIdentifier = ""
+                                if notificaciones {
+                                    notificationIdentifier = scheduleNotification(frecuencia: selectedFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek, nombreSintoma: nombreSintoma)
+                                    
+                                    // Actualiza el modelo con el identificador de la notificación
+                                    //if let lastIndex = symptoms.symptoms.indices.last {
+                                       //symptoms.symptoms[lastIndex].notificacion = notificationIdentifier
+                                    //}
                                 }
                                 let cuantitativo = selectedIndex == 0 ? true : false
                                 symptoms.symptoms.append(Symptom(id: newID, nombre: nombreSintoma, icon: icon, description: descripcion, cuantitativo: cuantitativo, unidades: "", activo: true, color: colorString, notificacion: notificationIdentifier))
