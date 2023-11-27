@@ -169,7 +169,7 @@ struct AnalysisItemView: View {
         let registers = filteredRegisters.sorted { $0.fecha < $1.fecha }
         
         let spm = operaciones(registers: registers)
-        Text("Sum: \(spm[0].stringFormat)  Prom: \(spm[1].stringFormat)  Max: \(spm[2].stringFormat)")
+        Text("Prom: \(spm[0].stringFormat)  Max: \(spm[1].stringFormat)  Min: \(spm[2].stringFormat)")
             .font(.system(size: 18).bold())
         //.foregroundColor(Color(hex: symptom.color))
         
@@ -180,7 +180,7 @@ struct AnalysisItemView: View {
         Chart {
             ForEach(registers, id:\.self) { register in
                 LineMark (
-                    x: .value("Día", register.fecha.formatted(.dateTime.day().month())),
+                    x: .value("Día", register.fecha, unit: .day),
                     y: .value("CANTIDAD", register.cantidad)//register.animacion ? register.cantidad : 0)
                 )
                 .foregroundStyle(Color(hex: symptom.color))
@@ -210,16 +210,18 @@ struct AnalysisItemView: View {
     }*/
     
     func operaciones(registers: [Register]) -> [Float] {
-        var operacionesList : [Float] = [0,0,0]
+        var operacionesList : [Float] = [0,0,Float.greatestFiniteMagnitude]
         
         for item in registers {
             operacionesList[0] = operacionesList[0] + item.cantidad
-            operacionesList[1] = operacionesList[1] + 1
-            if operacionesList[2] < item.cantidad {
+            if operacionesList[1] < item.cantidad {
+                operacionesList[1] = item.cantidad
+            }
+            if operacionesList[2] > item.cantidad {
                 operacionesList[2] = item.cantidad
             }
         }
-        operacionesList[1] = operacionesList[0] / operacionesList[1]
+        operacionesList[0] = operacionesList[0] / Float(registers.count)
         
         return operacionesList
     }
