@@ -45,7 +45,7 @@ struct AnalysisDoctorView: View {
                         .tabViewStyle(.page)
                         .indexViewStyle(.page(backgroundDisplayMode: .always))
                         
-                        Spacer(minLength: 50)
+                        Spacer(minLength: 10)
                     }
                     .background(Color("mainWhite"))
                 }
