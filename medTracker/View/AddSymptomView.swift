@@ -55,6 +55,12 @@ struct AddSymptomView: View {
                             .font(.system(size: 28))
                             .foregroundColor(colorSymptom)
                             .submitLabel(.done)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 2)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray, lineWidth: 1)
+                            )
                         
                         Button {
                             isPresented.toggle()
@@ -80,6 +86,10 @@ struct AddSymptomView: View {
                         .font(.system(size: 18))
                         .textFieldStyle(.roundedBorder)
                         .lineSpacing(4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
                         .padding(.trailing, 20)
                         .foregroundColor(colorSymptom)
                         .disableAutocorrection(true)
@@ -122,65 +132,67 @@ struct AddSymptomView: View {
                         .padding(.top, 40)
                         .font(.system(size: 24))
                     
-                    Picker("Quiero recibirlas:", selection: $selectedFrequency) {
-                        ForEach(cada_cuanto, id: \.self) {
-                            Text($0)
-                            //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                    if notificaciones {
+                        Picker("Quiero recibirlas:", selection: $selectedFrequency) {
+                            ForEach(cada_cuanto, id: \.self) {
+                                Text($0)
+                                //.foregroundColor(notificaciones ? colorSymptom : Color.gray)
+                            }
                         }
-                    }
-                    .pickerStyle(.segmented)
-                    .disabled(!notificaciones ? true : false)
-                    .foregroundColor(notificaciones ? colorSymptom : Color.gray)
-                    .padding(.trailing, 20)
-                    .font(.system(size: 18))
-                    /*.onChange(of: selectedFrequency) { newFrequency in
-                        if notificaciones {
-                            scheduleNotification(frecuencia: newFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
-                        }
-                    }*/
-                    
-                    if selectedFrequency == "Todos los días" {
-                        HStack{
-                            Spacer()
-                            DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
-                                .labelsHidden()
-                                .padding(.trailing, 20)
-                                .disabled(!notificaciones ? true : false)
-                            Spacer()
-                        }
-                            } else if selectedFrequency == "Cada semana" {
-                                HStack{
-                                    Spacer()
-                                    Picker("Selecciona el día de la semana", selection: $selectedDayOfWeek) {
-                                        ForEach(["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], id: \.self) {
-                                            Text($0)
-                                        }
-                                    }
+                        .pickerStyle(.segmented)
+                        .disabled(!notificaciones ? true : false)
+                        //.foregroundColor(notificaciones ? colorSymptom)
+                        .padding(.trailing, 20)
+                        .font(.system(size: 18))
+                        /*.onChange(of: selectedFrequency) { newFrequency in
+                         if notificaciones {
+                         scheduleNotification(frecuencia: newFrequency, selectedDate: selectedDate, selectedDayOfWeek: selectedDayOfWeek)
+                         }
+                         }*/
+                        
+                        if selectedFrequency == "Todos los días" {
+                            HStack{
+                                Spacer()
+                                DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
                                     .labelsHidden()
                                     .padding(.trailing, 20)
                                     .disabled(!notificaciones ? true : false)
-                                    
-                                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
-                                        .labelsHidden()
-                                        .padding(.trailing, 20)
-                                        .disabled(!notificaciones ? true : false)
-                                    Spacer()
-                                }
-                            } else if selectedFrequency == "Una vez al mes" {
-                                HStack{
-                                    Spacer()
-                                    DatePicker("Selecciona el día del mes", selection: $selectedDate, in: Date()..., displayedComponents: [.date])
-                                        .labelsHidden()
-                                        .disabled(!notificaciones ? true : false)
-                                        .padding(.trailing, 20)
-                                    
-                                    DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
-                                        .labelsHidden()
-                                        .padding(.trailing, 20)
-                                        .disabled(!notificaciones ? true : false)
-                                    Spacer()
-                                }
+                                Spacer()
                             }
+                        } else if selectedFrequency == "Cada semana" {
+                            HStack{
+                                Spacer()
+                                Picker("Selecciona el día de la semana", selection: $selectedDayOfWeek) {
+                                    ForEach(["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"], id: \.self) {
+                                        Text($0)
+                                    }
+                                }
+                                .labelsHidden()
+                                .padding(.trailing, 20)
+                                .disabled(!notificaciones ? true : false)
+                                
+                                DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                                    .labelsHidden()
+                                    .padding(.trailing, 20)
+                                    .disabled(!notificaciones ? true : false)
+                                Spacer()
+                            }
+                        } else if selectedFrequency == "Una vez al mes" {
+                            HStack{
+                                Spacer()
+                                DatePicker("Selecciona el día del mes", selection: $selectedDate, in: Date()..., displayedComponents: [.date])
+                                    .labelsHidden()
+                                    .disabled(!notificaciones ? true : false)
+                                    .padding(.trailing, 20)
+                                
+                                DatePicker("Selecciona la hora", selection: $selectedDate, displayedComponents: [.hourAndMinute])
+                                    .labelsHidden()
+                                    .padding(.trailing, 20)
+                                    .disabled(!notificaciones ? true : false)
+                                Spacer()
+                            }
+                        }
+                    }
                     
                     
                     HStack {
