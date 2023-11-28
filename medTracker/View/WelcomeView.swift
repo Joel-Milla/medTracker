@@ -12,18 +12,28 @@ import SwiftUI
  **********************************/
 struct WelcomeView: View {
     @EnvironmentObject var authentication: AuthViewModel
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.white
+                Color("mainWhite")
                     .ignoresSafeArea()
                 VStack{
-                    Image("logoV")
-                        .resizable()
-                        .imageScale(.small)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 300)
+                    if colorScheme == .light{
+                        Image("logoV")
+                            .resizable()
+                            .imageScale(.small)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 300)
+                    }
+                    else{
+                        Image("logoDarkMode")
+                            .resizable()
+                            .imageScale(.small)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 300)
+                    }
                     /*Text("¡Bienvenido a MedTracker!")
                         .font(.largeTitle)
                         .bold()
