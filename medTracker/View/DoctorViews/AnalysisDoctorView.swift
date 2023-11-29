@@ -14,6 +14,8 @@ import Charts
 struct AnalysisDoctorView: View {
     let patient: Patient
     @State var patientsData: PatientsData
+    @State private var isShowingActivityView = false
+    @State private var activityItems: [Any] = []
     
     init(patient: Patient) {
         self.patient = patient
@@ -48,11 +50,55 @@ struct AnalysisDoctorView: View {
                         Spacer(minLength: 10)
                     }
                     .background(Color("mainWhite"))
+                    .navigationTitle(patient.name)
+                    .toolbar {
+                        // Button to traverse to EditSymptomView.
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                if let url = exportCSV() {
+                                    activityItems = [url]
+                                    isShowingActivityView = true
+                                }
+                            } label: {
+                                Image(systemName: "square.and.arrow.up")
+                            }
+                        } 
+                    }
                 }
             case .isLoading:
                 ProgressView()
             }
         }
+    }
+    
+    func exportCSV()-> URL? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy HH:mm"
+        let fileName = "Datos.csv"
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
+        var csvText = "Nombre del Dato,Fecha,Cantidad,Notas\n"
+        let sortedRegs = patientsData.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
+        for register in sortedRegs {
+            let fechaStr = formatter.string(from:register.fecha)
+            if(getSymptomActive(register: register)){
+                let newLine = "\(getSymptomName(register: register)),\(fechaStr),\(register.cantidad),\(register.notas)\n"
+                csvText.append(contentsOf: newLine)
+            }
+        }
+
+        do {
+            try csvText.write(to: path, atomically: true, encoding: String.Encoding.utf8)
+
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                if let rootViewController = windowScene.windows.first?.rootViewController {
+                    let activityVC = UIActivityViewController(activityItems: [path], applicationActivities: nil)
+                    rootViewController.present(activityVC, animated: true, completion: nil)
+                }
+            }
+        } catch {
+            print("Error al escribir el archivo CSV: \(error)")
+        }
+        return path
     }
 }
 
