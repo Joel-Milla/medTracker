@@ -62,7 +62,7 @@ struct AnalysisDoctorView: View {
                             } label: {
                                 Image(systemName: "square.and.arrow.up")
                             }
-                        } 
+                        }
                     }
                 }
             case .isLoading:
@@ -80,15 +80,15 @@ struct AnalysisDoctorView: View {
         let sortedRegs = patientsData.registers.sorted(by: {$0.idSymptom > $1.idSymptom})
         for register in sortedRegs {
             let fechaStr = formatter.string(from:register.fecha)
-            if(getSymptomActive(register: register)){
-                let newLine = "\(getSymptomName(register: register)),\(fechaStr),\(register.cantidad),\(register.notas)\n"
+            if(getSymptomIsActive(register: register)){
+                let newLine = "\(getSymptomOfName(register: register)),\(fechaStr),\(register.cantidad),\(register.notas)\n"
                 csvText.append(contentsOf: newLine)
             }
         }
-
+        
         do {
             try csvText.write(to: path, atomically: true, encoding: String.Encoding.utf8)
-
+            
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 if let rootViewController = windowScene.windows.first?.rootViewController {
                     let activityVC = UIActivityViewController(activityItems: [path], applicationActivities: nil)
@@ -99,6 +99,20 @@ struct AnalysisDoctorView: View {
             print("Error al escribir el archivo CSV: \(error)")
         }
         return path
+    }
+    
+    func getSymptomIsActive(register: Register) -> Bool {
+        if let symptom = patientsData.symptoms.first(where: { $0.id == register.idSymptom }) {
+            return symptom.activo
+        }
+        return false
+    }
+    
+    func getSymptomOfName(register: Register) -> String {
+        if let symptom = patientsData.symptoms.first(where: { $0.id == register.idSymptom }) {
+            return symptom.nombre
+        }
+        return "Unknown Symptom"
     }
 }
 
